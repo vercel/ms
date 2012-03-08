@@ -1,0 +1,11 @@
+{
+    "name": "ms"
+  , "version": "0.1.0"
+  , "description": "Tiny ms conversion utility"
+  , "main": "./ms"
+  , "devDependencies": {
+        "mocha": "*"
+      , "expect.js": "*"
+      , "serve": "*"
+    }
+}
