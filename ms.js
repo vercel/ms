@@ -15,9 +15,10 @@ No more painful `setTimeout(fn, 60 * 4 * 3 * 2 * 1 * Infinity * NaN * '☃')`.
 
 **/
 
-(function (g) {
+!function (g) {
   var r = /(\d*.?\d+)([mshd]+)/
     , _ = {}
+    , m;
 
   _.ms = 1;
   _.s = 1000;
@@ -26,10 +27,8 @@ No more painful `setTimeout(fn, 60 * 4 * 3 * 2 * 1 * Infinity * NaN * '☃')`.
   _.d = _.h * 24;
 
   function ms (s) {
-    if (s == Number(s)) return Number(s);
-    r.exec(s.toLowerCase());
-    return RegExp.$1 * _[RegExp.$2];
+    return +s || ((m = r.exec(s.toLowerCase())) ? m[1] * _[m[2]] : NaN);
   }
 
   g.top ? g.ms = ms : module.exports = ms;
-})(this);
+}(this);
