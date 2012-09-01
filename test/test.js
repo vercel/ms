@@ -59,5 +59,7 @@ describe('ms(string)', function(){
 // numbers
 
 describe('ms(number)', function(){
-  
+  it('should support milliseconds', function(){
+    expect(ms(500)).to.be('500 ms');
+  })
 })
