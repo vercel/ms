@@ -1,20 +1,3 @@
-/**
-
-# ms.js
-
-No more painful `setTimeout(fn, 60 * 4 * 3 * 2 * 1 * Infinity * NaN * '☃')`.
-
-    ms('2d')      // 172800000
-    ms('1.5h')    // 5400000
-    ms('1h')      // 3600000
-    ms('1m')      // 60000
-    ms('5s')      // 5000
-    ms('500ms')   // 500
-    ms('100')     // 100
-    ms(100)       // 100
-
-**/
-
 !function (g) {
   var r = /(\d*.?\d+)([mshd]+)/
     , _ = {}
@@ -26,8 +9,20 @@ No more painful `setTimeout(fn, 60 * 4 * 3 * 2 * 1 * Infinity * NaN * '☃')`.
   _.h = _.m * 60;
   _.d = _.h * 24;
 
-  function ms (s) {
-    return +s || ((m = r.exec(s.toLowerCase())) ? m[1] * _[m[2]] : NaN);
+  function ms (val) {
+    if ('number' == typeof val) {
+      if (val == _.d) return (val / _.d) + ' day';
+      if (val > _.d) return (val / _.d) + ' days';
+      if (val == _.h) return (val / _.h) + ' hour';
+      if (val > _.h) return (val / _.h) + ' hours';
+      if (val == _.m) return (val / _.m) + ' minute';
+      if (val > _.m) return (val / _.m) + ' minutes';
+      if (val == _.s) return (val / _.s) + ' second';
+      if (val > _.s) return (val / _.s) + ' seconds';
+      return val + ' ms';
+    } else {
+      return +val || ((m = r.exec(val.toLowerCase())) ? m[1] * _[m[2]] : NaN);
+    }
   }
 
   g.top ? g.ms = ms : module.exports = ms;
