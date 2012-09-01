@@ -8,12 +8,9 @@ if ('undefined' != typeof require) {
   ms = require('../ms');
 }
 
-/**
- * Test.
- */
+// strings
 
-describe('ms.js', function () {
-
+describe('ms(string)', function(){
   it('should preserve ms', function () {
     expect(100).to.be(100);
   });
@@ -57,5 +54,10 @@ describe('ms.js', function () {
   it('should work with numbers starting with .', function () {
     expect(ms('.5ms')).to.be(.5);
   });
+})
 
-});
+// numbers
+
+describe('ms(number)', function(){
+  
+})

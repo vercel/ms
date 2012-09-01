@@ -1,20 +1,3 @@
-/**
-
-# ms.js
-
-No more painful `setTimeout(fn, 60 * 4 * 3 * 2 * 1 * Infinity * NaN * '☃')`.
-
-    ms('2d')      // 172800000
-    ms('1.5h')    // 5400000
-    ms('1h')      // 3600000
-    ms('1m')      // 60000
-    ms('5s')      // 5000
-    ms('500ms')   // 500
-    ms('100')     // 100
-    ms(100)       // 100
-
-**/
-
 !function (g) {
   var r = /(\d*.?\d+)([mshd]+)/
     , _ = {}
