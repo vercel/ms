@@ -11,6 +11,8 @@
 
   function ms (val) {
     if ('number' == typeof val) {
+      if (val == _.d) return (val / _.d) + ' day';
+      if (val > _.d) return (val / _.d) + ' days';
       if (val == _.h) return (val / _.h) + ' hour';
       if (val > _.h) return (val / _.h) + ' hours';
       if (val == _.m) return (val / _.m) + ' minute';
