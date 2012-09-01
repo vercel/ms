@@ -11,6 +11,8 @@
 
   function ms (val) {
     if ('number' == typeof val) {
+      if (val == _.s) return (val / _.s) + ' second';
+      if (val > _.s) return (val / _.s) + ' seconds';
       return val + ' ms';
     } else {
       return +val || ((m = r.exec(val.toLowerCase())) ? m[1] * _[m[2]] : NaN);

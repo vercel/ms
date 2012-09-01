@@ -62,4 +62,10 @@ describe('ms(number)', function(){
   it('should support milliseconds', function(){
     expect(ms(500)).to.be('500 ms');
   })
+
+  it('should support seconds', function(){
+    expect(ms(1000)).to.be('1 second');
+    expect(ms(1500)).to.be('1.5 seconds');
+    expect(ms(10000)).to.be('10 seconds');
+  })
 })
