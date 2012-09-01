@@ -74,4 +74,10 @@ describe('ms(number)', function(){
     expect(ms(60 * 1500)).to.be('1.5 minutes');
     expect(ms(60 * 10000)).to.be('10 minutes');
   })
+
+  it('should support hours', function(){
+    expect(ms(60 * 60 * 1000)).to.be('1 hour');
+    expect(ms(60 * 60 * 1500)).to.be('1.5 hours');
+    expect(ms(60 * 60 * 10000)).to.be('10 hours');
+  })
 })
