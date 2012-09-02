@@ -15,10 +15,6 @@ describe('ms(string)', function(){
     expect(100).to.be(100);
   });
 
-  it('should convert number strings to number', function () {
-    expect(ms('1e+5')).to.be(1e+5);
-  });
- 
   it('should convert from m to ms', function () {
     expect(ms('1m')).to.be(60000);
   });
