@@ -1,29 +1,81 @@
-!function (g) {
-  var r = /(\d*.?\d+)([mshd]+)/
-    , _ = {}
-    , m;
 
-  _.ms = 1;
-  _.s = 1000;
-  _.m = _.s * 60;
-  _.h = _.m * 60;
-  _.d = _.h * 24;
+/**
+ * Helpers.
+ */
 
-  function ms (val) {
-    if ('number' == typeof val) {
-      if (val == _.d) return (val / _.d) + ' day';
-      if (val > _.d) return (val / _.d) + ' days';
-      if (val == _.h) return (val / _.h) + ' hour';
-      if (val > _.h) return (val / _.h) + ' hours';
-      if (val == _.m) return (val / _.m) + ' minute';
-      if (val > _.m) return (val / _.m) + ' minutes';
-      if (val == _.s) return (val / _.s) + ' second';
-      if (val > _.s) return (val / _.s) + ' seconds';
-      return val + ' ms';
-    } else {
-      return +val || ((m = r.exec(val.toLowerCase())) ? m[1] * _[m[2]] : NaN);
-    }
+var s = 1000;
+var m = s * 60;
+var h = m * 60;
+var d = h * 24;
+
+/**
+ * Parse or format the given `val`.
+ *
+ * @param {String|Number} val
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val){
+  if ('string' == typeof val) return parse(val);
+  return format(val);
+}
+
+/**
+ * Parse the given `str` and return milliseconds.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  var m = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)$/i.exec(str);
+  if (!m) return;
+  var n = parseFloat(m[1]);
+  var type = m[2].toLowerCase();
+  switch (type) {
+    case 'years':
+    case 'year':
+    case 'y':
+      return n * 31557600000;
+    case 'days':
+    case 'day':
+    case 'd':
+      return n * 86400000;
+    case 'hours':
+    case 'hour':
+    case 'h':
+      return n * 3600000;
+    case 'minutes':
+    case 'minute':
+    case 'm':
+      return n * 60000;
+    case 'seconds':
+    case 'second':
+    case 's':
+      return n * 1000;
+    case 'ms':
+      return n;
   }
+}
 
-  g.top ? g.ms = ms : module.exports = ms;
-}(this);
+/**
+ * Format the given `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api public
+ */
+
+function format(ms) {
+  if (ms == d) return (ms / d) + ' day';
+  if (ms > d) return (ms / d) + ' days';
+  if (ms == h) return (ms / h) + ' hour';
+  if (ms > h) return (ms / h) + ' hours';
+  if (ms == m) return (ms / m) + ' minute';
+  if (ms > m) return (ms / m) + ' minutes';
+  if (ms == s) return (ms / s) + ' second';
+  if (ms > s) return (ms / s) + ' seconds';
+  return ms + ' ms';
+}
