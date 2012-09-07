@@ -12,7 +12,7 @@ if ('undefined' != typeof require) {
 
 describe('ms(string)', function(){
   it('should preserve ms', function () {
-    expect(100).to.be(100);
+    expect(ms('100')).to.be(100);
   });
 
   it('should convert from m to ms', function () {
