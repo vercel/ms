@@ -30,10 +30,10 @@ module.exports = function(val){
  */
 
 function parse(str) {
-  var m = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)$/i.exec(str);
+  var m = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)?$/i.exec(str);
   if (!m) return;
   var n = parseFloat(m[1]);
-  var type = m[2].toLowerCase();
+  var type = (m[2] || 'ms').toLowerCase();
   switch (type) {
     case 'years':
     case 'year':
