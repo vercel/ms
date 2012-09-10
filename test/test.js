@@ -5,7 +5,7 @@
 
 if ('undefined' != typeof require) {
   expect = require('expect.js');
-  ms = require('../ms');
+  ms = require('../');
 }
 
 // strings
