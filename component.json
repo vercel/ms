@@ -3,5 +3,5 @@
   "repo": "guille/ms.js",
   "description": "ms parsing / formatting",
   "keywords": ["ms", "parse", "format"],
-  "main": "ms.js"
+  "scripts": ["index.js"]
 }
