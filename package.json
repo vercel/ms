@@ -2,7 +2,7 @@
     "name": "ms"
   , "version": "0.3.0"
   , "description": "Tiny ms conversion utility"
-  , "main": "./ms"
+  , "main": "./index"
   , "devDependencies": {
         "mocha": "*"
       , "expect.js": "*"
