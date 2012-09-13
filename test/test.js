@@ -8,7 +8,7 @@ if ('undefined' != typeof require) {
   ms = require('../');
 }
 
-// strings
+// Default lang strings
 
 describe('ms(string)', function(){
   it('should preserve ms', function () {
@@ -52,7 +52,7 @@ describe('ms(string)', function(){
   });
 })
 
-// numbers
+// Default lang numbers
 
 describe('ms(number)', function(){
   it('should support milliseconds', function(){
@@ -81,5 +81,37 @@ describe('ms(number)', function(){
     expect(ms(24 * 60 * 60 * 1000)).to.be('1 day');
     expect(ms(24 * 60 * 60 * 1500)).to.be('1.5 days');
     expect(ms(24 * 60 * 60 * 10000)).to.be('10 days');
+  })
+})
+
+// pt-br lang numbers
+
+describe('ms(number)', function(){
+  it('deve suportar milisegundos', function(){
+    expect(ms(500, 'pt-br')).to.be('500 ms');
+  })
+
+  it('deve suportar segundos', function(){
+    expect(ms(1000,'pt-br')).to.be('1 segundo');
+    expect(ms(1500,'pt-br')).to.be('1.5 segundos');
+    expect(ms(10000,'pt-br')).to.be('10 segundos');
+  })
+
+  it('deve suportar minutos', function(){
+    expect(ms(60 * 1000,'pt-br')).to.be('1 minuto');
+    expect(ms(60 * 1500,'pt-br')).to.be('1.5 minutos');
+    expect(ms(60 * 10000,'pt-br')).to.be('10 minutos');
+  })
+
+  it('deve suportar horas', function(){
+    expect(ms(60 * 60 * 1000,'pt-br')).to.be('1 hora');
+    expect(ms(60 * 60 * 1500,'pt-br')).to.be('1.5 horas');
+    expect(ms(60 * 60 * 10000,'pt-br')).to.be('10 horas');
+  })
+
+  it('deve suportar dias', function(){
+    expect(ms(24 * 60 * 60 * 1000,'pt-br')).to.be('1 dia');
+    expect(ms(24 * 60 * 60 * 1500,'pt-br')).to.be('1.5 dias');
+    expect(ms(24 * 60 * 60 * 10000,'pt-br')).to.be('10 dias');
   })
 })

@@ -1,7 +1,10 @@
 {
     "name": "ms"
-  , "version": "0.3.0"
+  , "version": "0.4.0"
   , "description": "Tiny ms conversion utility"
+  , "contributors": [ 
+       { "name": "Caio Ribeiro Pereira", "email": "caio.ribeiro.pereira@gmail.com" }
+    ]
   , "main": "./index"
   , "devDependencies": {
         "mocha": "*"
