@@ -1,4 +1,10 @@
+0.4.0 / 2012-09-13
+==================
 
+  * Multilanguage support [caio-ribeiro-pereira]
+  * add pt-br language [caio-ribeiro-pereira]
+  * add en language (default) [caio-ribeiro-pereira]
+  
 0.3.0 / 2012-09-07
 ==================
 
