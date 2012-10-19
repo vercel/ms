@@ -61,25 +61,25 @@ describe('ms(number)', function(){
 
   it('should support seconds', function(){
     expect(ms(1000)).to.be('1 second');
-    expect(ms(1500)).to.be('1.5 seconds');
     expect(ms(10000)).to.be('10 seconds');
   })
 
   it('should support minutes', function(){
     expect(ms(60 * 1000)).to.be('1 minute');
-    expect(ms(60 * 1500)).to.be('1.5 minutes');
     expect(ms(60 * 10000)).to.be('10 minutes');
   })
 
   it('should support hours', function(){
     expect(ms(60 * 60 * 1000)).to.be('1 hour');
-    expect(ms(60 * 60 * 1500)).to.be('1.5 hours');
     expect(ms(60 * 60 * 10000)).to.be('10 hours');
   })
 
   it('should support days', function(){
     expect(ms(24 * 60 * 60 * 1000)).to.be('1 day');
-    expect(ms(24 * 60 * 60 * 1500)).to.be('1.5 days');
     expect(ms(24 * 60 * 60 * 10000)).to.be('10 days');
+  })
+
+  it('should round', function(){
+    expect(ms(234234234)).to.be('3 days');
   })
 })
