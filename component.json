@@ -1,6 +1,7 @@
 {
   "name": "ms",
   "repo": "guille/ms.js",
+  "version": "0.4.0",
   "description": "ms parsing / formatting",
   "keywords": ["ms", "parse", "format"],
   "scripts": ["index.js"]
