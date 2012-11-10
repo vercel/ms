@@ -1,4 +1,11 @@
 
+0.5.0 / 2012-11-09
+==================
+
+  * add short formatting as default and .long option
+  * add .license property to component.json
+  * add version to component.json
+
 0.4.0 / 2012-10-22
 ==================
 
