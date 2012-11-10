@@ -10,9 +10,15 @@ ms('100')     // 100
 ```
 
 ```js
-ms(60000)             // "1 minute"
-ms(2 * 60000)         // "2 minutes"
-ms(ms('10 hours'))    // "10 hours"
+ms(60000)             // "1m"
+ms(2 * 60000)         // "2m"
+ms(ms('10 hours'))    // "10h"
+```
+
+```js
+ms(60000, { long: true })             // "1 minute"
+ms(2 * 60000, { long: true })         // "2 minutes"
+ms(ms('10 hours', { long: true }))    // "10 hours"
 ```
 
 - Node/Browser compatible. Published as `ms` in NPM.
