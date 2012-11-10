@@ -11,15 +11,23 @@ var d = h * 24;
 /**
  * Parse or format the given `val`.
  *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
  * @param {String|Number} val
+ * @param {Object} options
  * @return {String|Number}
  * @api public
  */
 
-module.exports = function(val){
+module.exports = function(val, options){
+  options = options || {};
   if ('string' == typeof val) return parse(val);
-  return format(val);
-}
+  return options.long
+    ? long(val)
+    : short(val);
+};
 
 /**
  * Parse the given `str` and return milliseconds.
@@ -61,14 +69,30 @@ function parse(str) {
 }
 
 /**
- * Format the given `ms`.
+ * Short format for `ms`.
  *
  * @param {Number} ms
  * @return {String}
- * @api public
+ * @api private
  */
 
-function format(ms) {
+function short(ms) {
+  if (ms >= d) return Math.round(ms / d) + 'd';
+  if (ms >= h) return Math.round(ms / h) + 'h';
+  if (ms >= m) return Math.round(ms / m) + 'm';
+  if (ms >= s) return Math.round(ms / s) + 's';
+  return ms + 'ms';
+}
+
+/**
+ * Long format for `ms`.
+ *
+ * @param {Number} ms
+ * @return {String}
+ * @api private
+ */
+
+function long(ms) {
   if (ms == d) return Math.round(ms / d) + ' day';
   if (ms > d) return Math.round(ms / d) + ' days';
   if (ms == h) return Math.round(ms / h) + ' hour';
