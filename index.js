@@ -1,4 +1,3 @@
-
 /**
  * Helpers.
  */
@@ -7,6 +6,7 @@ var s = 1000;
 var m = s * 60;
 var h = m * 60;
 var d = h * 24;
+var y = d * 365.25;
 
 /**
  * Parse or format the given `val`.
@@ -46,23 +46,23 @@ function parse(str) {
     case 'years':
     case 'year':
     case 'y':
-      return n * 31557600000;
+      return n * y;
     case 'days':
     case 'day':
     case 'd':
-      return n * 86400000;
+      return n * d;
     case 'hours':
     case 'hour':
     case 'h':
-      return n * 3600000;
+      return n * h;
     case 'minutes':
     case 'minute':
     case 'm':
-      return n * 60000;
+      return n * m;
     case 'seconds':
     case 'second':
     case 's':
-      return n * 1000;
+      return n * s;
     case 'ms':
       return n;
   }
