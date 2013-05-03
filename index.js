@@ -7,6 +7,7 @@ var m = s * 60;
 var h = m * 60;
 var d = h * 24;
 var y = d * 365.25;
+var order = ['s','m','h','d','y'];
 
 /**
  * Parse or format the given `val`.
@@ -38,6 +39,11 @@ module.exports = function(val, options){
  */
 
 function parse(str) {
+  var segments = str.split(':');
+  if(segments.length > 1) {
+    str = segments.map(function(t,i) {
+      return t + (order[segments.length-i - 1] || ':')}).join('');
+  }
   var match = /^((?:\d+)?\.?\d+) *(ms|seconds?|s|minutes?|m|hours?|h|days?|d|years?|y)?$/i.exec(str);
   if (!match) return;
   var n = parseFloat(match[1]);
