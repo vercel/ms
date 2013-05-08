@@ -1,11 +1,16 @@
 {
-    "name": "ms"
-  , "version": "0.3.0"
-  , "description": "Tiny ms conversion utility"
-  , "main": "./index"
-  , "devDependencies": {
-        "mocha": "*"
-      , "expect.js": "*"
-      , "serve": "*"
+  "name": "ms",
+  "version": "0.6.0",
+  "description": "Tiny ms conversion utility",
+  "main": "./index",
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": "*",
+    "serve": "*"
+  },
+  "component": {
+    "scripts": {
+      "ms/index.js": "index.js"
     }
+  }
 }
