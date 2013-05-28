@@ -2,6 +2,10 @@
   "name": "ms",
   "version": "0.6.1",
   "description": "Tiny ms conversion utility",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/guille/ms.js.git"
+  },
   "main": "./index",
   "devDependencies": {
     "mocha": "*",
