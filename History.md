@@ -1,4 +1,9 @@
 
+0.6.2 / 2013-12-05
+==================
+
+ * Adding repository section to package.json to suppress warning from NPM.
+
 0.6.1 / 2013-05-10
 ==================
 
