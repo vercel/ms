@@ -1,8 +1,10 @@
 # ms.js: miliseconds conversion utility
 
 ```js
+ms('2 days')  // 172800000
 ms('1d')      // 86400000
 ms('10h')     // 36000000
+ms('2.5 hrs') // 9000000
 ms('2h')      // 7200000
 ms('1m')      // 60000
 ms('5s')      // 5000
@@ -21,7 +23,7 @@ ms(2 * 60000, { long: true })         // "2 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
-- Node/Browser compatible. Published as `ms` in NPM.
+- Node/Browser compatible. Published as [`ms`](https://www.npmjs.org/package/ms) in [NPM](nodejs.org/download).
 - If a number is supplied to `ms`, a string with a unit is returned.
 - If a string that contains the number is supplied, it returns it as
 a number (e.g: it returns `100` for `'100'`).
