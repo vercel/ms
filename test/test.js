@@ -39,6 +39,10 @@ describe('ms(string)', function(){
     expect(ms('1.5h')).to.be(5400000);
   });
 
+  it('should work with multiple spaces', function () {
+    expect(ms('1   s')).to.be(1000);
+  });
+
   it('should return NaN if invalid', function () {
     expect(isNaN(ms('☃'))).to.be(true);
   });
@@ -49,6 +53,38 @@ describe('ms(string)', function(){
 
   it('should work with numbers starting with .', function () {
     expect(ms('.5ms')).to.be(.5);
+  });
+})
+
+// long strings
+
+describe('ms(long string)', function(){
+  it('should convert milliseconds to ms', function () {
+    expect(ms('53 milliseconds')).to.be(53);
+  });
+
+  it('should convert msecs to ms', function () {
+    expect(ms('17 msecs')).to.be(17);
+  });
+
+  it('should convert sec to ms', function () {
+    expect(ms('1 sec')).to.be(1000);
+  });
+
+  it('should convert from min to ms', function () {
+    expect(ms('1 min')).to.be(60000);
+  });
+
+  it('should convert from hr to ms', function () {
+    expect(ms('1 hr')).to.be(3600000);
+  });
+
+  it('should convert days to ms', function () {
+    expect(ms('2 days')).to.be(172800000);
+  });
+
+  it('should work with decimals', function () {
+    expect(ms('1.5 hours')).to.be(5400000);
   });
 })
 
