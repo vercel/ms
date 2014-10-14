@@ -16,5 +16,8 @@
     "scripts": {
       "ms/index.js": "index.js"
     }
+  },
+  "spm": {
+    "main": "index.js"
   }
 }
