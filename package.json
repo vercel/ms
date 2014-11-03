@@ -1,6 +1,7 @@
 {
   "name": "ms",
   "version": "0.6.2",
+  "license": "MIT",
   "description": "Tiny ms conversion utility",
   "repository": {
     "type": "git",
