@@ -1,4 +1,11 @@
 
+0.7.0 / 2014-11-24
+==================
+
+ * add time abbreviations, updated tests and readme for the new units
+ * fix example in the readme.
+ * add LICENSE file
+
 0.6.2 / 2013-12-05
 ==================
 
