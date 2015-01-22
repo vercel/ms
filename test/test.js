@@ -155,3 +155,13 @@ describe('ms(number)', function(){
     expect(ms(234234234)).to.be('3d');
   })
 })
+
+describe('invalid inputs', function(){
+  it('should leave undefined unchanged', function(){
+    expect(ms(undefined)).to.be(undefined)
+  })
+
+  it('should leave null unchanged', function(){
+    expect(ms(null)).to.be(null)
+  })
+})
