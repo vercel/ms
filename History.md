@@ -1,4 +1,10 @@
 
+0.7.1 / 2015-04-20
+==================
+
+  * prevent extraordinary long inputs (@evilpacket)
+  * Fixed broken readme link
+
 0.7.0 / 2014-11-24
 ==================
 
