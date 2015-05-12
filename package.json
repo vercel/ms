@@ -2,6 +2,7 @@
   "name": "ms",
   "version": "0.7.1",
   "description": "Tiny ms conversion utility",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git://github.com/guille/ms.js.git"
