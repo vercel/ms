@@ -4,7 +4,7 @@
   "description": "Tiny ms conversion utility",
   "repository": {
     "type": "git",
-    "url": "git://github.com/guille/ms.js.git"
+    "url": "git://github.com/rauchg/ms.js.git"
   },
   "main": "./index",
   "devDependencies": {
