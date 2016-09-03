@@ -1,4 +1,6 @@
-# ms.js: miliseconds conversion utility
+# ms
+
+Use this package to easily convert various time formats to milliseconds. Here are a few examples:
 
 ```js
 ms('2 days')  // 172800000
