@@ -2,7 +2,7 @@
   "name": "ms",
   "version": "0.7.1",
   "description": "Tiny ms conversion utility",
-  "repository": "zeit/ms",
+  "repository": "zeit/ms.js",
   "main": "./index",
   "license": "MIT",
   "devDependencies": {
