@@ -33,12 +33,12 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ## Features
 
-- Works both in node and in the browser.
+- Works both in [node](https://nodejs.org) and in the browser.
 - If a number is supplied to `ms`, a string with a unit is returned.
 - If a string that contains the number is supplied, it returns it as a number (e.g.: it returns `100` for `'100'`).
 - If you pass a string with a number and a valid unit, the number of equivalent ms is returned.
 
-## Contribute
+## Caught a bug?
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 2. Link the package to the global module directory: `npm link`
