@@ -4,6 +4,9 @@
   "description": "Tiny ms conversion utility",
   "repository": "zeit/ms.js",
   "main": "./index",
+  "files": [
+    "index"
+  ],
   "license": "MIT",
   "devDependencies": {
     "mocha": "^3.0.2",
