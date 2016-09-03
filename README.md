@@ -23,7 +23,7 @@ ms(2 * 60000, { long: true })         // "2 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
-- Node/Browser compatible. Published as [`ms`](https://www.npmjs.org/package/ms) in [NPM](http://nodejs.org/download).
+- Node/Browser compatible. Published as [`ms`](https://www.npmjs.org/package/ms) in [npm](http://nodejs.org/download).
 - If a number is supplied to `ms`, a string with a unit is returned.
 - If a string that contains the number is supplied, it returns it as
 a number (e.g: it returns `100` for `'100'`).
@@ -35,3 +35,5 @@ equivalent ms is returned.
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
 2. Link the package to the global module directory: `npm link`
 3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `npm link ms`. Instead of the default one from npm, node will now use your clone of ms!
+
+As always, you can run the tests using: `npm test`
