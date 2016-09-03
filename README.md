@@ -30,6 +30,8 @@ a number (e.g: it returns `100` for `'100'`).
 - If you pass a string with a number and a valid unit, the number of
 equivalent ms is returned.
 
-## License
+## Contribute
 
-MIT
+1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
+2. Link the package to the global module directory: `npm link`
+3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `npm link ms`. Instead of the default one from npm, node will now use your clone of ms!
