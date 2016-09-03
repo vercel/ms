@@ -23,6 +23,7 @@ var y = d * 365.25;
 
 module.exports = function(val, options){
   options = options || {};
+  if (!val) return val;
   if ('string' == typeof val) return parse(val);
   return options['long']
     ? fmtLong(val)
