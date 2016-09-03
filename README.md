@@ -1,6 +1,8 @@
 # ms
 
-Use this package to easily convert various time formats to milliseconds. Here are a few examples:
+Use this package to easily convert various time formats to milliseconds.
+
+## Examples
 
 ```js
 ms('2 days')  // 172800000
@@ -13,11 +15,15 @@ ms('5s')      // 5000
 ms('100')     // 100
 ```
 
+### Convert from milliseconds
+
 ```js
 ms(60000)             // "1m"
 ms(2 * 60000)         // "2m"
 ms(ms('10 hours'))    // "10h"
 ```
+
+### Time format written-out
 
 ```js
 ms(60000, { long: true })             // "1 minute"
@@ -25,12 +31,12 @@ ms(2 * 60000, { long: true })         // "2 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
-- Node/Browser compatible. Published as [`ms`](https://www.npmjs.org/package/ms) in [npm](http://nodejs.org/download).
+## Features
+
+- Works both in node and in the browser.
 - If a number is supplied to `ms`, a string with a unit is returned.
-- If a string that contains the number is supplied, it returns it as
-a number (e.g: it returns `100` for `'100'`).
-- If you pass a string with a number and a valid unit, the number of
-equivalent ms is returned.
+- If a string that contains the number is supplied, it returns it as a number (e.g.: it returns `100` for `'100'`).
+- If you pass a string with a number and a valid unit, the number of equivalent ms is returned.
 
 ## Contribute
 
