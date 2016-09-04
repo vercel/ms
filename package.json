@@ -5,7 +5,7 @@
   "repository": "zeit/ms",
   "main": "./index",
   "files": [
-    "index"
+    "index.js"
   ],
   "scripts": {
     "test": "mocha test/index.js",
