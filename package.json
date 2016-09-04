@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "npm run test-node && npm run test-browser",
-    "test-node": "mocha test/test.js",
+    "test-node": "mocha test/index.js",
     "test-browser": "serve ./test"
   },
   "license": "MIT",
