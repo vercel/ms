@@ -6,7 +6,9 @@ var s = 1000;
 var m = s * 60;
 var h = m * 60;
 var d = h * 24;
+var w = d * 7;
 var y = d * 365.25;
+var separators = [' ', '.', ','];
 
 /**
  * Parse or format the given `val`.
@@ -23,11 +25,66 @@ var y = d * 365.25;
 
 module.exports = function(val, options){
   options = options || {};
-  if ('string' == typeof val) return parse(val);
+  if ('string' === typeof val) return parse(val);
   return options['long']
     ? fmtLong(val)
     : fmtShort(val);
 };
+
+/**
+ * Parse the given `str` and return milliseconds. Can contain multiple units.
+ *
+ * @param {String} str
+ * @return {Number}
+ * @api private
+ */
+
+function parse(str) {
+  var units = tokenize(str);
+  if (!units.length) { return; }
+
+  var ms = 0;
+  var parsed, i;
+  for (i = 0; i < units.length; i++) {
+    parsed = parseString(units[i]);
+    if ('undefined' === typeof parsed) { return; }
+    ms += parsed;
+  }
+  return ms;
+}
+
+/**
+ * Splits the given `str` into multiple unit/value tokens.
+ *
+ * @param {String} str
+ * @return {Array}
+ * @api private
+ */
+
+function tokenize(str) {
+  var units = [];
+  var buf = '';
+  var sawLetter = false;
+  var i, c;
+  for (i = 0; i < str.length; i++) {
+    c = str[i];
+    if (~separators.indexOf(c)) {
+      buf += c;
+    } else if (isNaN(c)) {
+      sawLetter = true;
+      buf += c;
+    } else {
+      if (sawLetter) {
+        units.push(buf.trim());
+        buf = '';
+      }
+      sawLetter = false;
+      buf += c;
+    }
+  }
+  if (buf.length) { units.push(buf.trim()); }
+  return units;
+}
 
 /**
  * Parse the given `str` and return milliseconds.
@@ -37,10 +94,10 @@ module.exports = function(val, options){
  * @api private
  */
 
-function parse(str) {
+function parseString(str) {
   str = '' + str;
   if (str.length > 10000) return;
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(str);
+  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(str);
   if (!match) return;
   var n = parseFloat(match[1]);
   var type = (match[2] || 'ms').toLowerCase();
@@ -51,6 +108,10 @@ function parse(str) {
     case 'yr':
     case 'y':
       return n * y;
+    case 'weeks':
+    case 'week':
+    case 'w':
+      return n * w;
     case 'days':
     case 'day':
     case 'd':

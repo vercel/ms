@@ -19,12 +19,16 @@ describe('ms(string)', function(){
     expect(ms('1m')).to.be(60000);
   });
 
-  it('should convert from h to ms', function () {
-    expect(ms('1h')).to.be(3600000);
+  it('should convert w to ms', function () {
+    expect(ms('2w')).to.be(1209600000);
   });
 
   it('should convert d to ms', function () {
     expect(ms('2d')).to.be(172800000);
+  });
+
+  it('should convert from h to ms', function () {
+    expect(ms('1h')).to.be(3600000);
   });
 
   it('should convert s to ms', function () {
@@ -41,6 +45,14 @@ describe('ms(string)', function(){
 
   it('should work with multiple spaces', function () {
     expect(ms('1   s')).to.be(1000);
+  });
+
+  it('should work with multiple units', function () {
+    expect(ms('1h1m32s')).to.be(3692000);
+  });
+
+  it('should work with multiple units with spaces', function () {
+    expect(ms('1 h 1 m 32 s')).to.be(3692000);
   });
 
   it('should return NaN if invalid', function () {
@@ -83,8 +95,16 @@ describe('ms(long string)', function(){
     expect(ms('2 days')).to.be(172800000);
   });
 
+  it('should convert weeks to ms', function () {
+    expect(ms('2 weeks')).to.be(1209600000);
+  });
+
   it('should work with decimals', function () {
     expect(ms('1.5 hours')).to.be(5400000);
+  });
+
+  it('should work with multiple units', function () {
+    expect(ms('1 hour 1 minute 32 seconds')).to.be(3692000);
   });
 })
 
