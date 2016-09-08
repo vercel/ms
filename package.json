@@ -21,5 +21,8 @@
     "scripts": {
       "ms/index.js": "index.js"
     }
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/_mocha ./test/* -R spec"
   }
 }
