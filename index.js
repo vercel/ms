@@ -17,16 +17,23 @@ var y = d * 365.25;
  *
  * @param {String|Number} val
  * @param {Object} options
+ * @throws {Error} throw an error if val is not a non-empty string or a number
  * @return {String|Number}
  * @api public
  */
 
 module.exports = function(val, options){
   options = options || {};
-  if ('string' == typeof val) return parse(val);
-  return options['long']
-    ? fmtLong(val)
-    : fmtShort(val);
+  var type = typeof val;
+  if ('string' === type && val.length > 0) {
+    return parse(val);
+  } else if ('number' === type && isNaN(val) === false) {
+    return options['long']
+      ? fmtLong(val)
+      : fmtShort(val);
+  } else {
+    throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val));
+  }
 };
 
 /**

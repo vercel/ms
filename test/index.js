@@ -11,6 +11,12 @@ if ('undefined' != typeof require) {
 // strings
 
 describe('ms(string)', function(){
+  it('should not throw an error', function() {
+    expect(function() {
+      ms('1m');
+    }).to.not.throwError();
+  });
+
   it('should preserve ms', function () {
     expect(ms('100')).to.be(100);
   });
@@ -59,6 +65,12 @@ describe('ms(string)', function(){
 // long strings
 
 describe('ms(long string)', function(){
+  it('should not throw an error', function() {
+    expect(function() {
+      ms('53 milliseconds');
+    }).to.not.throwError();
+  });
+
   it('should convert milliseconds to ms', function () {
     expect(ms('53 milliseconds')).to.be(53);
   });
@@ -91,6 +103,12 @@ describe('ms(long string)', function(){
 // numbers
 
 describe('ms(number, { long: true })', function(){
+  it('should not throw an error', function() {
+    expect(function() {
+      ms(500, { long: true });
+    }).to.not.throwError();
+  });
+
   it('should support milliseconds', function(){
     expect(ms(500, { long: true })).to.be('500 ms');
   })
@@ -127,6 +145,12 @@ describe('ms(number, { long: true })', function(){
 // numbers
 
 describe('ms(number)', function(){
+  it('should not throw an error', function() {
+    expect(function() {
+      ms(500);
+    }).to.not.throwError();
+  });
+
   it('should support milliseconds', function(){
     expect(ms(500)).to.be('500ms');
   })
@@ -155,3 +179,44 @@ describe('ms(number)', function(){
     expect(ms(234234234)).to.be('3d');
   })
 })
+
+
+// invalid inputs
+
+describe('ms(invalid inputs)', function() {
+  it('should throw an error, when ms("")', function() {
+    expect(function() {
+      ms('');
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms(undefined)', function() {
+    expect(function() {
+      ms(undefined);
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms(null)', function() {
+    expect(function() {
+      ms(null);
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms([])', function() {
+    expect(function() {
+      ms([]);
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms({})', function() {
+    expect(function() {
+      ms({});
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms(NaN)', function() {
+    expect(function() {
+      ms(NaN);
+    }).to.throwError();
+  });
+});
