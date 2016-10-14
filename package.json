@@ -8,18 +8,26 @@
     "index.js"
   ],
   "scripts": {
-    "test": "mocha test/index.js",
+    "test": "xo && mocha test/index.js",
     "test-browser": "serve ./test"
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^3.0.2",
     "expect.js": "^0.3.1",
-    "serve": "^1.4.0"
+    "mocha": "^3.0.2",
+    "serve": "^1.4.0",
+    "xo": "^0.17.0"
   },
   "component": {
     "scripts": {
       "ms/index.js": "index.js"
     }
+  },
+  "xo": {
+    "space": true,
+    "semicolon": false,
+    "envs": [
+      "mocha"
+    ]
   }
 }
