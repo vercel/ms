@@ -28,6 +28,9 @@
     "semicolon": false,
     "envs": [
       "mocha"
-    ]
+    ],
+    "rules": {
+      "complexity": 0
+    }
   }
 }
