@@ -60,6 +60,10 @@ describe('ms(string)', function () {
   it('should work with numbers starting with .', function () {
     expect(ms('.5ms')).to.be(0.5)
   })
+
+  it('should work with numbers starting with -', function () {
+    expect(ms('-5ms')).to.be(-5)
+  })
 })
 
 // long strings
@@ -148,6 +152,11 @@ describe('ms(number)', function () {
   it('should not throw an error', function () {
     expect(function () {
       ms(500)
+    }).to.not.throwError()
+  })
+  it('should support negative numbers', function () {
+    expect(function () {
+      ms(-500)
     }).to.not.throwError()
   })
 
