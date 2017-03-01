@@ -15,7 +15,7 @@
   "devDependencies": {
     "expect.js": "^0.3.1",
     "mocha": "^3.0.2",
-    "serve": "^3.1.0",
+    "serve": "^4.0.0",
     "xo": "^0.17.0"
   },
   "component": {
