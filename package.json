@@ -16,7 +16,7 @@
     "expect.js": "0.3.1",
     "mocha": "3.0.2",
     "serve": "5.0.3",
-    "xo": "0.17.0"
+    "xo": "0.18.0"
   },
   "component": {
     "scripts": {
