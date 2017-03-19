@@ -10,7 +10,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "lint": "eslint lib/* bin/*",
-    "test": "mocha test.js"
+    "test": "mocha tests.js"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
