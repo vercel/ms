@@ -27,11 +27,6 @@
       "git add"
     ]
   },
-  "component": {
-    "scripts": {
-      "ms/index.js": "index.js"
-    }
-  },
   "license": "MIT",
   "devDependencies": {
     "eslint": "3.18.0",
