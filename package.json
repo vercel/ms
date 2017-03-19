@@ -8,7 +8,7 @@
     "index.js"
   ],
   "scripts": {
-    "test": "xo && mocha test/index.js",
+    "test": "mocha test/index.js",
     "test-browser": "serve ./test"
   },
   "license": "MIT",
@@ -16,21 +16,10 @@
     "expect.js": "0.3.1",
     "mocha": "3.0.2",
     "serve": "5.0.4",
-    "xo": "0.18.0"
   },
   "component": {
     "scripts": {
       "ms/index.js": "index.js"
-    }
-  },
-  "xo": {
-    "space": true,
-    "semicolon": false,
-    "envs": [
-      "mocha"
-    ],
-    "rules": {
-      "complexity": 0
     }
   }
 }
