@@ -30,7 +30,7 @@
   "devDependencies": {
     "eslint": "3.18.0",
     "expect.js": "0.3.1",
-    "husky": "0.13.2",
+    "husky": "0.13.3",
     "lint-staged": "3.4.0",
     "mocha": "3.0.2"
   }
