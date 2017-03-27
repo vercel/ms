@@ -17,11 +17,14 @@ ms('1m')      // 60000
 ms('5s')      // 5000
 ms('1y')      // 31557600000
 ms('100')     // 100
+ms('23μs')    // 0.023
+ms('386ns')   // 0.000386
 ```
 
 ### Convert from milliseconds
 
 ```js
+ms(2e-2)              // "20μs"
 ms(60000)             // "1m"
 ms(2 * 60000)         // "2m"
 ms(ms('10 hours'))    // "10h"
@@ -30,6 +33,7 @@ ms(ms('10 hours'))    // "10h"
 ### Time format written-out
 
 ```js
+ms(2e-2, { long: true })              // "20 microseconds"
 ms(60000, { long: true })             // "1 minute"
 ms(2 * 60000, { long: true })         // "2 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"

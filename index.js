@@ -2,6 +2,8 @@
  * Helpers.
  */
 
+var ns = 1e-6;
+var μs = 1e-3;
 var s = 1000;
 var m = s * 60;
 var h = m * 60;
@@ -49,7 +51,7 @@ function parse(str) {
   if (str.length > 10000) {
     return;
   }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
+  var match = /^((?:\d+)?\.?\d+) *(nanoseconds?|nanos?|nsecs?|ns|microseconds?|micros?|μs|milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
     str
   );
   if (!match) {
@@ -92,6 +94,20 @@ function parse(str) {
     case 'msec':
     case 'ms':
       return n;
+    case 'microseconds':
+    case 'microsecond':
+    case 'micros':
+    case 'micro':
+    case 'μs':
+      return n * μs;
+    case 'nanoseconds':
+    case 'nanosecond':
+    case 'nanos':
+    case 'nano':
+    case 'nsecs':
+    case 'nsec':
+    case 'ns':
+      return n * ns;
     default:
       return undefined;
   }
@@ -118,7 +134,14 @@ function fmtShort(ms) {
   if (ms >= s) {
     return Math.round(ms / s) + 's';
   }
-  return ms + 'ms';
+  if (ms >= 1) {
+    return ms + 'ms';
+  }
+  if (ms >= μs) {
+    return Math.round(ms / μs) + 'μs';
+  }
+
+  return Math.round(ms / ns) + 'ns';
 }
 
 /**
@@ -134,7 +157,9 @@ function fmtLong(ms) {
     plural(ms, h, 'hour') ||
     plural(ms, m, 'minute') ||
     plural(ms, s, 'second') ||
-    ms + ' ms';
+    (ms < 1 ? undefined : ms + ' ms') || // should probably be "plural(ms, 1, 'millisecond') ||"
+    plural(ms, μs, 'microsecond') ||
+    ms / ns + ' ns';
 }
 
 /**

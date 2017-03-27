@@ -41,6 +41,14 @@ describe('ms(string)', function() {
     expect(ms('100ms')).to.be(100);
   });
 
+  it('should convert μs to ms', function() {
+    expect(ms('1μs')).to.be(0.001);
+  });
+
+  it('should convert ns to ms', function() {
+    expect(ms('1ns')).to.be(0.000001);
+  });
+
   it('should work with decimals', function() {
     expect(ms('1.5h')).to.be(5400000);
   });
@@ -69,6 +77,14 @@ describe('ms(long string)', function() {
     expect(function() {
       ms('53 milliseconds');
     }).to.not.throwError();
+  });
+
+  it('should convert nanoseconds to ms', function() {
+    expect(ms('42 nanoseconds')).to.be(4.2e-5);
+  });
+
+  it('should convert microseconds to ms', function() {
+    expect(ms('66 microseconds')).to.be(0.066);
   });
 
   it('should convert milliseconds to ms', function() {
@@ -107,6 +123,16 @@ describe('ms(number, { long: true })', function() {
     expect(function() {
       ms(500, { long: true });
     }).to.not.throwError();
+  });
+
+  it('should support nanoseconds', function() {
+    expect(ms(998e-6, { long: true })).to.be('998 ns');
+  });
+
+  it('should support microseconds', function() {
+    expect(ms(1e-3, { long: true })).to.be('1 microsecond');
+    expect(ms(12e-4, { long: true })).to.be('1 microsecond');
+    expect(ms(10e-3, { long: true })).to.be('10 microseconds');
   });
 
   it('should support milliseconds', function() {
@@ -149,6 +175,14 @@ describe('ms(number)', function() {
     expect(function() {
       ms(500);
     }).to.not.throwError();
+  });
+
+  it('should support microseconds', function() {
+    expect(ms(13e-3)).to.be('13μs');
+  });
+
+  it('should support nanoseconds', function() {
+    expect(ms(500e-6)).to.be('500ns');
   });
 
   it('should support milliseconds', function() {
