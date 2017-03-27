@@ -10,9 +10,9 @@ describe('format(number, { long: true })', () => {
   });
 
   it('should support milliseconds', () => {
-    expect(format(500, { long: true })).toBe('500 ms');
+    expect(format(500, { long: true })).toBe('500 milliseconds');
 
-    expect(format(-500, { long: true })).toBe('-500 ms');
+    expect(format(-500, { long: true })).toBe('-500 milliseconds');
   });
 
   it('should support seconds', () => {

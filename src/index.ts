@@ -1,4 +1,6 @@
 // Helpers.
+const ns = 1e-6;
+const μs = 1e-3;
 const s = 1000;
 const m = s * 60;
 const h = m * 60;
@@ -37,7 +39,19 @@ type Unit =
   | 'Millisecond'
   | 'Msecs'
   | 'Msec'
-  | 'Ms';
+  | 'Ms'
+  | 'microseconds'
+  | 'microsecond'
+  | 'micros'
+  | 'micro'
+  | 'μs'
+  | 'nanoseconds'
+  | 'nanosecond'
+  | 'nanos'
+  | 'nano'
+  | 'nsecs'
+  | 'nsec'
+  | 'ns';
 
 type UnitAnyCase = Unit | Uppercase<Unit> | Lowercase<Unit>;
 
@@ -92,7 +106,7 @@ export function parse(str: string): number {
     );
   }
   const match =
-    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>nanoseconds?|nanos?|nsecs?|ns|microseconds?|micros?|μs|milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
   // Named capture groups need to be manually typed today.
@@ -142,6 +156,20 @@ export function parse(str: string): number {
     case 'msec':
     case 'ms':
       return n;
+    case 'microseconds':
+    case 'microsecond':
+    case 'micros':
+    case 'micro':
+    case 'μs':
+      return n * μs;
+    case 'nanoseconds':
+    case 'nanosecond':
+    case 'nanos':
+    case 'nano':
+    case 'nsecs':
+    case 'nsec':
+    case 'ns':
+      return n * ns;
     default:
       // This should never occur.
       throw new Error(
@@ -181,7 +209,13 @@ function fmtShort(ms: number): StringValue {
   if (msAbs >= s) {
     return `${Math.round(ms / s)}s`;
   }
-  return `${ms}ms`;
+  if (msAbs >= 1) {
+    return `${ms}ms`;
+  }
+  if (msAbs >= μs) {
+    return `${Math.round(ms / μs)}μs`;
+  }
+  return `${Math.round(ms / ns)}ns`;
 }
 
 /**
@@ -201,7 +235,14 @@ function fmtLong(ms: number): StringValue {
   if (msAbs >= s) {
     return plural(ms, msAbs, s, 'second');
   }
-  return `${ms} ms`;
+  if (msAbs >= 1) {
+    return plural(ms, msAbs, 1, 'millisecond');
+  }
+  if (msAbs >= μs) {
+    return plural(ms, msAbs, μs, 'microsecond');
+  }
+
+  return plural(ms, msAbs, ns, 'nanosecond');
 }
 
 /**
