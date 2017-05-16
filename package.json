@@ -1,6 +1,6 @@
 {
   "name": "ms",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Tiny milisecond conversion utility",
   "repository": "zeit/ms",
   "main": "./index",
