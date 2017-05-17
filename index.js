@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Helpers.
  */
@@ -8,33 +10,38 @@ var h = m * 60;
 var d = h * 24;
 var y = d * 365.25;
 
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} [options]
- * @throws {Error} throw an error if val is not a non-empty string or a number
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function(val, options) {
-  options = options || {};
-  var type = typeof val;
-  if (type === 'string' && val.length > 0) {
-    return parse(val);
-  } else if (type === 'number' && isNaN(val) === false) {
-    return options.long ? fmtLong(val) : fmtShort(val);
-  }
-  throw new Error(
-    'val is not a non-empty string or a valid number. val=' +
-      JSON.stringify(val)
-  );
+var scales = {
+  years: y,
+  year: y,
+  yrs: y,
+  yr: y,
+  y: y,
+  days: d,
+  day: d,
+  d: d,
+  hours: h,
+  hour: h,
+  hrs: h,
+  hr: h,
+  h: h,
+  minutes: m,
+  minute: m,
+  mins: m,
+  min: m,
+  m: m,
+  seconds: s,
+  second: s,
+  secs: s,
+  sec: s,
+  s: s,
+  milliseconds: 1,
+  millisecond: 1,
+  msecs: 1,
+  msec: 1,
+  ms: 1
 };
+
+var splitExp = /\s*?(?=[a-z])/i;
 
 /**
  * Parse the given `str` and return milliseconds.
@@ -43,58 +50,27 @@ module.exports = function(val, options) {
  * @return {Number}
  * @api private
  */
-
 function parse(str) {
   str = String(str);
-  if (str.length > 100) {
+  var match = str.match(splitExp);
+  var numStr = str;
+  var scale = '';
+  if (match) {
+    var scalePos = match.index + match[0].length;
+    if (scalePos < numStr.length) {
+      scale = numStr.substr(scalePos).toLowerCase();
+      numStr = numStr.substr(0, scalePos);
+    }
+  }
+  var num = parseFloat(+numStr);
+  if (isNaN(num)) {
     return;
   }
-  var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
-    str
-  );
-  if (!match) {
+  scale = scale || 'ms';
+  if (!(scale in scales)) {
     return;
   }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
+  return num * scales[scale];
 }
 
 /**
@@ -130,11 +106,13 @@ function fmtShort(ms) {
  */
 
 function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
+  return (
+    plural(ms, d, 'day') ||
     plural(ms, h, 'hour') ||
     plural(ms, m, 'minute') ||
     plural(ms, s, 'second') ||
-    ms + ' ms';
+    ms + ' ms'
+  );
 }
 
 /**
@@ -150,3 +128,31 @@ function plural(ms, n, name) {
   }
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
+
+/**
+ * Parse or format the given `val`.
+ *
+ * Options:
+ *
+ *  - `long` verbose formatting [false]
+ *
+ * @param {String|Number} val
+ * @param {Object} [options]
+ * @throws {Error} throw an error if val is not a non-empty string or a number
+ * @return {String|Number}
+ * @api public
+ */
+
+module.exports = function(val, options) {
+  options = options || {};
+  var type = typeof val;
+  if (type === 'string' && val.length > 0) {
+    return parse(val);
+  } else if (type === 'number' && isFinite(val)) {
+    return options.long ? fmtLong(val) : fmtShort(val);
+  }
+  throw new Error(
+    'val is not a non-empty string or a valid number. val=' +
+      JSON.stringify(val)
+  );
+};

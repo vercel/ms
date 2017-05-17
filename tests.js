@@ -218,4 +218,20 @@ describe('ms(invalid inputs)', function() {
       ms(NaN);
     }).to.throwError();
   });
+
+  it('should throw an error, when ms(Infinity)', function() {
+    expect(function() {
+      ms(Infinity);
+    }).to.throwError();
+  });
+});
+
+describe('performance on long strings', function() {
+  it('should break if 100 iterations on 1k string longer than 50ms', function() {
+    this.timeout(50);
+    var testVal = '1'.repeat(998) + 'Q';
+    for (var i = 0; i < 100; i++) {
+      expect(ms(testVal)).to.be.undefined;
+    }
+  });
 });
