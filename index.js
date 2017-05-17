@@ -1,14 +1,14 @@
-'use strict';
+'use strict'
 
 /**
  * Helpers.
  */
 
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var y = d * 365.25;
+var s = 1000
+var m = s * 60
+var h = m * 60
+var d = h * 24
+var y = d * 365.25
 
 var scales = {
   years: y,
@@ -39,9 +39,9 @@ var scales = {
   msecs: 1,
   msec: 1,
   ms: 1
-};
+}
 
-var splitExp = /\s*?(?=[a-z])/i;
+var splitExp = /\s*?(?=[a-z])/i
 
 /**
  * Parse the given `str` and return milliseconds.
@@ -50,27 +50,27 @@ var splitExp = /\s*?(?=[a-z])/i;
  * @return {Number}
  * @api private
  */
-function parse(str) {
-  str = String(str);
-  var match = str.match(splitExp);
-  var numStr = str;
-  var scale = '';
+function parse (str) {
+  str = String(str)
+  var match = str.match(splitExp)
+  var numStr = str
+  var scale = ''
   if (match) {
-    var scalePos = match.index + match[0].length;
+    var scalePos = match.index + match[0].length
     if (scalePos < numStr.length) {
-      scale = numStr.substr(scalePos).toLowerCase();
-      numStr = numStr.substr(0, scalePos);
+      scale = numStr.substr(scalePos).toLowerCase()
+      numStr = numStr.substr(0, scalePos)
     }
   }
-  var num = parseFloat(+numStr);
-  if (isNaN(num)) {
-    return;
+  var num = parseFloat(+numStr)
+  if (!isFinite(num)) {
+    return
   }
-  scale = scale || 'ms';
+  scale = scale || 'ms'
   if (!(scale in scales)) {
-    return;
+    return
   }
-  return num * scales[scale];
+  return num * scales[scale]
 }
 
 /**
@@ -81,20 +81,20 @@ function parse(str) {
  * @api private
  */
 
-function fmtShort(ms) {
+function fmtShort (ms) {
   if (ms >= d) {
-    return Math.round(ms / d) + 'd';
+    return Math.round(ms / d) + 'd'
   }
   if (ms >= h) {
-    return Math.round(ms / h) + 'h';
+    return Math.round(ms / h) + 'h'
   }
   if (ms >= m) {
-    return Math.round(ms / m) + 'm';
+    return Math.round(ms / m) + 'm'
   }
   if (ms >= s) {
-    return Math.round(ms / s) + 's';
+    return Math.round(ms / s) + 's'
   }
-  return ms + 'ms';
+  return ms + 'ms'
 }
 
 /**
@@ -105,28 +105,24 @@ function fmtShort(ms) {
  * @api private
  */
 
-function fmtLong(ms) {
+function fmtLong (ms) {
   return (
-    plural(ms, d, 'day') ||
-    plural(ms, h, 'hour') ||
-    plural(ms, m, 'minute') ||
-    plural(ms, s, 'second') ||
-    ms + ' ms'
-  );
+    plural(ms, d, 'day') || plural(ms, h, 'hour') || plural(ms, m, 'minute') || plural(ms, s, 'second') || ms + ' ms'
+  )
 }
 
 /**
  * Pluralization helper.
  */
 
-function plural(ms, n, name) {
+function plural (ms, n, name) {
   if (ms < n) {
-    return;
+    return
   }
   if (ms < n * 1.5) {
-    return Math.floor(ms / n) + ' ' + name;
+    return Math.floor(ms / n) + ' ' + name
   }
-  return Math.ceil(ms / n) + ' ' + name + 's';
+  return Math.ceil(ms / n) + ' ' + name + 's'
 }
 
 /**
@@ -143,16 +139,13 @@ function plural(ms, n, name) {
  * @api public
  */
 
-module.exports = function(val, options) {
-  options = options || {};
-  var type = typeof val;
+module.exports = function (val, options) {
+  options = options || {}
+  var type = typeof val
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    return parse(val)
   } else if (type === 'number' && isFinite(val)) {
-    return options.long ? fmtLong(val) : fmtShort(val);
+    return options.long ? fmtLong(val) : fmtShort(val)
   }
-  throw new Error(
-    'val is not a non-empty string or a valid number. val=' +
-      JSON.stringify(val)
-  );
-};
+  throw new Error('val is not a non-empty string or a valid number. val=' + JSON.stringify(val))
+}
