@@ -28,7 +28,7 @@ module.exports = function(val, options) {
   if (type === 'string' && val.length > 0) {
     return parse(val);
   } else if (type === 'number' && isNaN(val) === false) {
-    return options.long ? fmtLong(val) : fmtShort(val);
+    return options.long ? fmtLong(val) : options.toNumber ? val : fmtShort(val);
   }
   throw new Error(
     'val is not a non-empty string or a valid number. val=' +
@@ -130,11 +130,13 @@ function fmtShort(ms) {
  */
 
 function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
+  return (
+    plural(ms, d, 'day') ||
     plural(ms, h, 'hour') ||
     plural(ms, m, 'minute') ||
     plural(ms, s, 'second') ||
-    ms + ' ms';
+    ms + ' ms'
+  );
 }
 
 /**

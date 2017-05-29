@@ -180,6 +180,20 @@ describe('ms(number)', function() {
   });
 });
 
+// toNumber
+
+describe('ms(validInput, { toNumber: true })', function() {
+  it('should return unchanged ms number', function() {
+    expect(ms(5000, { toNumber: true })).to.be(5000);
+  });
+  it('should convert no unit string to ms number ', function() {
+    expect(ms('5000', { toNumber: true })).to.be(5000);
+  });
+  it('should convert string with time unit to ms number ', function() {
+    expect(ms('5s', { toNumber: true })).to.be(5000);
+  });
+});
+
 // invalid inputs
 
 describe('ms(invalid inputs)', function() {

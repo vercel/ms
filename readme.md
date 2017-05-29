@@ -35,6 +35,16 @@ ms(2 * 60000, { long: true })         // "2 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
+### Convert to milliseconds
+Use `toNumber` option to disable conversion from milliseconds numbers to human-readable strings.
+
+```js
+ms('5s', { toNumber: true })      // 5000
+ms('5000', { toNumber: true })    // 5000
+ms(5000, { toNumber: true })      // 5000
+```
+
+
 ## Features
 
 - Works both in [Node.js](https://nodejs.org) and in the browser
