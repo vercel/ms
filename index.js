@@ -10,38 +10,40 @@ var h = m * 60;
 var d = h * 24;
 var y = d * 365.25;
 
-var scales = {
-	years: y,
-	year: y,
-	yrs: y,
-	yr: y,
-	y: y,
-	days: d,
-	day: d,
-	d: d,
-	hours: h,
-	hour: h,
-	hrs: h,
-	hr: h,
-	h: h,
-	minutes: m,
-	minute: m,
-	mins: m,
-	min: m,
-	m: m,
-	seconds: s,
-	second: s,
-	secs: s,
-	sec: s,
-	s: s,
-	milliseconds: 1,
-	millisecond: 1,
-	msecs: 1,
-	msec: 1,
-	ms: 1
-};
+var scales = new Map(
+	[
+    ['years', y],
+    ['year', y],
+    ['yrs', y],
+    ['yr', y],
+    ['y', y],
+    ['days', d],
+    ['day', d],
+    ['d', d],
+    ['hours', h],
+    ['hour', h],
+    ['hrs', h],
+    ['hr', h],
+    ['h', h],
+    ['minutes', m],
+    ['minute', m],
+    ['mins', m],
+    ['min', m],
+    ['m', m],
+    ['seconds', s],
+    ['second', s],
+    ['secs', s],
+    ['sec', s],
+    ['s', s],
+    ['milliseconds', 1],
+    ['millisecond', 1],
+    ['msecs', 1],
+    ['msec', 1],
+    ['ms', 1]
+	]
+);
 
-var splitExp = /\s*?(?=[a-z])/i;
+var parseExp = /^((?:\d+)?\.?\d+)\s*(\w{0,12})?$/i;
 
 /**
  * Parse the given `str` and return milliseconds.
@@ -52,25 +54,16 @@ var splitExp = /\s*?(?=[a-z])/i;
  */
 function parse(str) {
 	str = String(str);
-	var match = str.match(splitExp);
-	var numStr = str;
-	var scale = '';
+	var match = str.match(parseExp);
 	if (match) {
-		var scalePos = match.index + match[0].length;
-		if (scalePos < numStr.length) {
-			scale = numStr.substr(scalePos).toLowerCase();
-			numStr = numStr.substr(0, scalePos);
+		var num = parseFloat(Number(match[1]));
+		if (isFinite(num)) {
+			var scale = scales.get((match[2] || 'ms').toLowerCase());
+			if (scale) {
+				return num * scale;
+			}
 		}
 	}
-	var num = parseFloat(Number(numStr));
-	if (!isFinite(num)) {
-		return;
-	}
-	scale = scale || 'ms';
-	if (!(scale in scales)) {
-		return;
-	}
-	return num * scales[scale];
 }
 
 /**
