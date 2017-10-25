@@ -219,3 +219,23 @@ describe('ms(invalid inputs)', function() {
     }).to.throwError();
   });
 });
+
+describe('ms(string, { from: Number })', function() {
+  it('should throw an error when options.from is true', function() {
+    expect(function() {
+      ms('1h', { from: true });
+    }).to.throwError();
+  });
+
+  it('should ignore options.from when it is not Number', function() {
+    expect(ms('1h', { from: '' })).to.be(3600000);
+    expect(ms('1h', { from: NaN })).to.be(3600000);
+  });
+
+  it('should add time to unix epoch time', function() {
+    expect(ms('1ms', { from: new Date(0) })).to.be(1);
+    expect(ms('1s', { from: new Date(0) })).to.be(1000);
+    expect(ms('1m', { from: new Date(0) })).to.be(60000);
+    expect(ms('1h', { from: new Date(0) })).to.be(3600000);
+  });
+});
