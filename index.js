@@ -26,7 +26,7 @@ module.exports = function(val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    return options.from ? calcFrom(val, options.from) : parse(val);
   } else if (type === 'number' && isNaN(val) === false) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
@@ -130,11 +130,13 @@ function fmtShort(ms) {
  */
 
 function fmtLong(ms) {
-  return plural(ms, d, 'day') ||
+  return (
+    plural(ms, d, 'day') ||
     plural(ms, h, 'hour') ||
     plural(ms, m, 'minute') ||
     plural(ms, s, 'second') ||
-    ms + ' ms';
+    ms + ' ms'
+  );
 }
 
 /**
@@ -149,4 +151,21 @@ function plural(ms, n, name) {
     return Math.floor(ms / n) + ' ' + name;
   }
   return Math.ceil(ms / n) + ' ' + name + 's';
+}
+
+/**
+ * Calculate the milliseconds for given date
+ * @param  {String} str
+ * @param  {Date} date
+ * @return {Number}
+ * @api private
+ */
+function calcFrom(str, date) {
+  if (new Date(date).toString() === 'Invalid Date' || date === true)
+    throw new Error(
+      'option.from is not a valid Date. options.from=' + JSON.stringify(date)
+    );
+  var ms = parse(str);
+
+  return new Date(date).getTime() + ms;
 }
