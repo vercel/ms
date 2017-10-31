@@ -100,6 +100,28 @@ describe('ms(long string)', function() {
   });
 });
 
+// colon separated strings
+
+describe('ms(colon separated string)', function() {
+  it('should not throw an error', function() {
+    expect(function() {
+      ms('07:55');
+    }).to.not.throwError();
+  });
+
+  it('should support hours and minutes', function() {
+    expect(ms('07:55')).to.be('7h55m');
+  });
+
+  it('should support hours, minutes and seconds', function() {
+    expect(ms('07:55:10')).to.be('7h55m10s');
+  });
+
+  it('should remove leading zeros', function() {
+    expect(ms('07:05:05')).to.be('7h5m5s');
+  });
+});
+
 // numbers
 
 describe('ms(number, { long: true })', function() {

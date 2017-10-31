@@ -7,6 +7,7 @@ var m = s * 60;
 var h = m * 60;
 var d = h * 24;
 var y = d * 365.25;
+var colonOrder = ['h', 'm', 's'];
 
 /**
  * Parse or format the given `val`.
@@ -48,6 +49,14 @@ function parse(str) {
   str = String(str);
   if (str.length > 100) {
     return;
+  }
+  var segments = str.split(':');
+  if (segments.length > 1 && segments.length < 4) {
+    return segments
+      .map(function (t, i) {
+        return parseInt(t) + colonOrder[i]
+      })
+      .join('');
   }
   var match = /^((?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|years?|yrs?|y)?$/i.exec(
     str
