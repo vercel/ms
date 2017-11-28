@@ -33,6 +33,10 @@ describe('ms(string)', function() {
     expect(ms('2d')).to.be(172800000);
   });
 
+  it('should convert w to ms', function() {
+    expect(ms('3w')).to.be(1814400000);
+  });
+
   it('should convert s to ms', function() {
     expect(ms('1s')).to.be(1000);
   });
