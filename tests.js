@@ -64,6 +64,12 @@ describe('ms(string)', function() {
   it('should work with numbers starting with .', function() {
     expect(ms('.5ms')).to.be(0.5);
   });
+
+  it('should work with numbers starting with -', function() {
+    expect(ms('-5')).to.be(-5);
+    expect(ms('-.5ms')).to.be(-0.5);
+    expect(ms('-0.5ms')).to.be(-0.5);
+  });
 });
 
 // long strings
