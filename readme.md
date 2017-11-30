@@ -17,6 +17,9 @@ ms('1m')      // 60000
 ms('5s')      // 5000
 ms('1y')      // 31557600000
 ms('100')     // 100
+ms('-3 days') // -259200000
+ms('-1h')     // -3600000
+ms('-200')    // -200
 ```
 
 ### Convert from Milliseconds
@@ -24,6 +27,7 @@ ms('100')     // 100
 ```js
 ms(60000)             // "1m"
 ms(2 * 60000)         // "2m"
+ms(-3 * 60000)        // "-3m"
 ms(ms('10 hours'))    // "10h"
 ```
 
@@ -32,6 +36,7 @@ ms(ms('10 hours'))    // "10h"
 ```js
 ms(60000, { long: true })             // "1 minute"
 ms(2 * 60000, { long: true })         // "2 minutes"
+ms(-3 * 60000, { long: true })        // "-3 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 

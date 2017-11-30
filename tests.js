@@ -65,10 +65,16 @@ describe('ms(string)', function() {
     expect(ms('.5ms')).to.be(0.5);
   });
 
-  it('should work with numbers starting with -', function() {
-    expect(ms('-5')).to.be(-5);
-    expect(ms('-.5ms')).to.be(-0.5);
-    expect(ms('-0.5ms')).to.be(-0.5);
+  it('should work with negative integers', function() {
+    expect(ms('-100ms')).to.be(-100);
+  });
+
+  it('should work with negative decimals', function() {
+    expect(ms('-1.5h')).to.be(-5400000);
+  });
+
+  it('should work with negative decimals starting with "."', function() {
+    expect(ms('-.5h')).to.be(-1800000);
   });
 });
 
@@ -108,6 +114,18 @@ describe('ms(long string)', function() {
   it('should work with decimals', function() {
     expect(ms('1.5 hours')).to.be(5400000);
   });
+
+  it('should work with negative integers', function() {
+    expect(ms('-100 milliseconds')).to.be(-100);
+  });
+
+  it('should work with negative decimals', function() {
+    expect(ms('-1.5 hours')).to.be(-5400000);
+  });
+
+  it('should work with negative decimals starting with "."', function() {
+    expect(ms('-.5 hr')).to.be(-1800000);
+  });
 });
 
 // numbers
@@ -121,34 +139,54 @@ describe('ms(number, { long: true })', function() {
 
   it('should support milliseconds', function() {
     expect(ms(500, { long: true })).to.be('500 ms');
+
+    expect(ms(-500, { long: true })).to.be('-500 ms');
   });
 
   it('should support seconds', function() {
     expect(ms(1000, { long: true })).to.be('1 second');
     expect(ms(1200, { long: true })).to.be('1 second');
     expect(ms(10000, { long: true })).to.be('10 seconds');
+
+    expect(ms(-1000, { long: true })).to.be('-1 second');
+    expect(ms(-1200, { long: true })).to.be('-1 second');
+    expect(ms(-10000, { long: true })).to.be('-10 seconds');
   });
 
   it('should support minutes', function() {
     expect(ms(60 * 1000, { long: true })).to.be('1 minute');
     expect(ms(60 * 1200, { long: true })).to.be('1 minute');
     expect(ms(60 * 10000, { long: true })).to.be('10 minutes');
+
+    expect(ms(-1 * 60 * 1000, { long: true })).to.be('-1 minute');
+    expect(ms(-1 * 60 * 1200, { long: true })).to.be('-1 minute');
+    expect(ms(-1 * 60 * 10000, { long: true })).to.be('-10 minutes');
   });
 
   it('should support hours', function() {
     expect(ms(60 * 60 * 1000, { long: true })).to.be('1 hour');
     expect(ms(60 * 60 * 1200, { long: true })).to.be('1 hour');
     expect(ms(60 * 60 * 10000, { long: true })).to.be('10 hours');
+
+    expect(ms(-1 * 60 * 60 * 1000, { long: true })).to.be('-1 hour');
+    expect(ms(-1 * 60 * 60 * 1200, { long: true })).to.be('-1 hour');
+    expect(ms(-1 * 60 * 60 * 10000, { long: true })).to.be('-10 hours');
   });
 
   it('should support days', function() {
     expect(ms(24 * 60 * 60 * 1000, { long: true })).to.be('1 day');
     expect(ms(24 * 60 * 60 * 1200, { long: true })).to.be('1 day');
     expect(ms(24 * 60 * 60 * 10000, { long: true })).to.be('10 days');
+
+    expect(ms(-1 * 24 * 60 * 60 * 1000, { long: true })).to.be('-1 day');
+    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: true })).to.be('-1 day');
+    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true })).to.be('-10 days');
   });
 
   it('should round', function() {
     expect(ms(234234234, { long: true })).to.be('3 days');
+
+    expect(ms(-234234234, { long: true })).to.be('-3 days');
   });
 });
 
@@ -163,30 +201,46 @@ describe('ms(number)', function() {
 
   it('should support milliseconds', function() {
     expect(ms(500)).to.be('500ms');
+
+    expect(ms(-500)).to.be('-500ms');
   });
 
   it('should support seconds', function() {
     expect(ms(1000)).to.be('1s');
     expect(ms(10000)).to.be('10s');
+
+    expect(ms(-1000)).to.be('-1s');
+    expect(ms(-10000)).to.be('-10s');
   });
 
   it('should support minutes', function() {
     expect(ms(60 * 1000)).to.be('1m');
     expect(ms(60 * 10000)).to.be('10m');
+
+    expect(ms(-1 * 60 * 1000)).to.be('-1m');
+    expect(ms(-1 * 60 * 10000)).to.be('-10m');
   });
 
   it('should support hours', function() {
     expect(ms(60 * 60 * 1000)).to.be('1h');
     expect(ms(60 * 60 * 10000)).to.be('10h');
+
+    expect(ms(-1 * 60 * 60 * 1000)).to.be('-1h');
+    expect(ms(-1 * 60 * 60 * 10000)).to.be('-10h');
   });
 
   it('should support days', function() {
     expect(ms(24 * 60 * 60 * 1000)).to.be('1d');
     expect(ms(24 * 60 * 60 * 10000)).to.be('10d');
+
+    expect(ms(-1 * 24 * 60 * 60 * 1000)).to.be('-1d');
+    expect(ms(-1 * 24 * 60 * 60 * 10000)).to.be('-10d');
   });
 
   it('should round', function() {
     expect(ms(234234234)).to.be('3d');
+
+    expect(ms(-234234234)).to.be('-3d');
   });
 });
 
