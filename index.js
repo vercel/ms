@@ -27,7 +27,7 @@ module.exports = function(val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    return options.from ? calcFrom(val, options.from) : parse(val);
   } else if (type === 'number' && isNaN(val) === false) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
@@ -159,4 +159,21 @@ function fmtLong(ms) {
 function plural(ms, msAbs, n, name) {
   var isPlural = msAbs >= n * 1.5;
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
+}
+
+/**
+ * Calculate the milliseconds for given date
+ * @param  {String} str
+ * @param  {Date} date
+ * @return {Number}
+ * @api private
+ */
+function calcFrom(str, date) {
+  if (new Date(date).toString() === 'Invalid Date' || date === true)
+    throw new Error(
+      'option.from is not a valid Date. options.from=' + JSON.stringify(date)
+    );
+  var ms = parse(str);
+
+  return new Date(date).getTime() + ms;
 }
