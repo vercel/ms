@@ -37,6 +37,8 @@ module.exports = function(val, options) {
   );
 };
 
+module.exports.default = module.exports;
+
 /**
  * Parse the given `str` and return milliseconds.
  *
