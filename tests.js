@@ -71,6 +71,7 @@ describe('ms(string)', function() {
 
   it('should work with negative decimals', function() {
     expect(ms('-1.5h')).to.be(-5400000);
+    expect(ms('-10.5h')).to.be(-37800000);
   });
 
   it('should work with negative decimals starting with "."', function() {
