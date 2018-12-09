@@ -27,7 +27,10 @@ module.exports = function(val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    return val
+      .replace(/([0-9])[ \t]+([^ \t])/g, (_, digit, char) => `${digit}${char}`)
+      .split(/[ \t]+/)
+      .map(val => parse(val)).reduce((a,b) => a + b);
   } else if (type === 'number' && isNaN(val) === false) {
     return options.long ? fmtLong(val) : fmtShort(val);
   }
