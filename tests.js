@@ -77,6 +77,18 @@ describe('ms(string)', function() {
   it('should work with negative decimals starting with "."', function() {
     expect(ms('-.5h')).to.be(-1800000);
   });
+
+  it('should work with an expression with multiple units', function() {
+    expect(ms('1h 24m 44s')).to.be(5084000); 
+  });
+
+  it('should work with an expression with multiple units - and allow spaces between digits and units', function() {
+    expect(ms('1 h 24 m  44s 771')).to.be(5084771); 
+  });
+
+  it('should handle trailing whitespace', function() {
+    expect(ms('1 h  ')).to.be(3600000); 
+  });
 });
 
 // long strings
