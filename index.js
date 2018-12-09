@@ -29,6 +29,7 @@ module.exports = function(val, options) {
   if (type === 'string' && val.length > 0) {
     return val
       .replace(/([0-9])[ \t]+([^ \t])/g, (_, digit, char) => `${digit}${char}`)
+      .trim()
       .split(/[ \t]+/)
       .map(val => parse(val)).reduce((a,b) => a + b);
   } else if (type === 'number' && isNaN(val) === false) {
