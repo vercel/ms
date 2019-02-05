@@ -283,4 +283,16 @@ describe('ms(invalid inputs)', function() {
       ms(NaN);
     }).to.throwError();
   });
+
+  it('should throw an error, when ms(Infinity)', function() {
+    expect(function() {
+      ms(Infinity);
+    }).to.throwError();
+  });
+
+  it('should throw an error, when ms(-Infinity)', function() {
+    expect(function() {
+      ms(-Infinity);
+    }).to.throwError();
+  });
 });
