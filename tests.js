@@ -55,6 +55,7 @@ describe('ms(string)', function() {
 
   it('should return NaN if invalid', function() {
     expect(isNaN(ms('☃'))).to.be(true);
+    expect(isNaN(ms('10-.5'))).to.be(true);
   });
 
   it('should be case-insensitive', function() {
