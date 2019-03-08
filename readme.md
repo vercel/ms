@@ -50,6 +50,7 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 ## Related Packages
 
 - [ms.macro](https://github.com/knpwrs/ms.macro) - Run `ms` as a macro at build-time.
+- [bytes](https://github.com/visionmedia/bytes.js) - Convert various bytes formats to number of bytes.
 
 ## Caught a Bug?
 
