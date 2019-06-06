@@ -22,7 +22,7 @@ bench('number -> string (short)')
   .run();
 
 bench('number -> string (long)')
-  .add('ms  ', () => ms(31557600000, { long: true }))
+  .add('ms  ', () => ms(31557600000, true))
   .run();
 
 bench('Negative :: string (short) -> number')
@@ -38,5 +38,5 @@ bench('Negative :: number -> string (short)')
   .run();
 
 bench('Negative :: number -> string (long)')
-  .add('ms  ', () => ms(-31557600000, { long: true }))
+  .add('ms  ', () => ms(-31557600000, true))
   .run();

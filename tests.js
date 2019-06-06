@@ -132,63 +132,62 @@ describe('ms(long string)', function() {
 
 // numbers
 
-describe('ms(number, { long: true })', function() {
+describe('ms(number, true)', function() {
   it('should not throw an error', function() {
     expect(function() {
-      ms(500, { long: true });
+      ms(500, true);
     }).to.not.throwError();
   });
 
   it('should support milliseconds', function() {
-    expect(ms(500, { long: true })).to.be('500 ms');
-
-    expect(ms(-500, { long: true })).to.be('-500 ms');
+    expect(ms(500, true)).to.be('500 ms');
+    expect(ms(-500, true)).to.be('-500 ms');
   });
 
   it('should support seconds', function() {
-    expect(ms(1000, { long: true })).to.be('1 second');
-    expect(ms(1200, { long: true })).to.be('1 second');
-    expect(ms(10000, { long: true })).to.be('10 seconds');
+    expect(ms(1000, true)).to.be('1 second');
+    expect(ms(1200, true)).to.be('1 second');
+    expect(ms(10000, true)).to.be('10 seconds');
 
-    expect(ms(-1000, { long: true })).to.be('-1 second');
-    expect(ms(-1200, { long: true })).to.be('-1 second');
-    expect(ms(-10000, { long: true })).to.be('-10 seconds');
+    expect(ms(-1000, true)).to.be('-1 second');
+    expect(ms(-1200, true)).to.be('-1 second');
+    expect(ms(-10000, true)).to.be('-10 seconds');
   });
 
   it('should support minutes', function() {
-    expect(ms(60 * 1000, { long: true })).to.be('1 minute');
-    expect(ms(60 * 1200, { long: true })).to.be('1 minute');
-    expect(ms(60 * 10000, { long: true })).to.be('10 minutes');
+    expect(ms(60 * 1000, true)).to.be('1 minute');
+    expect(ms(60 * 1200, true)).to.be('1 minute');
+    expect(ms(60 * 10000, true)).to.be('10 minutes');
 
-    expect(ms(-1 * 60 * 1000, { long: true })).to.be('-1 minute');
-    expect(ms(-1 * 60 * 1200, { long: true })).to.be('-1 minute');
-    expect(ms(-1 * 60 * 10000, { long: true })).to.be('-10 minutes');
+    expect(ms(-1 * 60 * 1000, true)).to.be('-1 minute');
+    expect(ms(-1 * 60 * 1200, true)).to.be('-1 minute');
+    expect(ms(-1 * 60 * 10000, true)).to.be('-10 minutes');
   });
 
   it('should support hours', function() {
-    expect(ms(60 * 60 * 1000, { long: true })).to.be('1 hour');
-    expect(ms(60 * 60 * 1200, { long: true })).to.be('1 hour');
-    expect(ms(60 * 60 * 10000, { long: true })).to.be('10 hours');
+    expect(ms(60 * 60 * 1000, true)).to.be('1 hour');
+    expect(ms(60 * 60 * 1200, true)).to.be('1 hour');
+    expect(ms(60 * 60 * 10000, true)).to.be('10 hours');
 
-    expect(ms(-1 * 60 * 60 * 1000, { long: true })).to.be('-1 hour');
-    expect(ms(-1 * 60 * 60 * 1200, { long: true })).to.be('-1 hour');
-    expect(ms(-1 * 60 * 60 * 10000, { long: true })).to.be('-10 hours');
+    expect(ms(-1 * 60 * 60 * 1000, true)).to.be('-1 hour');
+    expect(ms(-1 * 60 * 60 * 1200, true)).to.be('-1 hour');
+    expect(ms(-1 * 60 * 60 * 10000, true)).to.be('-10 hours');
   });
 
   it('should support days', function() {
-    expect(ms(24 * 60 * 60 * 1000, { long: true })).to.be('1 day');
-    expect(ms(24 * 60 * 60 * 1200, { long: true })).to.be('1 day');
-    expect(ms(24 * 60 * 60 * 10000, { long: true })).to.be('10 days');
+    expect(ms(24 * 60 * 60 * 1000, true)).to.be('1 day');
+    expect(ms(24 * 60 * 60 * 1200, true)).to.be('1 day');
+    expect(ms(24 * 60 * 60 * 10000, true)).to.be('10 days');
 
-    expect(ms(-1 * 24 * 60 * 60 * 1000, { long: true })).to.be('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: true })).to.be('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true })).to.be('-10 days');
+    expect(ms(-1 * 24 * 60 * 60 * 1000, true)).to.be('-1 day');
+    expect(ms(-1 * 24 * 60 * 60 * 1200, true)).to.be('-1 day');
+    expect(ms(-1 * 24 * 60 * 60 * 10000, true)).to.be('-10 days');
   });
 
   it('should round', function() {
-    expect(ms(234234234, { long: true })).to.be('3 days');
+    expect(ms(234234234, true)).to.be('3 days');
 
-    expect(ms(-234234234, { long: true })).to.be('-3 days');
+    expect(ms(-234234234, true)).to.be('-3 days');
   });
 });
 
