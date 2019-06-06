@@ -10,9 +10,12 @@
     "dist"
   ],
   "scripts": {
+    "bench": "node bench",
     "build": "bundt index.js",
-    "precommit": "lint-staged",
     "lint": "eslint *.js",
+    "prebench": "npm run build",
+    "precommit": "lint-staged",
+    "pretest": "npm run build",
     "test": "mocha tests.js"
   },
   "eslintConfig": {
@@ -34,6 +37,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "benchmark": "2.1.4",
     "bundt": "0.4.0",
     "eslint": "4.12.1",
     "expect.js": "0.3.1",

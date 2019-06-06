@@ -5,7 +5,7 @@
 
 if (typeof require !== 'undefined') {
   expect = require('expect.js');
-  ms = require('./');
+  ms = require('./dist');
 }
 
 // strings
