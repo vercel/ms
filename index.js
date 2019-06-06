@@ -23,7 +23,7 @@ var y = d * 365.25;
  * @api public
  */
 
-module.exports = function(val, options) {
+export default function(val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
@@ -35,7 +35,7 @@ module.exports = function(val, options) {
     'val is not a non-empty string or a valid number. val=' +
       JSON.stringify(val)
   );
-};
+}
 
 /**
  * Parse the given `str` and return milliseconds.

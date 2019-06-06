@@ -1,15 +1,18 @@
 {
   "name": "ms",
   "version": "2.1.2",
-  "description": "Tiny millisecond conversion utility",
   "repository": "zeit/ms",
-  "main": "./index",
+  "description": "Tiny millisecond conversion utility",
+  "unpkg": "dist/index.min.js",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
   "files": [
-    "index.js"
+    "dist"
   ],
   "scripts": {
+    "build": "bundt index.js",
     "precommit": "lint-staged",
-    "lint": "eslint lib/* bin/*",
+    "lint": "eslint *.js",
     "test": "mocha tests.js"
   },
   "eslintConfig": {
@@ -17,6 +20,9 @@
     "env": {
       "node": true,
       "es6": true
+    },
+    "parserOptions": {
+      "sourceType": "module"
     }
   },
   "lint-staged": {
@@ -28,6 +34,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "bundt": "0.4.0",
     "eslint": "4.12.1",
     "expect.js": "0.3.1",
     "husky": "0.14.3",
