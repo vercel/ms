@@ -34,10 +34,10 @@ ms(ms('10 hours'))    // "10h"
 ### Time Format Written-Out
 
 ```js
-ms(60000, { long: true })             // "1 minute"
-ms(2 * 60000, { long: true })         // "2 minutes"
-ms(-3 * 60000, { long: true })        // "-3 minutes"
-ms(ms('10 hours'), { long: true })    // "10 hours"
+ms(60000, true)             // "1 minute"
+ms(2 * 60000, true)         // "2 minutes"
+ms(-3 * 60000, true)        // "-3 minutes"
+ms(ms('10 hours'), true)    // "10 hours"
 ```
 
 ## Features
