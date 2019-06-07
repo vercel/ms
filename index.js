@@ -2,12 +2,13 @@
  * Helpers.
  */
 
-var s = 1000;
+var s = 1e3;
 var m = s * 60;
 var h = m * 60;
 var d = h * 24;
-var w = d * 7;
 var y = d * 365.25;
+
+var rgx = /^(-?(?:\d+)?\.?\d+) *([a-z]+)?$/;
 
 /**
  * Parse or format the given `val`.
@@ -25,7 +26,12 @@ export default function(val, toLong) {
     type = typeof val;
 
   if (type === 'string' && val.length > 0) {
-    return parse(val);
+    if ((fmt = val.length < 101 && val.toLowerCase().match(rgx))) {
+      if ((abs = parseFloat(fmt[1], 10))) {
+        return convert(abs, fmt[2]);
+      }
+    }
+    return abs;
   }
 
   if (type === 'number' && isFinite(val)) {
@@ -40,72 +46,54 @@ export default function(val, toLong) {
   }
 
   throw new Error(
-    'val is an empty string or a invalid number. val=' + JSON.stringify(val)
+    'val is an empty string or an invalid number. val=' + JSON.stringify(val)
   );
 }
 
 /**
- * Parse the given `str` and return milliseconds.
+ * Convert the `str` segments into milliseconds.
  *
- * @param {String} str
+ * @param {Array} arr  The RegExp matches
  * @return {Number}
  * @api private
  */
 
-function parse(str) {
-  if (str.length > 100) {
-    return;
-  }
-  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
-    str
-  );
-  if (!match) {
-    return;
-  }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
+function convert(num, type) {
   switch (type) {
     case 'years':
     case 'year':
     case 'yrs':
     case 'yr':
     case 'y':
-      return n * y;
+      return num * y;
     case 'weeks':
     case 'week':
     case 'w':
-      return n * w;
+      return num * d * 7;
     case 'days':
     case 'day':
     case 'd':
-      return n * d;
+      return num * d;
     case 'hours':
     case 'hour':
     case 'hrs':
     case 'hr':
     case 'h':
-      return n * h;
+      return num * h;
     case 'minutes':
     case 'minute':
     case 'mins':
     case 'min':
     case 'm':
-      return n * m;
+      return num * m;
     case 'seconds':
     case 'second':
     case 'secs':
     case 'sec':
     case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return;
+      return num * s;
   }
+  return num;
 }
 
 /**

@@ -26,6 +26,9 @@
     },
     "parserOptions": {
       "sourceType": "module"
+    },
+    "rules": {
+      "no-cond-assign": 0
     }
   },
   "lint-staged": {
