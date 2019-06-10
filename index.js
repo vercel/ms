@@ -2,12 +2,12 @@
  * Helpers.
  */
 
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var w = d * 7;
-var y = d * 365.25;
+const s = 1000;
+const m = s * 60;
+const h = m * 60;
+const d = h * 24;
+const w = d * 7;
+const y = d * 365.25;
 
 /**
  * Parse or format the given `val`.
@@ -56,50 +56,23 @@ function parse(str) {
   if (!match) {
     return;
   }
+
   var n = parseFloat(match[1]);
   var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'weeks':
-    case 'week':
-    case 'w':
-      return n * w;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
+
+  const availableTypes = [
+    { types: ['years', 'year', 'yrs', 'yr', 'y'], logic: n * y },
+    { types: ['weeks', 'week', 'w'], logic: n * w },
+    { types: ['days', 'day', 'd'], logic: n * d },
+    { types: ['hours', 'hour', 'hrs', 'hr', 'h'], logic: n * h },
+    { types: ['minutes', 'minute', 'mins', 'min', 'm'], logic: n * m },
+    { types: ['seconds', 'second', 'secs', 'sec', 's'], logic: n * s },
+    { types: ['milliseconds', 'millisecond', 'msecs', 'msec', 'ms'], logic: n }
+  ];
+
+  return availableTypes.find(
+    element => element.types.includes(type) || undefined
+  ).logic;
 }
 
 /**
