@@ -15,6 +15,7 @@ var y = d * 365.25;
  * Options:
  *
  *  - `long` verbose formatting [false]
+ *  - `decimal` decimal place [0], maximum 3 decimal place
  *
  * @param {String|Number} val
  * @param {Object} [options]
@@ -25,11 +26,12 @@ var y = d * 365.25;
 
 module.exports = function(val, options) {
   options = options || {};
+  var decimal = options.decimal ? Math.min(options.decimal, 3) : 0;
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
     return parse(val);
   } else if (type === 'number' && isFinite(val)) {
-    return options.long ? fmtLong(val) : fmtShort(val);
+    return options.long ? fmtLong(val, decimal) : fmtShort(val, decimal);
   }
   throw new Error(
     'val is not a non-empty string or a valid number. val=' +
@@ -106,23 +108,25 @@ function parse(str) {
  * Short format for `ms`.
  *
  * @param {Number} ms
+ * @param {Number} demical
  * @return {String}
  * @api private
  */
 
-function fmtShort(ms) {
+function fmtShort(ms, decimal) {
   var msAbs = Math.abs(ms);
+  var base = Math.pow(10, decimal);
   if (msAbs >= d) {
-    return Math.round(ms / d) + 'd';
+    return Math.round((ms / d) * base) / base + 'd';
   }
   if (msAbs >= h) {
-    return Math.round(ms / h) + 'h';
+    return Math.round((ms / h) * base) / base + 'h';
   }
   if (msAbs >= m) {
-    return Math.round(ms / m) + 'm';
+    return Math.round((ms / m) * base) / base + 'm';
   }
   if (msAbs >= s) {
-    return Math.round(ms / s) + 's';
+    return Math.round((ms / s) * base) / base + 's';
   }
   return ms + 'ms';
 }
@@ -131,23 +135,24 @@ function fmtShort(ms) {
  * Long format for `ms`.
  *
  * @param {Number} ms
+ * @param {Number} demical
  * @return {String}
  * @api private
  */
 
-function fmtLong(ms) {
+function fmtLong(ms, demical) {
   var msAbs = Math.abs(ms);
   if (msAbs >= d) {
-    return plural(ms, msAbs, d, 'day');
+    return plural(ms, msAbs, d, 'day', demical);
   }
   if (msAbs >= h) {
-    return plural(ms, msAbs, h, 'hour');
+    return plural(ms, msAbs, h, 'hour', demical);
   }
   if (msAbs >= m) {
-    return plural(ms, msAbs, m, 'minute');
+    return plural(ms, msAbs, m, 'minute', demical);
   }
   if (msAbs >= s) {
-    return plural(ms, msAbs, s, 'second');
+    return plural(ms, msAbs, s, 'second', demical);
   }
   return ms + ' ms';
 }
@@ -156,7 +161,10 @@ function fmtLong(ms) {
  * Pluralization helper.
  */
 
-function plural(ms, msAbs, n, name) {
+function plural(ms, msAbs, n, name, demical) {
   var isPlural = msAbs >= n * 1.5;
-  return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
+  var base = Math.pow(10, demical);
+  return (
+    Math.round((ms / n) * base) / base + ' ' + name + (isPlural ? 's' : '')
+  );
 }

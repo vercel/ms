@@ -40,6 +40,16 @@ ms(-3 * 60000, { long: true })        // "-3 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
+### Round to decimal place
+
+```js
+ms(60000, {decimal: 1 })                            // "1m"
+ms(66000, {decimal: 1 })                            // "1.1m"
+ms(-3 * 66000, { long: true, decimal: 1 })          // "-3.3 minutes"
+ms(234234234, { decimal: 2  })                      // "2.71m"
+ms(ms('10.5 hours'), { long: true, decimal: 1 })    // "10.5 hours"
+```
+
 ## Features
 
 - Works both in [Node.js](https://nodejs.org) and in the browser
