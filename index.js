@@ -48,13 +48,13 @@ module.exports = function(val, options) {
 function parse(str) {
   str = String(str);
   if (str.length > 100) {
-    return;
+    return NaN;
   }
   var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
     str
   );
   if (!match) {
-    return;
+    return NaN;
   }
   var n = parseFloat(match[1]);
   var type = (match[2] || 'ms').toLowerCase();
