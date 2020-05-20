@@ -98,7 +98,7 @@ function parse(str) {
     case 'ms':
       return n;
     default:
-      return undefined;
+      return NaN;
   }
 }
 
