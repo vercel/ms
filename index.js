@@ -23,7 +23,7 @@ var y = d * 365.25;
  * @api public
  */
 
-module.exports = function(val, options) {
+module.exports = function (val, options) {
   options = options || {};
   var type = typeof val;
   if (type === 'string' && val.length > 0) {
@@ -113,18 +113,18 @@ function parse(str) {
 function fmtShort(ms) {
   var msAbs = Math.abs(ms);
   if (msAbs >= d) {
-    return Math.round(ms / d) + 'd';
+    return Math.round(ms / d) + ' d';
   }
   if (msAbs >= h) {
-    return Math.round(ms / h) + 'h';
+    return Math.round(ms / h) + ' h';
   }
   if (msAbs >= m) {
-    return Math.round(ms / m) + 'm';
+    return Math.round(ms / m) + ' min';
   }
   if (msAbs >= s) {
-    return Math.round(ms / s) + 's';
+    return Math.round(ms / s) + ' s';
   }
-  return ms + 'ms';
+  return ms + ' ms';
 }
 
 /**
