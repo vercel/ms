@@ -49,6 +49,7 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ## Related Packages
 
+- [bree](https://jobscheduler.net) - Bree is a job scheduler for Node.js with built-in support for workers, cron expression syntax, human-friendly times, Dates, and more.
 - [ms.macro](https://github.com/knpwrs/ms.macro) - Run `ms` as a macro at build-time.
 
 ## Caught a Bug?
