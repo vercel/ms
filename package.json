@@ -2,7 +2,7 @@
   "name": "ms",
   "version": "2.1.2",
   "description": "Tiny millisecond conversion utility",
-  "repository": "zeit/ms",
+  "repository": "vercel/ms",
   "main": "./index",
   "files": [
     "index.js"
