@@ -1,6 +1,6 @@
 # ms
 
-[![Build Status](https://travis-ci.org/vercel/ms.svg?branch=master)](https://travis-ci.org/vercel/ms)
+![CI](https://github.com/vercel/ms/workflows/CI/badge.svg)
 
 Use this package to easily convert various time formats to milliseconds.
 
