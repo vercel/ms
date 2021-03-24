@@ -29,6 +29,12 @@ module.exports = function (val, options) {
   if (type === 'string' && val.length > 0) {
     return parse(val);
   } else if (type === 'number' && isFinite(val)) {
+    if (options.roundTo === 'd') return roundTo(val, d, options.long);
+    if (options.roundTo === 'h') return roundTo(val, h, options.long);
+    if (options.roundTo === 'm') return roundTo(val, m, options.long);
+    if (options.roundTo === 's') return roundTo(val, s, options.long);
+    if (options.roundTo === 'ms') return roundTo(val, 1, options.long);
+
     return options.long ? fmtLong(val) : fmtShort(val);
   }
   throw new Error(
@@ -159,4 +165,74 @@ function fmtLong(ms) {
 function plural(ms, msAbs, n, name) {
   var isPlural = msAbs >= n * 1.5;
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
+}
+
+/**
+ * Optional rounding to the nearest unit of days, hours, minutes, seconds or milliseconds
+ *
+ * @param {Number} ms
+ * @param {Number} format this takes the values d | h | m | s | 1
+ * @param {Boolean} long
+ * @return {String}
+ * @api private
+ */
+function roundTo(ms, format, long) {
+  const msAbs = Math.abs(ms);
+  let remainder = ms;
+  let result = '';
+
+  if (msAbs >= d && format <= d) {
+    const totalDays = remainder / d;
+    const totalDaysInteger =
+      format === d ? Math.round(totalDays) : Math.floor(totalDays);
+    const totalDaysIntegerInMS = totalDaysInteger * d;
+    remainder -= totalDaysIntegerInMS;
+    result += long
+      ? fmtLong(totalDaysIntegerInMS)
+      : fmtShort(totalDaysIntegerInMS);
+    result += ' ';
+  }
+
+  if (msAbs >= h && format <= h) {
+    const totalHours = remainder / h;
+    const totalHoursInteger =
+      format === h ? Math.round(totalHours) : Math.floor(totalHours);
+    const totalHoursIntegerInMS = totalHoursInteger * h;
+    remainder -= totalHoursIntegerInMS;
+    result += long
+      ? fmtLong(totalHoursIntegerInMS)
+      : fmtShort(totalHoursIntegerInMS);
+    result += ' ';
+  }
+
+  if (msAbs >= m && format <= m) {
+    const totalMinutes = remainder / m;
+    const totalMinutesInteger =
+      format === m ? Math.round(totalMinutes) : Math.floor(totalMinutes);
+    const totalMinutesIntegerInMS = totalMinutesInteger * m;
+    remainder -= totalMinutesIntegerInMS;
+    result += long
+      ? fmtLong(totalMinutesIntegerInMS)
+      : fmtShort(totalMinutesIntegerInMS);
+    result += ' ';
+  }
+
+  if (msAbs >= s && format <= s) {
+    const totalSeconds = remainder / s;
+    const totalSecondsInteger =
+      format === s ? Math.round(totalSeconds) : Math.floor(totalSeconds);
+    const totalSecondsIntegerInMS = totalSecondsInteger * s;
+    remainder -= totalSecondsIntegerInMS;
+    result += long
+      ? fmtLong(totalSecondsIntegerInMS)
+      : fmtShort(totalSecondsIntegerInMS);
+    result += ' ';
+  }
+
+  if (format < s) {
+    result += long ? fmtLong(remainder) : fmtShort(remainder);
+    result += ' ';
+  }
+
+  return result.trim();
 }
