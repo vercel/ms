@@ -45,7 +45,7 @@ module.exports = function (val, options) {
 function parse(str) {
   str = String(str);
   if (str.length > 100) return;
-  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|seconds?|secs?|s|minutes?|mins?|ms?|hours?|hrs?|h|days?|dy|d|weeks?|wks?|w|years?|yrs?|y)?$/i.exec(
     str
   );
   if (!match) return;
@@ -54,7 +54,7 @@ function parse(str) {
   switch (type) {
     case 'years', 'year', 'yrs', 'yr', 'y':
       return n * y;
-    case 'weeks', 'week', 'wk', 'w':
+    case 'weeks', 'week', 'wks', 'wk', 'w':
       return n * w;
     case 'days', 'day', 'dy', 'd':
       return n * d;
