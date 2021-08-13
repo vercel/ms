@@ -2,11 +2,8 @@
 /**
  * Dependencies.
  */
-
-if (typeof require !== 'undefined') {
-  expect = require('expect.js');
-  ms = require('./');
-}
+import expect from 'expect.js';
+import ms from './index.js';
 
 // strings
 
