@@ -1,6 +1,7 @@
 {
   "root": true,
   "extends": ["eslint:recommended", "prettier"],
+  "ignorePatterns": ["lib/**"],
   "overrides": [
     {
       "files": ["*.ts?(x)"],

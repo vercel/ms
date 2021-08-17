@@ -4,7 +4,8 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "target": "ES2019"
   },
   "include": ["index.ts", "spec.ts"]
 }

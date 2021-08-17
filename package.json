@@ -3,16 +3,37 @@
   "version": "3.0.0",
   "description": "Tiny millisecond conversion utility",
   "repository": "vercel/ms",
-  "main": "./lib/index.js",
+  "main": "./lib/index.cjs",
+  "type": "module",
+  "exports": {
+    "import": "./lib/index.mjs",
+    "require": "./lib/index.cjs"
+  },
   "module": "./lib/index.mjs",
+  "types": "./lib",
+  "sideEffects": false,
+  "license": "MIT",
+  "engines": {
+    "node": ">=12.13"
+  },
   "files": [
     "lib"
   ],
   "scripts": {
+    "test": "jest",
+    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --outDir lib && shx mv lib/index.js lib/index.cjs",
+    "build:esm": "tsc --project tsconfig.build.json --module es2015 --outDir lib && shx mv lib/index.js lib/index.mjs",
+    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir lib",
+    "prepublishOnly": "shx rm -rf lib && npm run build:cjs && npm run build:esm && npm run build:types",
+    "eslint-check": "eslint --max-warnings=0 .",
+    "prettier-check": "prettier --check .",
+    "type-check": "tsc --noEmit",
     "precommit": "lint-staged",
-    "lint": "eslint .",
-    "test": "jest tests.ts",
     "prepare": "husky install"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   },
   "prettier": {
     "endOfLine": "lf",
@@ -23,26 +44,26 @@
   },
   "lint-staged": {
     "*": [
-      "eslint --max-warnings=0 --fix",
       "prettier --ignore-unknown --write"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --max-warnings=0 --fix"
     ]
   },
-  "license": "MIT",
   "devDependencies": {
     "@types/jest": "27.0.1",
     "@typescript-eslint/eslint-plugin": "4.29.2",
     "@typescript-eslint/parser": "4.29.2",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-jest": "24.4.0",
     "eslint-plugin-tsdoc": "0.2.14",
     "husky": "7.0.1",
     "jest": "27.0.6",
     "lint-staged": "11.1.2",
     "prettier": "2.3.2",
+    "shx": "0.3.3",
     "ts-jest": "27.0.5",
     "typescript": "4.3.5"
-  },
-  "dependencies": {
-    "eslint-plugin-jest": "24.4.0"
   }
 }
