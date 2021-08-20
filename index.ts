@@ -45,7 +45,6 @@ export type StringValue =
   | `${number}`
   | `${number}${UnitAnyCase}`
   | `${number} ${UnitAnyCase}`;
-export type Value = StringValue | number;
 
 interface Options {
   /**
@@ -61,36 +60,38 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-export default function ms(
-  value: Value,
-  options?: Options,
-): string | number | undefined {
-  if (typeof value === 'string' && value.length > 0) {
-    return parse(value);
-  } else if (typeof value === 'number' && isFinite(value)) {
-    return options?.long ? fmtLong(value) : fmtShort(value);
+function ms(value: StringValue, options?: Options): number;
+function ms(value: number, options?: Options): string;
+function ms(value: StringValue | number, options?: Options): number | string {
+  try {
+    if (typeof value === 'string' && value.length > 0) {
+      return parse(value);
+    } else if (typeof value === 'number' && isFinite(value)) {
+      return options?.long ? fmtLong(value) : fmtShort(value);
+    }
+    throw new Error('Value is not a string or number.');
+  } catch (error) {
+    const message = isError(error)
+      ? `${error.message}. value=${JSON.stringify(value)}`
+      : 'An unknown error has occured.';
+    throw new Error(message);
   }
-  throw new Error(
-    `val is not a non-empty string or a valid number. val=${JSON.stringify(
-      value,
-    )}`,
-  );
 }
 
 /**
  * Parse the given `str` and return milliseconds.
  */
-function parse(str: string): number | undefined {
+function parse(str: string): number {
   str = String(str);
   if (str.length > 100) {
-    return;
+    throw new Error('Value exceeds the maximum length of 100 characters.');
   }
   const match =
     /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
   if (!match) {
-    return;
+    throw new Error("Value doesn't contain a valid unit of time.");
   }
   const n = parseFloat(match[1]);
   const type = (match[2] || 'ms').toLowerCase() as Lowercase<Unit>;
@@ -134,9 +135,14 @@ function parse(str: string): number | undefined {
     case 'ms':
       return n;
     default:
-      return undefined;
+      // This should never occur.
+      throw new Error(
+        `The unit ${type as string} was matched, but no matching case exists.`,
+      );
   }
 }
+
+export default ms;
 
 /**
  * Short format for `ms`.
@@ -189,4 +195,11 @@ function plural(
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
   return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+}
+
+/**
+ * A type guard for errors.
+ */
+function isError(error: unknown): error is Error {
+  return typeof error === 'object' && error !== null && 'message' in error;
 }
