@@ -37,16 +37,21 @@ function compile(files, options) {
 
     if (!isDts) {
       switch (compilerOptions.module) {
-        case ts.ModuleKind.CommonJS:
+        case ts.ModuleKind.CommonJS: {
           // Adds backwards-compatibilty for Node.js.
-          contents += 'module.exports = exports.default;\n';
+          const { groups } = /^exports\.default = (?<export>.+)$/gm.exec(
+            contents,
+          );
+          contents += `module.exports = ${groups.export}\n`;
           // Use the .cjs file extension.
           path = path.replace(/\.js$/, '.cjs');
           break;
-        case ts.ModuleKind.ES2015:
+        }
+        case ts.ModuleKind.ES2015: {
           // Use the .mjs file extension.
           path = path.replace(/\.js$/, '.mjs');
           break;
+        }
         default:
           throw Error('Unhandled module type');
       }
