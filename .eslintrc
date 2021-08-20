@@ -2,9 +2,20 @@
   "root": true,
   "extends": ["eslint:recommended", "prettier"],
   "ignorePatterns": ["lib/**"],
+
   "overrides": [
     {
-      "files": ["*.ts?(x)"],
+      "files": ["*.js"],
+      "env": {
+        "node": true
+      },
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "latest"
+      }
+    },
+    {
+      "files": ["*.ts"],
       "plugins": ["eslint-plugin-tsdoc"],
       "extends": [
         "plugin:@typescript-eslint/recommended",

@@ -41,10 +41,11 @@ type Unit =
 
 type UnitAnyCase = Unit | Uppercase<Unit> | Lowercase<Unit>;
 
-type StringValue =
+export type StringValue =
   | `${number}`
   | `${number}${UnitAnyCase}`
   | `${number} ${UnitAnyCase}`;
+export type Value = StringValue | number;
 
 interface Options {
   /**
@@ -61,7 +62,7 @@ interface Options {
  * @throws Error if `value` is not a non-empty string or a number
  */
 export default function ms(
-  value: StringValue | number,
+  value: Value,
   options?: Options,
 ): string | number | undefined {
   if (typeof value === 'string' && value.length > 0) {

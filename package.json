@@ -10,7 +10,7 @@
     "require": "./lib/index.cjs"
   },
   "module": "./lib/index.mjs",
-  "types": "./lib",
+  "types": "./lib/index.d.ts",
   "sideEffects": false,
   "license": "MIT",
   "engines": {
@@ -21,10 +21,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "build:cjs": "tsc --project tsconfig.build.json --module commonjs --outDir lib && shx mv lib/index.js lib/index.cjs",
-    "build:esm": "tsc --project tsconfig.build.json --module es2015 --outDir lib && shx mv lib/index.js lib/index.mjs",
-    "build:types": "tsc --project tsconfig.build.json --declaration --emitDeclarationOnly --outDir lib",
-    "prepublishOnly": "shx rm -rf lib && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build": "scripts/build.js",
+    "prepublishOnly": "npm run build",
     "eslint-check": "eslint --max-warnings=0 .",
     "prettier-check": "prettier --check .",
     "type-check": "tsc --noEmit",
@@ -62,7 +60,6 @@
     "jest": "27.0.6",
     "lint-staged": "11.1.2",
     "prettier": "2.3.2",
-    "shx": "0.3.3",
     "ts-jest": "27.0.5",
     "typescript": "4.3.5"
   }
