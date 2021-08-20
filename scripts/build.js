@@ -39,10 +39,7 @@ function compile(files, options) {
       switch (compilerOptions.module) {
         case ts.ModuleKind.CommonJS: {
           // Adds backwards-compatibilty for Node.js.
-          const { groups } = /^exports\.default = (?<export>.+)$/gm.exec(
-            contents,
-          );
-          contents += `module.exports = ${groups.export}\n`;
+          contents += `module.exports = exports.default;\nmodule.exports.default = exports.default;\n`;
           // Use the .cjs file extension.
           path = path.replace(/\.js$/, '.cjs');
           break;
