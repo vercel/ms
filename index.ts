@@ -91,7 +91,7 @@ function parse(str: string): number {
       str,
     );
   if (!match) {
-    throw new Error("Value doesn't contain a valid unit of time.");
+    return NaN;
   }
   const n = parseFloat(match[1]);
   const type = (match[2] || 'ms').toLowerCase() as Lowercase<Unit>;
