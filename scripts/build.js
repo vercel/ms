@@ -17,9 +17,12 @@ const { config } = ts.readConfigFile('./tsconfig.json', (fileName) =>
 );
 
 // Build CommonJS module.
-compile(['./index.ts'], { module: ts.ModuleKind.CommonJS });
+compile(['./src/index.ts'], { module: ts.ModuleKind.CommonJS });
 // Build an ES2015 module and type declarations.
-compile(['./index.ts'], { module: ts.ModuleKind.ES2020, declaration: true });
+compile(['./src/index.ts'], {
+  module: ts.ModuleKind.ES2020,
+  declaration: true,
+});
 
 /**
  * Compiles files to JavaScript.

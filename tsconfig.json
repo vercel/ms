@@ -7,5 +7,5 @@
     "strict": true,
     "target": "ES2019"
   },
-  "include": ["index.ts", "spec.ts"]
+  "include": ["src/"]
 }
