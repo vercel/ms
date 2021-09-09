@@ -1,8 +1,7 @@
 {
   "root": true,
   "extends": ["eslint:recommended", "prettier"],
-  "ignorePatterns": ["lib/**"],
-
+  "ignorePatterns": ["dist/**"],
   "overrides": [
     {
       "files": ["*.js"],

@@ -5,7 +5,7 @@ import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import ts from 'typescript';
 
-const DIR = './lib';
+const DIR = './dist';
 
 // Delete and recreate the ouptut directory.
 rmdirSync(DIR, { recursive: true });
@@ -19,7 +19,7 @@ const { config } = ts.readConfigFile('./tsconfig.json', (fileName) =>
 // Build CommonJS module.
 compile(['./index.ts'], { module: ts.ModuleKind.CommonJS });
 // Build an ES2015 module and type declarations.
-compile(['./index.ts'], { module: ts.ModuleKind.ES2015, declaration: true });
+compile(['./index.ts'], { module: ts.ModuleKind.ES2020, declaration: true });
 
 /**
  * Compiles files to JavaScript.
@@ -44,7 +44,7 @@ function compile(files, options) {
           path = path.replace(/\.js$/, '.cjs');
           break;
         }
-        case ts.ModuleKind.ES2015: {
+        case ts.ModuleKind.ES2020: {
           // Use the .mjs file extension.
           path = path.replace(/\.js$/, '.mjs');
           break;
