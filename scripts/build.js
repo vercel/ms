@@ -2,24 +2,25 @@
 // @ts-check
 import { mkdirSync, readFileSync, rmdirSync } from 'fs';
 import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { join, sep } from 'path';
 import ts from 'typescript';
 
 const DIR = './dist';
 
-// Delete and recreate the ouptut directory.
+// Delete and recreate the output directory.
 rmdirSync(DIR, { recursive: true });
 mkdirSync(DIR);
 
 // Read the TypeScript config file.
-const { config } = ts.readConfigFile('./tsconfig.json', (fileName) =>
+const { config } = ts.readConfigFile('tsconfig.json', (fileName) =>
   readFileSync(fileName).toString(),
 );
 
+const sourceFile = join('src', 'index.ts');
 // Build CommonJS module.
-compile(['./src/index.ts'], { module: ts.ModuleKind.CommonJS });
+compile([sourceFile], { module: ts.ModuleKind.CommonJS });
 // Build an ES2015 module and type declarations.
-compile(['./src/index.ts'], {
+compile([sourceFile], {
   module: ts.ModuleKind.ES2020,
   declaration: true,
 });
@@ -36,12 +37,12 @@ function compile(files, options) {
 
   host.writeFile = (fileName, contents) => {
     const isDts = fileName.endsWith('.d.ts');
-    let path = join(DIR, fileName);
+    let path = join(DIR, fileName.split(sep)[1]);
 
     if (!isDts) {
       switch (compilerOptions.module) {
         case ts.ModuleKind.CommonJS: {
-          // Adds backwards-compatibilty for Node.js.
+          // Adds backwards-compatibility for Node.js.
           contents += `module.exports = exports.default;\nmodule.exports.default = exports.default;\n`;
           // Use the .cjs file extension.
           path = path.replace(/\.js$/, '.cjs');
