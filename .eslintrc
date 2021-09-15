@@ -1,0 +1,38 @@
+{
+  "root": true,
+  "extends": ["eslint:recommended", "prettier"],
+  "ignorePatterns": ["dist/**"],
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "env": {
+        "node": true
+      },
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "latest"
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "plugins": ["eslint-plugin-tsdoc"],
+      "extends": [
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "prettier"
+      ],
+      "parserOptions": {
+        "project": "tsconfig.json"
+      },
+      "rules": {
+        "tsdoc/syntax": "warn",
+        // Aligns with our style-guide.
+        "@typescript-eslint/switch-exhaustiveness-check": "error"
+      }
+    },
+    {
+      "files": ["tests.ts"],
+      "extends": ["plugin:jest/recommended"]
+    }
+  ]
+}
