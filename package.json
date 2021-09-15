@@ -1,6 +1,6 @@
 {
   "name": "ms",
-  "version": "3.0.0",
+  "version": "3.0.0-canary.0",
   "description": "Tiny millisecond conversion utility",
   "repository": "vercel/ms",
   "main": "./dist/index.cjs",
