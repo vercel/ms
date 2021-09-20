@@ -109,6 +109,10 @@ describe('ms(long string)', function () {
     expect(ms('2 days')).toBe(172800000);
   });
 
+  it('should convert weeks to ms', function () {
+    expect(ms('1 week')).toBe(604800000);
+  });
+
   it('should convert years to ms', function () {
     expect(ms('1 year')).toBe(31557600000);
   });
