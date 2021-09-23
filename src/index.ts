@@ -48,9 +48,30 @@ export type StringValue =
 
 interface Options {
   /**
-   * Set to `true` to use verbose formatting. Defaults to `false`.
+   * Set to `true` to use verbose formatting.
+   *
+   * @defaultValue `false`
    */
   long?: boolean;
+
+  /**
+   * Set to `true` to enable rounding.
+   * @example
+   * ```
+   * ms(4567, { round: false }) // 4567ms
+   * ```
+   *
+   * When set to a `number`, it will be used to set the precision.
+   * @example
+   * ```
+   * ms(4567, { round: 1 }) // 4.6s
+   * ms(4567, { round: 2 }) // 4.57s
+   * ms(4567, { round: 3 }) // 4.567s
+   * ```
+   *
+   * @defaultValue `true`
+   */
+  round?: boolean | number;
 }
 
 /**
@@ -62,12 +83,17 @@ interface Options {
  */
 function ms(value: StringValue, options?: Options): number;
 function ms(value: number, options?: Options): string;
-function ms(value: StringValue | number, options?: Options): number | string {
+function ms(
+  value: StringValue | number,
+  options: Options = { round: true, long: false },
+): number | string {
   try {
     if (typeof value === 'string' && value.length > 0) {
       return parse(value);
     } else if (typeof value === 'number' && isFinite(value)) {
-      return options?.long ? fmtLong(value) : fmtShort(value);
+      return options.long
+        ? fmtLong(value, options.round ?? true)
+        : fmtShort(value, options.round ?? true);
     }
     throw new Error('Value is not a string or number.');
   } catch (error) {
@@ -144,22 +170,32 @@ function parse(str: string): number {
 
 export default ms;
 
+function shouldRound(value: number, round: boolean | number): number {
+  if (typeof round === 'number') {
+    return value.toFixed(round) as unknown as number; // Required to display the correct decimal point.
+  } else if (typeof round === 'boolean' && round === true) {
+    return Math.round(value);
+  }
+
+  return value;
+}
+
 /**
  * Short format for `ms`.
  */
-function fmtShort(ms: number): StringValue {
+function fmtShort(ms: number, round: boolean | number): StringValue {
   const msAbs = Math.abs(ms);
   if (msAbs >= d) {
-    return `${Math.round(ms / d)}d`;
+    return `${shouldRound(ms / d, round)}d`;
   }
   if (msAbs >= h) {
-    return `${Math.round(ms / h)}h`;
+    return `${shouldRound(ms / h, round)}h`;
   }
   if (msAbs >= m) {
-    return `${Math.round(ms / m)}m`;
+    return `${shouldRound(ms / m, round)}m`;
   }
   if (msAbs >= s) {
-    return `${Math.round(ms / s)}s`;
+    return `${shouldRound(ms / s, round)}s`;
   }
   return `${ms}ms`;
 }
@@ -167,19 +203,19 @@ function fmtShort(ms: number): StringValue {
 /**
  * Long format for `ms`.
  */
-function fmtLong(ms: number): StringValue {
+function fmtLong(ms: number, round: boolean | number): StringValue {
   const msAbs = Math.abs(ms);
   if (msAbs >= d) {
-    return plural(ms, msAbs, d, 'day');
+    return plural(ms, msAbs, d, 'day', round);
   }
   if (msAbs >= h) {
-    return plural(ms, msAbs, h, 'hour');
+    return plural(ms, msAbs, h, 'hour', round);
   }
   if (msAbs >= m) {
-    return plural(ms, msAbs, m, 'minute');
+    return plural(ms, msAbs, m, 'minute', round);
   }
   if (msAbs >= s) {
-    return plural(ms, msAbs, s, 'second');
+    return plural(ms, msAbs, s, 'second', round);
   }
   return `${ms} ms`;
 }
@@ -192,9 +228,12 @@ function plural(
   msAbs: number,
   n: number,
   name: string,
+  round: boolean | number,
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
-  return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+  return `${shouldRound(ms / n, round)} ${name}${
+    isPlural ? 's' : ''
+  }` as StringValue;
 }
 
 /**
