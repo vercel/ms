@@ -35,6 +35,10 @@ describe('ms(string)', function () {
     expect(ms('100ms')).toBe(100);
   });
 
+  it('should convert y to ms', function () {
+    expect(ms('1y')).toBe(31557600000);
+  });
+
   it('should work with decimals', function () {
     expect(ms('1.5h')).toBe(5400000);
   });
@@ -103,6 +107,14 @@ describe('ms(long string)', function () {
 
   it('should convert days to ms', function () {
     expect(ms('2 days')).toBe(172800000);
+  });
+
+  it('should convert weeks to ms', function () {
+    expect(ms('1 week')).toBe(604800000);
+  });
+
+  it('should convert years to ms', function () {
+    expect(ms('1 year')).toBe(31557600000);
   });
 
   it('should work with decimals', function () {
