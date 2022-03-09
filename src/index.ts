@@ -66,7 +66,7 @@ function ms(value: StringValue | number, options?: Options): number | string {
   try {
     if (typeof value === 'string' && value.length > 0) {
       return parse(value);
-    } else if (typeof value === 'number' && isFinite(value)) {
+    } else if (typeof value === 'number' && Number.isFinite(value)) {
       return options?.long ? fmtLong(value) : fmtShort(value);
     }
     throw new Error('Value is not a string or number.');
