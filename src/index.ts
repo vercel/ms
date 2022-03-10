@@ -4,6 +4,7 @@ const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
+const mth = d * 30;
 const y = d * 365.25;
 
 type Unit =
@@ -12,6 +13,9 @@ type Unit =
   | 'Yrs'
   | 'Yr'
   | 'Y'
+  | 'Months'
+  | 'Month'
+  | 'Mth'
   | 'Weeks'
   | 'Week'
   | 'W'
@@ -102,6 +106,10 @@ function parse(str: string): number {
     case 'yr':
     case 'y':
       return n * y;
+    case 'months':
+    case 'month':
+    case 'mth':
+      return n * mth;
     case 'weeks':
     case 'week':
     case 'w':
