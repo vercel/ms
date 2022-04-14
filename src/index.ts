@@ -73,7 +73,7 @@ function msFn(value: StringValue | number, options?: Options): number | string {
   } catch (error) {
     const message = isError(error)
       ? `${error.message}. value=${JSON.stringify(value)}`
-      : 'An unknown error has occured.';
+      : 'An unknown error has occurred.';
     throw new Error(message);
   }
 }
@@ -87,14 +87,17 @@ function parse(_str: string): number {
     throw new Error('Value exceeds the maximum length of 100 characters.');
   }
   const match =
-    /^(?:-?(?:\d+)?\.?\d+) *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
-  if (!match || !match[1]) {
+  // Named capture groups need to be manually typed today.
+  // https://github.com/microsoft/TypeScript/issues/32098
+  const groups = match?.groups as { value: string; type?: string } | undefined;
+  if (!groups) {
     return NaN;
   }
-  const n = parseFloat(match[1]);
-  const type = (match[2] || 'ms').toLowerCase() as Lowercase<Unit>;
+  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
+  const n = parseFloat(groups.value);
   switch (type) {
     case 'years':
     case 'year':

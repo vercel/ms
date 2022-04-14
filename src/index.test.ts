@@ -52,6 +52,8 @@ describe('ms(string)', () => {
     expect(isNaN(ms('☃'))).toBe(true);
     // @ts-expect-error - We expect this to fail.
     expect(isNaN(ms('10-.5'))).toBe(true);
+    // @ts-expect-error - We expect this to fail.
+    expect(isNaN(ms('ms'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {
