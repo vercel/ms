@@ -60,9 +60,9 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-function ms(value: StringValue, options?: Options): number;
-function ms(value: number, options?: Options): string;
-function ms(value: StringValue | number, options?: Options): number | string {
+function msFn(value: StringValue, options?: Options): number;
+function msFn(value: number, options?: Options): string;
+function msFn(value: StringValue | number, options?: Options): number | string {
   try {
     if (typeof value === 'string' && value.length > 0) {
       return parse(value);
@@ -81,16 +81,16 @@ function ms(value: StringValue | number, options?: Options): number | string {
 /**
  * Parse the given `str` and return milliseconds.
  */
-function parse(str: string): number {
-  str = String(str);
+function parse(_str: string): number {
+  const str = String(_str);
   if (str.length > 100) {
     throw new Error('Value exceeds the maximum length of 100 characters.');
   }
   const match =
-    /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?:-?(?:\d+)?\.?\d+) *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
-  if (!match) {
+  if (!match || !match[1]) {
     return NaN;
   }
   const n = parseFloat(match[1]);
@@ -142,7 +142,8 @@ function parse(str: string): number {
   }
 }
 
-export default ms;
+// eslint-disable-next-line import/no-default-export
+export default msFn;
 
 /**
  * Short format for `ms`.
