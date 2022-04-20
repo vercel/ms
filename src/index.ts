@@ -54,7 +54,7 @@ interface Options {
 }
 
 /**
- * Parse or format the given `val`.
+ * Parse or format the given value.
  *
  * @param value - The string or number to convert
  * @param options - Options for the conversion
@@ -79,10 +79,13 @@ function msFn(value: StringValue | number, options?: Options): number | string {
 }
 
 /**
- * Parse the given `str` and return milliseconds.
+ * Parse the given string and return milliseconds.
+ *
+ * @param str - A string to parse to milliseconds
+ * @returns The parsed value in milliseconds, or `NaN` if the string can't be
+ * parsed
  */
-function parse(_str: string): number {
-  const str = String(_str);
+function parse(str: string): number {
   if (str.length > 100) {
     throw new Error('Value exceeds the maximum length of 100 characters.');
   }
@@ -96,8 +99,8 @@ function parse(_str: string): number {
   if (!groups) {
     return NaN;
   }
-  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
   const n = parseFloat(groups.value);
+  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
   switch (type) {
     case 'years':
     case 'year':
@@ -203,7 +206,10 @@ function plural(
 
 /**
  * A type guard for errors.
+ *
+ * @param value - The value to test
+ * @returns A boolean `true` if the provided value is an Error-like object
  */
-function isError(error: unknown): error is Error {
-  return typeof error === 'object' && error !== null && 'message' in error;
+function isError(value: unknown): value is Error {
+  return typeof value === 'object' && value !== null && 'message' in value;
 }
