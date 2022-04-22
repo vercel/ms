@@ -54,15 +54,15 @@ interface Options {
 }
 
 /**
- * Parse or format the given `val`.
+ * Parse or format the given value.
  *
  * @param value - The string or number to convert
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-function ms(value: StringValue, options?: Options): number;
-function ms(value: number, options?: Options): string;
-function ms(value: StringValue | number, options?: Options): number | string {
+function msFn(value: StringValue, options?: Options): number;
+function msFn(value: number, options?: Options): string;
+function msFn(value: StringValue | number, options?: Options): number | string {
   try {
     if (typeof value === 'string' && value.length > 0) {
       return parse(value);
@@ -73,28 +73,34 @@ function ms(value: StringValue | number, options?: Options): number | string {
   } catch (error) {
     const message = isError(error)
       ? `${error.message}. value=${JSON.stringify(value)}`
-      : 'An unknown error has occured.';
+      : 'An unknown error has occurred.';
     throw new Error(message);
   }
 }
 
 /**
- * Parse the given `str` and return milliseconds.
+ * Parse the given string and return milliseconds.
+ *
+ * @param str - A string to parse to milliseconds
+ * @returns The parsed value in milliseconds, or `NaN` if the string can't be
+ * parsed
  */
 function parse(str: string): number {
-  str = String(str);
   if (str.length > 100) {
     throw new Error('Value exceeds the maximum length of 100 characters.');
   }
   const match =
-    /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
-  if (!match) {
+  // Named capture groups need to be manually typed today.
+  // https://github.com/microsoft/TypeScript/issues/32098
+  const groups = match?.groups as { value: string; type?: string } | undefined;
+  if (!groups) {
     return NaN;
   }
-  const n = parseFloat(match[1]);
-  const type = (match[2] || 'ms').toLowerCase() as Lowercase<Unit>;
+  const n = parseFloat(groups.value);
+  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
   switch (type) {
     case 'years':
     case 'year':
@@ -142,7 +148,8 @@ function parse(str: string): number {
   }
 }
 
-export default ms;
+// eslint-disable-next-line import/no-default-export
+export default msFn;
 
 /**
  * Short format for `ms`.
@@ -199,7 +206,10 @@ function plural(
 
 /**
  * A type guard for errors.
+ *
+ * @param value - The value to test
+ * @returns A boolean `true` if the provided value is an Error-like object
  */
-function isError(error: unknown): error is Error {
-  return typeof error === 'object' && error !== null && 'message' in error;
+function isError(value: unknown): value is Error {
+  return typeof value === 'object' && value !== null && 'message' in value;
 }
