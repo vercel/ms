@@ -8,7 +8,11 @@ import ts from 'typescript';
 const DIR = './dist';
 
 // Delete and recreate the output directory.
-rmdirSync(DIR, { recursive: true });
+try {
+  rmdirSync(DIR, { recursive: true });
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 mkdirSync(DIR);
 
 // Read the TypeScript config file.
