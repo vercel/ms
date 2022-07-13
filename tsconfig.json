@@ -1,10 +1,6 @@
 {
+  "extends": "@vercel/style-guide/typescript",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "strict": true,
     "target": "ES2019"
   },
   "include": ["src/"]

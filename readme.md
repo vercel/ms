@@ -1,6 +1,7 @@
 # ms
 
 ![CI](https://github.com/vercel/ms/workflows/CI/badge.svg)
+![Edge Runtime Compatible](https://img.shields.io/badge/edge--runtime-%E2%9C%94%20compatible-black)
 
 Use this package to easily convert various time formats to milliseconds.
 
@@ -51,7 +52,7 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ## TypeScript support
 
-As of v3.0, this package includes TypeScript definitions.
+As of `v3.0`, this package includes TypeScript definitions.
 
 For added safety, we're using [Template Literal Types](https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html) (added in [TypeScript 4.1](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-4-1.html)). This ensures that you don't accidentally pass `ms` values that it can't process.
 
@@ -108,6 +109,26 @@ function example(value: OnlyDaysAndWeeks) {
 
 // This function will accept "# days" or "# weeks" only.
 example('5.2 days');
+```
+
+## Edge Runtime Support
+
+`ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app/). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:
+
+```js
+// Next.js (pages/api/edge.js) (npm i next@canary)
+// Other frameworks (api/edge.js) (npm i -g vercel@canary)
+
+import ms from 'ms';
+const start = Date.now();
+
+export default (req) => {
+  return new Response(`Alive since ${ms(Date.now() - start)}`);
+};
+
+export const config = {
+  runtime: 'experimental-edge',
+};
 ```
 
 ## Related Packages

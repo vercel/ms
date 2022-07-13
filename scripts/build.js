@@ -8,7 +8,11 @@ import ts from 'typescript';
 const DIR = './dist';
 
 // Delete and recreate the output directory.
-rmdirSync(DIR, { recursive: true });
+try {
+  rmdirSync(DIR, { recursive: true });
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
+}
 mkdirSync(DIR);
 
 // Read the TypeScript config file.
@@ -43,6 +47,7 @@ function compile(files, options) {
       switch (compilerOptions.module) {
         case ts.ModuleKind.CommonJS: {
           // Adds backwards-compatibility for Node.js.
+          // eslint-disable-next-line no-param-reassign
           contents += `module.exports = exports.default;\nmodule.exports.default = exports.default;\n`;
           // Use the .cjs file extension.
           path = path.replace(/\.js$/, '.cjs');
@@ -60,9 +65,11 @@ function compile(files, options) {
 
     writeFile(path, contents)
       .then(() => {
+        // eslint-disable-next-line no-console
         console.log('Built', path);
       })
       .catch((error) => {
+        // eslint-disable-next-line no-console
         console.error(error);
       });
   };
