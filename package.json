@@ -1,5 +1,5 @@
 {
-  "name": "@casperengl/ms",
+  "name": "ms",
   "version": "3.0.0-canary.1",
   "description": "Tiny millisecond conversion utility",
   "repository": "vercel/ms",
