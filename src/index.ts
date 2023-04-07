@@ -69,7 +69,9 @@ function msFn(value: StringValue | number, options?: Options): number | string {
     } else if (typeof value === 'number' && isFinite(value)) {
       return options?.long ? fmtLong(value) : fmtShort(value);
     }
-    throw new Error('Value is not a string or number.');
+    else {
+      return null
+    }
   } catch (error) {
     const message = isError(error)
       ? `${error.message}. value=${JSON.stringify(value)}`
