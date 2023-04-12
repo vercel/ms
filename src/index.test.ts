@@ -136,7 +136,7 @@ describe('ms(long string)', () => {
   });
 });
 
-// numbers
+// numbers, long format
 
 describe('ms(number, { long: true })', () => {
   it('should not throw an error', () => {
@@ -195,6 +195,177 @@ describe('ms(number, { long: true })', () => {
     expect(ms(234234234, { long: true })).toBe('3 days');
 
     expect(ms(-234234234, { long: true })).toBe('-3 days');
+  });
+});
+
+// numbers all units
+
+describe('ms(number, { allUnits: true })', () => {
+  it('should not throw an error', () => {
+    expect(() => {
+      ms(500, { long: true, allUnits: true });
+    }).not.toThrowError();
+  });
+
+  it('should support milliseconds', () => {
+    expect(ms(500, { long: true, allUnits: true })).toBe('500 ms');
+    expect(ms(500, { long: false, allUnits: true })).toBe('500ms');
+    expect(ms(-500, { long: true, allUnits: true })).toBe('-500 ms');
+    expect(ms(-500, { long: false, allUnits: true })).toBe('-500ms');
+  });
+
+  it('should support seconds', () => {
+    expect(ms(1000, { long: true, allUnits: true })).toBe('1 second 0 ms');
+    expect(ms(1200, { long: true, allUnits: true })).toBe('1 second 200 ms');
+    expect(ms(10000, { long: true, allUnits: true })).toBe('10 seconds 0 ms');
+
+    expect(ms(-1000, { long: true, allUnits: true })).toBe('-1 second 0 ms');
+    expect(ms(-1200, { long: true, allUnits: true })).toBe('-1 second 200 ms');
+    expect(ms(-10000, { long: true, allUnits: true })).toBe('-10 seconds 0 ms');
+
+    expect(ms(1000, { long: false, allUnits: true })).toBe('1s0ms');
+    expect(ms(1200, { long: false, allUnits: true })).toBe('1s200ms');
+    expect(ms(10000, { long: false, allUnits: true })).toBe('10s0ms');
+
+    expect(ms(-1000, { long: false, allUnits: true })).toBe('-1s0ms');
+    expect(ms(-1200, { long: false, allUnits: true })).toBe('-1s200ms');
+    expect(ms(-10000, { long: false, allUnits: true })).toBe('-10s0ms');
+  });
+
+  it('should support minutes', () => {
+    expect(ms(60 * 1000, { long: true, allUnits: true })).toBe(
+      '1 minute 0 seconds 0 ms',
+    );
+    expect(ms(60 * 1200, { long: true, allUnits: true })).toBe(
+      '1 minute 12 seconds 0 ms',
+    );
+    expect(ms(60 * 10000, { long: true, allUnits: true })).toBe(
+      '10 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(-1 * 60 * 1000, { long: true, allUnits: true })).toBe(
+      '-1 minute 0 seconds 0 ms',
+    );
+    expect(ms(-1 * 60 * 1200, { long: true, allUnits: true })).toBe(
+      '-1 minute 12 seconds 0 ms',
+    );
+    expect(ms(-1 * 60 * 10000, { long: true, allUnits: true })).toBe(
+      '-10 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(60 * 1000, { long: false, allUnits: true })).toBe('1m0s0ms');
+    expect(ms(60 * 1200, { long: false, allUnits: true })).toBe('1m12s0ms');
+    expect(ms(60 * 10000, { long: false, allUnits: true })).toBe('10m0s0ms');
+
+    expect(ms(-1 * 60 * 1000, { long: false, allUnits: true })).toBe(
+      '-1m0s0ms',
+    );
+    expect(ms(-1 * 60 * 1200, { long: false, allUnits: true })).toBe(
+      '-1m12s0ms',
+    );
+    expect(ms(-1 * 60 * 10000, { long: false, allUnits: true })).toBe(
+      '-10m0s0ms',
+    );
+  });
+
+  it('should support hours', () => {
+    expect(ms(60 * 60 * 1000, { long: true, allUnits: true })).toBe(
+      '1 hour 0 minutes 0 seconds 0 ms',
+    );
+    expect(ms(60 * 60 * 1200, { long: true, allUnits: true })).toBe(
+      '1 hour 12 minutes 0 seconds 0 ms',
+    );
+    expect(ms(60 * 60 * 10000, { long: true, allUnits: true })).toBe(
+      '10 hours 0 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(-1 * 60 * 60 * 1000, { long: true, allUnits: true })).toBe(
+      '-1 hour 0 minutes 0 seconds 0 ms',
+    );
+    expect(ms(-1 * 60 * 60 * 1200, { long: true, allUnits: true })).toBe(
+      '-1 hour 12 minutes 0 seconds 0 ms',
+    );
+    expect(ms(-1 * 60 * 60 * 10000, { long: true, allUnits: true })).toBe(
+      '-10 hours 0 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(60 * 60 * 1000, { long: false, allUnits: true })).toBe(
+      '1h0m0s0ms',
+    );
+    expect(ms(60 * 60 * 1200, { long: false, allUnits: true })).toBe(
+      '1h12m0s0ms',
+    );
+    expect(ms(60 * 60 * 10000, { long: false, allUnits: true })).toBe(
+      '10h0m0s0ms',
+    );
+
+    expect(ms(-1 * 60 * 60 * 1000, { long: false, allUnits: true })).toBe(
+      '-1h0m0s0ms',
+    );
+    expect(ms(-1 * 60 * 60 * 1200, { long: false, allUnits: true })).toBe(
+      '-1h12m0s0ms',
+    );
+    expect(ms(-1 * 60 * 60 * 10000, { long: false, allUnits: true })).toBe(
+      '-10h0m0s0ms',
+    );
+  });
+
+  it('should support days', () => {
+    expect(ms(24 * 60 * 60 * 1000, { long: true, allUnits: true })).toBe(
+      '1 day 0 hours 0 minutes 0 seconds 0 ms',
+    );
+    expect(ms(24 * 60 * 60 * 1200, { long: true, allUnits: true })).toBe(
+      '1 day 4 hours 48 minutes 0 seconds 0 ms',
+    );
+    expect(ms(24 * 60 * 60 * 10000, { long: true, allUnits: true })).toBe(
+      '10 days 0 hours 0 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(-1 * 24 * 60 * 60 * 1000, { long: true, allUnits: true })).toBe(
+      '-1 day 0 hours 0 minutes 0 seconds 0 ms',
+    );
+    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: true, allUnits: true })).toBe(
+      '-1 day 4 hours 48 minutes 0 seconds 0 ms',
+    );
+    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true, allUnits: true })).toBe(
+      '-10 days 0 hours 0 minutes 0 seconds 0 ms',
+    );
+
+    expect(ms(24 * 60 * 60 * 1000, { long: false, allUnits: true })).toBe(
+      '1d0h0m0s0ms',
+    );
+    expect(ms(24 * 60 * 60 * 1200, { long: false, allUnits: true })).toBe(
+      '1d4h48m0s0ms',
+    );
+    expect(ms(24 * 60 * 60 * 10000, { long: false, allUnits: true })).toBe(
+      '10d0h0m0s0ms',
+    );
+
+    expect(ms(-1 * 24 * 60 * 60 * 1000, { long: false, allUnits: true })).toBe(
+      '-1d0h0m0s0ms',
+    );
+    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: false, allUnits: true })).toBe(
+      '-1d4h48m0s0ms',
+    );
+    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: false, allUnits: true })).toBe(
+      '-10d0h0m0s0ms',
+    );
+  });
+
+  it('should be exact', () => {
+    expect(ms(234234234, { long: true, allUnits: true })).toBe(
+      '2 days 17 hours 3 minutes 54 seconds 234 ms',
+    );
+    expect(ms(-234234234, { long: true, allUnits: true })).toBe(
+      '-2 days 17 hours 3 minutes 54 seconds 234 ms',
+    );
+
+    expect(ms(234234234, { long: false, allUnits: true })).toBe(
+      '2d17h3m54s234ms',
+    );
+    expect(ms(-234234234, { long: false, allUnits: true })).toBe(
+      '-2d17h3m54s234ms',
+    );
   });
 });
 
