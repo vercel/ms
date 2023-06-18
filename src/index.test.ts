@@ -196,6 +196,34 @@ describe('ms(number, { long: true })', () => {
 
     expect(ms(-234234234, { long: true })).toBe('-3 days');
   });
+
+  it('should not round', () => {
+    expect(ms(4.56789 * 1000, { long: true, round: false })).toBe(
+      '4.56789 seconds',
+    );
+
+    expect(ms(-4.56789 * 1000, { long: true, round: false })).toBe(
+      '-4.56789 seconds',
+    );
+  });
+
+  it(`should round to precision 1 (0.1)`, () => {
+    expect(ms(4.567 * 1000, { long: true, round: 1 })).toBe('4.6 seconds');
+
+    expect(ms(-4.567 * 1000, { long: true, round: 1 })).toBe('-4.6 seconds');
+  });
+
+  it(`should round to precision 2 (0.01)`, () => {
+    expect(ms(4.567 * 1000, { long: true, round: 2 })).toBe('4.57 seconds');
+
+    expect(ms(-4.567 * 1000, { long: true, round: 2 })).toBe('-4.57 seconds');
+  });
+
+  it(`should round to precision 3 (0.001)`, () => {
+    expect(ms(4.567 * 1000, { long: true, round: 3 })).toBe('4.567 seconds');
+
+    expect(ms(-4.567 * 1000, { long: true, round: 3 })).toBe('-4.567 seconds');
+  });
 });
 
 // numbers
@@ -249,6 +277,30 @@ describe('ms(number)', () => {
     expect(ms(234234234)).toBe('3d');
 
     expect(ms(-234234234)).toBe('-3d');
+  });
+
+  it('should not round', () => {
+    expect(ms(4.56789 * 1000, { round: false })).toBe('4.56789s');
+
+    expect(ms(-4.56789 * 1000, { round: false })).toBe('-4.56789s');
+  });
+
+  it(`should round to precision 1 (0.1)`, () => {
+    expect(ms(4.567 * 1000, { round: 1 })).toBe('4.6s');
+
+    expect(ms(-4.567 * 1000, { round: 1 })).toBe('-4.6s');
+  });
+
+  it(`should round to precision 2 (0.01)`, () => {
+    expect(ms(4.567 * 1000, { round: 2 })).toBe('4.57s');
+
+    expect(ms(-4.567 * 1000, { round: 2 })).toBe('-4.57s');
+  });
+
+  it(`should round to precision 3 (0.001)`, () => {
+    expect(ms(4.567 * 1000, { round: 3 })).toBe('4.567s');
+
+    expect(ms(-4.567 * 1000, { round: 3 })).toBe('-4.567s');
   });
 });
 
