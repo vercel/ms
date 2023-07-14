@@ -149,6 +149,9 @@ export function parseStrict(value: StringValue): number {
  */
 function fmtShort(ms: number): StringValue {
   const msAbs = Math.abs(ms);
+  if(msAbs >= y){
+    return `${Math.round(ms / y)}y`;
+  }
   if (msAbs >= d) {
     return `${Math.round(ms / d)}d`;
   }
@@ -169,6 +172,9 @@ function fmtShort(ms: number): StringValue {
  */
 function fmtLong(ms: number): StringValue {
   const msAbs = Math.abs(ms);
+  if(msAbs >= y){
+    return plural(ms, msAbs, y, 'year');;
+  }
   if (msAbs >= d) {
     return plural(ms, msAbs, d, 'day');
   }
