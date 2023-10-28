@@ -6,10 +6,17 @@ on:
   pull_request:
     branches: [master]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  prettier:
-    name: 'Prettier'
+  quality:
+    name: 'Check quality'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        command: ['prettier-check', 'eslint-check', 'type-check']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,53 +35,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run Prettier check
-        run: pnpm run prettier-check
-
-  eslint:
-    name: 'ESLint'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run ESLint check
-        run: pnpm run eslint-check
-
-  types:
-    name: 'TypeScript'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run TypeScript type check
-        run: pnpm run type-check
+      - name: Run command
+        run: pnpm run ${{ matrix.command }}
