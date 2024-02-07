@@ -4,6 +4,7 @@ const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
+const mo = d * 30.4375;
 const y = d * 365.25;
 
 type Unit =
@@ -12,6 +13,9 @@ type Unit =
   | 'Yrs'
   | 'Yr'
   | 'Y'
+  | 'Months'
+  | 'Month'
+  | 'Mo'
   | 'Weeks'
   | 'Week'
   | 'W'
@@ -90,7 +94,7 @@ function parse(str: string): number {
     throw new Error('Value exceeds the maximum length of 100 characters.');
   }
   const match =
-    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo?|years?|yrs?|y)?$/i.exec(
       str,
     );
   // Named capture groups need to be manually typed today.
@@ -108,6 +112,10 @@ function parse(str: string): number {
     case 'yr':
     case 'y':
       return n * y;
+    case 'months':
+    case 'month':
+    case 'mo': 
+      return n * mo;
     case 'weeks':
     case 'week':
     case 'w':
