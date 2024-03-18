@@ -150,6 +150,17 @@ export function parse(str: string): number {
   }
 }
 
+/**
+ * Parse the given StringValue and return milliseconds.
+ *
+ * @param value - A typesafe StringValue to parse to milliseconds
+ * @returns The parsed value in milliseconds, or `NaN` if the string can't be
+ * parsed
+ */
+export function parseStrict(value: StringValue): number {
+  return parse(value);
+}
+
 // eslint-disable-next-line import/no-default-export
 export default msFn;
 
