@@ -69,7 +69,7 @@ function msFn(value: StringValue | number, options?: Options): number | string {
     } else if (typeof value === 'number') {
       return format(value, options);
     }
-    throw new Error('Value of ms() must be a string or number.');
+    throw new Error('Value provided to ms() must be a string or number.');
   } catch (error) {
     const message = isError(error)
       ? `${error.message}. value=${JSON.stringify(value)}`
@@ -88,7 +88,7 @@ function msFn(value: StringValue | number, options?: Options): number | string {
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      'Value of ms.parse() must be a string with length between 1 and 99.',
+      'Value provided to ms.parse() must be a string with length between 1 and 99.',
     );
   }
   const match =
@@ -202,7 +202,7 @@ function fmtLong(ms: number): StringValue {
  */
 export function format(ms: number, options?: Options): string {
   if (typeof ms !== 'number' || !isFinite(ms)) {
-    throw new Error('Value of ms.format() must be of type number.');
+    throw new Error('Value provided to ms.format() must be of type number.');
   }
   return options?.long ? fmtLong(ms) : fmtShort(ms);
 }
