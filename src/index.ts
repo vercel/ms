@@ -64,12 +64,12 @@ function msFn(value: StringValue, options?: Options): number;
 function msFn(value: number, options?: Options): string;
 function msFn(value: StringValue | number, options?: Options): number | string {
   try {
-    if (typeof value === 'string' && value.length > 0) {
+    if (typeof value === 'string') {
       return parse(value);
-    } else if (typeof value === 'number' && isFinite(value)) {
-      return options?.long ? fmtLong(value) : fmtShort(value);
+    } else if (typeof value === 'number') {
+      return format(value, options);
     }
-    throw new Error('Value is not a string or number.');
+    throw new Error('Value provided to ms() must be a string or number.');
   } catch (error) {
     const message = isError(error)
       ? `${error.message}. value=${JSON.stringify(value)}`
@@ -85,9 +85,11 @@ function msFn(value: StringValue | number, options?: Options): number | string {
  * @returns The parsed value in milliseconds, or `NaN` if the string can't be
  * parsed
  */
-function parse(str: string): number {
-  if (str.length > 100) {
-    throw new Error('Value exceeds the maximum length of 100 characters.');
+export function parse(str: string): number {
+  if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
+    throw new Error(
+      'Value provided to ms.parse() must be a string with length between 1 and 99.',
+    );
   }
   const match =
     /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
@@ -148,6 +150,17 @@ function parse(str: string): number {
   }
 }
 
+/**
+ * Parse the given StringValue and return milliseconds.
+ *
+ * @param value - A typesafe StringValue to parse to milliseconds
+ * @returns The parsed value in milliseconds, or `NaN` if the string can't be
+ * parsed
+ */
+export function parseStrict(value: StringValue): number {
+  return parse(value);
+}
+
 // eslint-disable-next-line import/no-default-export
 export default msFn;
 
@@ -189,6 +202,20 @@ function fmtLong(ms: number): StringValue {
     return plural(ms, msAbs, s, 'second');
   }
   return `${ms} ms`;
+}
+
+/**
+ * Format the given integer as a string.
+ *
+ * @param ms - milliseconds
+ * @param options - Options for the conversion
+ * @returns The formatted string
+ */
+export function format(ms: number, options?: Options): string {
+  if (typeof ms !== 'number' || !isFinite(ms)) {
+    throw new Error('Value provided to ms.format() must be of type number.');
+  }
+  return options?.long ? fmtLong(ms) : fmtShort(ms);
 }
 
 /**
