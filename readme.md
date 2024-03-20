@@ -111,6 +111,30 @@ function example(value: OnlyDaysAndWeeks) {
 example('5.2 days');
 ```
 
+## Advanced Usage
+
+As of `v3.0`, you can import `parse` and `format` separately.
+
+```ts
+import { parse, format } from 'ms';
+
+parse('1h'); // 3600000
+
+format(2000); // "2s"
+```
+
+If you want strict type checking for the input value, you can use `parseStrict`.
+
+```ts
+import { parseStrict } from 'ms';
+
+parseStrict('1h'); // 3600000
+
+function example(s: string) {
+  return parseStrict(str); // tsc error
+}
+```
+
 ## Edge Runtime Support
 
 `ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app/). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:
