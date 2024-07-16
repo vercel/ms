@@ -84,7 +84,7 @@ function example(value: string) {
     // It's important to note that this can be dangerous (see below).
     ms(value as StringValue);
   } catch (error: Error) {
-    // Handle any errors from invalid vaues.
+    // Handle any errors from invalid values.
     console.error(error);
   }
 }
