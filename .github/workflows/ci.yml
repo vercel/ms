@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test:
@@ -12,24 +12,30 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x]
+        node-version: [18, 20, 22]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7
+        uses: actions/checkout@v4
 
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
+
+      - name: Use pnpm
+        run: corepack enable pnpm && pnpm --version
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Run Prettier check
+        run: pnpm run prettier-check
+
+      - name: Run ESLint check
+        run: pnpm run eslint-check
+
+      - name: Run TypeScript type check
+        run: pnpm run type-check
 
       - name: Run tests
         run: pnpm test
