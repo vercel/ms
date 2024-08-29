@@ -3,41 +3,32 @@
   "version": "3.0.0-canary.1",
   "description": "Tiny millisecond conversion utility",
   "repository": "vercel/ms",
-  "main": "./dist/index.cjs",
+  "license": "MIT",
+  "sideEffects": false,
   "type": "module",
   "exports": {
     "types": "./dist/index.d.ts",
     "import": "./dist/index.mjs",
     "require": "./dist/index.cjs"
   },
+  "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "sideEffects": false,
-  "license": "MIT",
-  "packageManager": "pnpm@9.9.0",
-  "engines": {
-    "node": ">=12.13"
-  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "test": "npm run test-nodejs && npm run test-edge",
-    "test-nodejs": "jest --env node",
-    "test-edge": "jest --env @edge-runtime/jest-environment",
     "build": "scripts/build.js",
-    "prepublishOnly": "npm run build",
     "eslint-check": "eslint --max-warnings=0 .",
-    "prettier-check": "prettier --check .",
-    "type-check": "tsc --noEmit",
     "precommit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublishOnly": "npm run build",
+    "prettier-check": "prettier --check .",
+    "test": "npm run test-nodejs && npm run test-edge",
+    "test-edge": "jest --env @edge-runtime/jest-environment",
+    "test-nodejs": "jest --env node",
+    "type-check": "tsc --noEmit"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
-  "prettier": "@vercel/style-guide/prettier",
   "lint-staged": {
     "*": [
       "prettier --ignore-unknown --write"
@@ -46,10 +37,15 @@
       "eslint --max-warnings=0 --fix"
     ]
   },
+  "prettier": "@vercel/style-guide/prettier",
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "@edge-runtime/jest-environment": "1.1.0-beta.6",
     "@types/jest": "27.0.1",
-    "@vercel/style-guide": "3.0.0",
+    "@vercel/style-guide": "6.0.0",
     "eslint": "8.12.0",
     "husky": "7.0.2",
     "jest": "27.1.1",
@@ -57,5 +53,9 @@
     "prettier": "2.6.2",
     "ts-jest": "27.0.5",
     "typescript": "4.6.3"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "engines": {
+    "node": ">=12.13"
   }
 }
