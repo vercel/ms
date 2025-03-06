@@ -43,9 +43,19 @@ ms(-3 * 60000, { long: true })        // "-3 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
+## Installation
+
+You can install this package using a package manager like npm or bun.
+
+```bash
+npm install ms
+# or
+bun add ms
+```
+
 ## Features
 
-- Works both in [Node.js](https://nodejs.org) and in the browser
+- Works in both browsers and server runtimes like [Node.js](https://nodejs.org) and [Bun](https://bun.sh)
 - If a number is supplied to `ms`, a string with a unit is returned
 - If a string that contains the number is supplied, it returns it as a number (e.g.: it returns `100` for `'100'`)
 - If you pass a string with a number and a valid unit, the number of equivalent milliseconds is returned
