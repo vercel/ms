@@ -32,13 +32,15 @@
 		"format": "biome format",
 		"typecheck": "tsc --noEmit",
 		"preattw": "pnpm build",
-		"attw": "attw --pack ."
+		"attw": "attw --pack .",
+		"prepare": "husky"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/cli": "0.18.2",
 		"@biomejs/biome": "2.1.2",
 		"@edge-runtime/jest-environment": "4.0.0",
 		"@jest/globals": "30.0.5",
+		"husky": "9.1.7",
 		"jest": "30.0.5",
 		"ts-jest": "29.4.0",
 		"ts-node": "10.9.2",

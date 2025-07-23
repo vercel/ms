@@ -8,6 +8,7 @@ importers:
       '@biomejs/biome': 2.1.2
       '@edge-runtime/jest-environment': 4.0.0
       '@jest/globals': 30.0.5
+      husky: 9.1.7
       jest: 30.0.5
       ts-jest: 29.4.0
       ts-node: 10.9.2
@@ -18,6 +19,7 @@ importers:
       '@biomejs/biome': 2.1.2
       '@edge-runtime/jest-environment': 4.0.0
       '@jest/globals': 30.0.5
+      husky: 9.1.7
       jest: 30.0.5_ts-node@10.9.2
       ts-jest: 29.4.0_pvhaxcdpff3jy4q26hfda653na
       ts-node: 10.9.2_typescript@5.8.3
@@ -2266,6 +2268,12 @@ packages:
   /human-signals/2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
+    dev: true
+
+  /husky/9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
+    hasBin: true
     dev: true
 
   /import-local/3.2.0:
