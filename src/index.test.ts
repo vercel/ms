@@ -1,5 +1,5 @@
 import { describe, expect, it } from "@jest/globals";
-import { ms, parse } from "./ms";
+import { ms, parse } from "./index";
 
 describe("ms(string)", () => {
 	it("should not throw an error", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "@jest/globals";
-import { format } from "./ms";
+import { format } from "./index";
 
 describe("format(number, { long: true })", () => {
 	it("should not throw an error", () => {

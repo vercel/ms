@@ -1,5 +1,5 @@
 import { describe, expect, it } from "@jest/globals";
-import { parseStrict } from "./ms";
+import { parseStrict } from "./index";
 
 describe("parseStrict(string)", () => {
 	it("should fallback to ms if no unit is provided", () => {

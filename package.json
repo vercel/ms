@@ -4,16 +4,16 @@
 	"description": "Tiny millisecond conversion utility",
 	"repository": "vercel/ms",
 	"type": "module",
-	"main": "./dist/ms.cjs",
+	"main": "./dist/index.cjs",
 	"exports": {
 		".": {
 			"import": {
-				"types": "./dist/ms.d.ts",
-				"default": "./dist/ms.js"
+				"types": "./dist/index.d.ts",
+				"default": "./dist/index.js"
 			},
 			"require": {
-				"types": "./dist/ms.d.cts",
-				"default": "./dist/ms.cjs"
+				"types": "./dist/index.d.cts",
+				"default": "./dist/index.cjs"
 			}
 		}
 	},
