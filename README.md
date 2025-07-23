@@ -7,7 +7,6 @@ Use this package to easily convert various time formats to milliseconds.
 
 ## Examples
 
-<!-- prettier-ignore -->
 ```js
 ms('2 days')  // 172800000
 ms('1d')      // 86400000
@@ -25,22 +24,20 @@ ms('-200')    // -200
 
 ### Convert from Milliseconds
 
-<!-- prettier-ignore -->
 ```js
-ms(60000)             // "1m"
-ms(2 * 60000)         // "2m"
-ms(-3 * 60000)        // "-3m"
-ms(ms('10 hours'))    // "10h"
+ms(60000)          // "1m"
+ms(2 * 60000)      // "2m"
+ms(-3 * 60000)     // "-3m"
+ms(ms('10 hours')) // "10h"
 ```
 
 ### Time Format Written-Out
 
-<!-- prettier-ignore -->
 ```js
-ms(60000, { long: true })             // "1 minute"
-ms(2 * 60000, { long: true })         // "2 minutes"
-ms(-3 * 60000, { long: true })        // "-3 minutes"
-ms(ms('10 hours'), { long: true })    // "10 hours"
+ms(60000, { long: true })          // "1 minute"
+ms(2 * 60000, { long: true })      // "2 minutes"
+ms(-3 * 60000, { long: true })     // "-3 minutes"
+ms(ms('10 hours'), { long: true }) // "10 hours"
 ```
 
 ## Features
@@ -59,7 +56,7 @@ For added safety, we're using [Template Literal Types](https://www.typescriptlan
 This won't require you to do anything special in most situations, but you can also import the `StringValue` type from `ms` if you need to use it.
 
 ```ts
-import ms, { StringValue } from 'ms';
+import { ms, type StringValue } from 'ms';
 
 // Using the exported type.
 function example(value: StringValue) {
@@ -73,7 +70,7 @@ example('1 h');
 In this example, we use a [Type Assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) to coerce a `string`.
 
 ```ts
-import ms, { StringValue } from 'ms';
+import { ms, type StringValue } from 'ms';
 
 // Type assertion with the exported type.
 function example(value: string) {
@@ -96,7 +93,7 @@ example('any value');
 You may also create a custom Template Literal Type.
 
 ```ts
-import ms from 'ms';
+import { ms } from 'ms';
 
 type OnlyDaysAndWeeks = `${number} ${'days' | 'weeks'}`;
 
@@ -137,13 +134,13 @@ function example(s: string) {
 
 ## Edge Runtime Support
 
-`ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app/). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:
+`ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:
 
 ```js
 // Next.js (pages/api/edge.js) (npm i next@canary)
 // Other frameworks (api/edge.js) (npm i -g vercel@canary)
 
-import ms from 'ms';
+import { ms } from 'ms';
 const start = Date.now();
 
 export default (req) => {
@@ -162,7 +159,7 @@ export const config = {
 ## Caught a Bug?
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Link the package to the global module directory: `npm link`
-3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `npm link ms`. Instead of the default one from npm, Node.js will now use your clone of ms!
+2. Link the package to the global module directory: `pnpm link`
+3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `pnpm link ms`. Instead of the default one from npm, Node.js will now use your clone of ms!
 
-As always, you can run the tests using: `npm test`
+As always, you can run the tests using: `pnpm test`

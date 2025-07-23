@@ -1,60 +1,53 @@
 {
-  "name": "ms",
-  "version": "3.0.0-canary.1",
-  "description": "Tiny millisecond conversion utility",
-  "repository": "vercel/ms",
-  "main": "./dist/index.cjs",
-  "type": "module",
-  "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
-  },
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
-  "license": "MIT",
-  "engines": {
-    "node": ">=12.13"
-  },
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "test": "npm run test-nodejs && npm run test-edge",
-    "test-nodejs": "jest --env node",
-    "test-edge": "jest --env @edge-runtime/jest-environment",
-    "build": "scripts/build.js",
-    "prepublishOnly": "npm run build",
-    "eslint-check": "eslint --max-warnings=0 .",
-    "prettier-check": "prettier --check .",
-    "type-check": "tsc --noEmit",
-    "precommit": "lint-staged",
-    "prepare": "husky install"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
-  "prettier": "@vercel/style-guide/prettier",
-  "lint-staged": {
-    "*": [
-      "prettier --ignore-unknown --write"
-    ],
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0 --fix"
-    ]
-  },
-  "devDependencies": {
-    "@edge-runtime/jest-environment": "1.1.0-beta.6",
-    "@types/jest": "27.0.1",
-    "@vercel/style-guide": "3.0.0",
-    "eslint": "8.12.0",
-    "husky": "7.0.2",
-    "jest": "27.1.1",
-    "lint-staged": "11.1.2",
-    "prettier": "2.6.2",
-    "ts-jest": "27.0.5",
-    "typescript": "4.6.3"
-  }
+	"name": "ms",
+	"version": "3.0.0-canary.2",
+	"description": "Tiny millisecond conversion utility",
+	"repository": "vercel/ms",
+	"type": "module",
+	"main": "./dist/ms.cjs",
+	"exports": {
+		".": {
+			"import": {
+				"types": "./dist/ms.d.ts",
+				"default": "./dist/ms.js"
+			},
+			"require": {
+				"types": "./dist/ms.d.cts",
+				"default": "./dist/ms.cjs"
+			}
+		}
+	},
+	"sideEffects": false,
+	"license": "MIT",
+	"engines": {
+		"node": ">=24.4.1"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"test": "pnpm run test:node && pnpm run test:edge",
+		"test:node": "jest --env node",
+		"test:edge": "jest --env @edge-runtime/jest-environment --no-coverage",
+		"build": "tsup",
+		"prepublishOnly": "pnpm run build",
+		"lint": "biome lint",
+		"format": "biome format",
+		"typecheck": "tsc --noEmit",
+		"preattw": "pnpm build",
+		"attw": "attw --pack .",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "0.18.2",
+		"@biomejs/biome": "2.1.2",
+		"@edge-runtime/jest-environment": "4.0.0",
+		"@jest/globals": "30.0.5",
+		"husky": "9.1.7",
+		"jest": "30.0.5",
+		"ts-jest": "29.4.0",
+		"tsup": "8.5.0",
+		"typescript": "5.8.3"
+	},
+	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }
