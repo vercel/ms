@@ -1,11 +1,11 @@
-import type { Config } from "jest";
+import type { Config } from 'jest';
 
 const config: Config = {
-	preset: "ts-jest",
+	preset: 'ts-jest',
 	collectCoverage: true,
-	coverageDirectory: "coverage",
-	coverageReporters: ["text", "lcov"],
-	moduleFileExtensions: ["ts", "js"],
+	coverageDirectory: 'coverage',
+	coverageReporters: ['text', 'lcov'],
+	moduleFileExtensions: ['ts', 'js'],
 	coverageThreshold: {
 		global: {
 			branches: 100,
@@ -15,9 +15,9 @@ const config: Config = {
 		},
 	},
 	transform: {
-		"^.+\\.ts$": "ts-jest",
+		'^.+\\.ts$': 'ts-jest',
 	},
-	testMatch: ["**/src/**/*.test.ts"],
+	testMatch: ['**/src/**/*.test.ts'],
 };
 
 export default config;

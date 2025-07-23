@@ -1,167 +1,167 @@
-import { describe, expect, it } from "@jest/globals";
-import { format } from "./index";
+import { describe, expect, it } from '@jest/globals';
+import { format } from './index';
 
-describe("format(number, { long: true })", () => {
-	it("should not throw an error", () => {
+describe('format(number, { long: true })', () => {
+	it('should not throw an error', () => {
 		expect(() => {
 			format(500, { long: true });
 		}).not.toThrow();
 	});
 
-	it("should support milliseconds", () => {
-		expect(format(500, { long: true })).toBe("500 ms");
+	it('should support milliseconds', () => {
+		expect(format(500, { long: true })).toBe('500 ms');
 
-		expect(format(-500, { long: true })).toBe("-500 ms");
+		expect(format(-500, { long: true })).toBe('-500 ms');
 	});
 
-	it("should support seconds", () => {
-		expect(format(1000, { long: true })).toBe("1 second");
-		expect(format(1200, { long: true })).toBe("1 second");
-		expect(format(10000, { long: true })).toBe("10 seconds");
+	it('should support seconds', () => {
+		expect(format(1000, { long: true })).toBe('1 second');
+		expect(format(1200, { long: true })).toBe('1 second');
+		expect(format(10000, { long: true })).toBe('10 seconds');
 
-		expect(format(-1000, { long: true })).toBe("-1 second");
-		expect(format(-1200, { long: true })).toBe("-1 second");
-		expect(format(-10000, { long: true })).toBe("-10 seconds");
+		expect(format(-1000, { long: true })).toBe('-1 second');
+		expect(format(-1200, { long: true })).toBe('-1 second');
+		expect(format(-10000, { long: true })).toBe('-10 seconds');
 	});
 
-	it("should support minutes", () => {
-		expect(format(60 * 1000, { long: true })).toBe("1 minute");
-		expect(format(60 * 1200, { long: true })).toBe("1 minute");
-		expect(format(60 * 10000, { long: true })).toBe("10 minutes");
+	it('should support minutes', () => {
+		expect(format(60 * 1000, { long: true })).toBe('1 minute');
+		expect(format(60 * 1200, { long: true })).toBe('1 minute');
+		expect(format(60 * 10000, { long: true })).toBe('10 minutes');
 
-		expect(format(-1 * 60 * 1000, { long: true })).toBe("-1 minute");
-		expect(format(-1 * 60 * 1200, { long: true })).toBe("-1 minute");
-		expect(format(-1 * 60 * 10000, { long: true })).toBe("-10 minutes");
+		expect(format(-1 * 60 * 1000, { long: true })).toBe('-1 minute');
+		expect(format(-1 * 60 * 1200, { long: true })).toBe('-1 minute');
+		expect(format(-1 * 60 * 10000, { long: true })).toBe('-10 minutes');
 	});
 
-	it("should support hours", () => {
-		expect(format(60 * 60 * 1000, { long: true })).toBe("1 hour");
-		expect(format(60 * 60 * 1200, { long: true })).toBe("1 hour");
-		expect(format(60 * 60 * 10000, { long: true })).toBe("10 hours");
+	it('should support hours', () => {
+		expect(format(60 * 60 * 1000, { long: true })).toBe('1 hour');
+		expect(format(60 * 60 * 1200, { long: true })).toBe('1 hour');
+		expect(format(60 * 60 * 10000, { long: true })).toBe('10 hours');
 
-		expect(format(-1 * 60 * 60 * 1000, { long: true })).toBe("-1 hour");
-		expect(format(-1 * 60 * 60 * 1200, { long: true })).toBe("-1 hour");
-		expect(format(-1 * 60 * 60 * 10000, { long: true })).toBe("-10 hours");
+		expect(format(-1 * 60 * 60 * 1000, { long: true })).toBe('-1 hour');
+		expect(format(-1 * 60 * 60 * 1200, { long: true })).toBe('-1 hour');
+		expect(format(-1 * 60 * 60 * 10000, { long: true })).toBe('-10 hours');
 	});
 
-	it("should support days", () => {
-		expect(format(24 * 60 * 60 * 1000, { long: true })).toBe("1 day");
-		expect(format(24 * 60 * 60 * 1200, { long: true })).toBe("1 day");
-		expect(format(24 * 60 * 60 * 10000, { long: true })).toBe("10 days");
+	it('should support days', () => {
+		expect(format(24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
+		expect(format(24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
+		expect(format(24 * 60 * 60 * 10000, { long: true })).toBe('10 days');
 
-		expect(format(-1 * 24 * 60 * 60 * 1000, { long: true })).toBe("-1 day");
-		expect(format(-1 * 24 * 60 * 60 * 1200, { long: true })).toBe("-1 day");
-		expect(format(-1 * 24 * 60 * 60 * 10000, { long: true })).toBe("-10 days");
+		expect(format(-1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
+		expect(format(-1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
+		expect(format(-1 * 24 * 60 * 60 * 10000, { long: true })).toBe('-10 days');
 	});
 
-	it("should round", () => {
-		expect(format(234234234, { long: true })).toBe("3 days");
+	it('should round', () => {
+		expect(format(234234234, { long: true })).toBe('3 days');
 
-		expect(format(-234234234, { long: true })).toBe("-3 days");
+		expect(format(-234234234, { long: true })).toBe('-3 days');
 	});
 });
 
-describe("format(number)", () => {
-	it("should not throw an error", () => {
+describe('format(number)', () => {
+	it('should not throw an error', () => {
 		expect(() => {
 			format(500);
 		}).not.toThrow();
 	});
 
-	it("should support milliseconds", () => {
-		expect(format(500)).toBe("500ms");
+	it('should support milliseconds', () => {
+		expect(format(500)).toBe('500ms');
 
-		expect(format(-500)).toBe("-500ms");
+		expect(format(-500)).toBe('-500ms');
 	});
 
-	it("should support seconds", () => {
-		expect(format(1000)).toBe("1s");
-		expect(format(10000)).toBe("10s");
+	it('should support seconds', () => {
+		expect(format(1000)).toBe('1s');
+		expect(format(10000)).toBe('10s');
 
-		expect(format(-1000)).toBe("-1s");
-		expect(format(-10000)).toBe("-10s");
+		expect(format(-1000)).toBe('-1s');
+		expect(format(-10000)).toBe('-10s');
 	});
 
-	it("should support minutes", () => {
-		expect(format(60 * 1000)).toBe("1m");
-		expect(format(60 * 10000)).toBe("10m");
+	it('should support minutes', () => {
+		expect(format(60 * 1000)).toBe('1m');
+		expect(format(60 * 10000)).toBe('10m');
 
-		expect(format(-1 * 60 * 1000)).toBe("-1m");
-		expect(format(-1 * 60 * 10000)).toBe("-10m");
+		expect(format(-1 * 60 * 1000)).toBe('-1m');
+		expect(format(-1 * 60 * 10000)).toBe('-10m');
 	});
 
-	it("should support hours", () => {
-		expect(format(60 * 60 * 1000)).toBe("1h");
-		expect(format(60 * 60 * 10000)).toBe("10h");
+	it('should support hours', () => {
+		expect(format(60 * 60 * 1000)).toBe('1h');
+		expect(format(60 * 60 * 10000)).toBe('10h');
 
-		expect(format(-1 * 60 * 60 * 1000)).toBe("-1h");
-		expect(format(-1 * 60 * 60 * 10000)).toBe("-10h");
+		expect(format(-1 * 60 * 60 * 1000)).toBe('-1h');
+		expect(format(-1 * 60 * 60 * 10000)).toBe('-10h');
 	});
 
-	it("should support days", () => {
-		expect(format(24 * 60 * 60 * 1000)).toBe("1d");
-		expect(format(24 * 60 * 60 * 10000)).toBe("10d");
+	it('should support days', () => {
+		expect(format(24 * 60 * 60 * 1000)).toBe('1d');
+		expect(format(24 * 60 * 60 * 10000)).toBe('10d');
 
-		expect(format(-1 * 24 * 60 * 60 * 1000)).toBe("-1d");
-		expect(format(-1 * 24 * 60 * 60 * 10000)).toBe("-10d");
+		expect(format(-1 * 24 * 60 * 60 * 1000)).toBe('-1d');
+		expect(format(-1 * 24 * 60 * 60 * 10000)).toBe('-10d');
 	});
 
-	it("should round", () => {
-		expect(format(234234234)).toBe("3d");
+	it('should round', () => {
+		expect(format(234234234)).toBe('3d');
 
-		expect(format(-234234234)).toBe("-3d");
+		expect(format(-234234234)).toBe('-3d');
 	});
 });
 
-describe("format(invalid inputs)", () => {
+describe('format(invalid inputs)', () => {
 	it('should throw an error, when format("")', () => {
 		expect(() => {
 			// @ts-expect-error - We expect this to throw.
-			format("");
+			format('');
 		}).toThrow();
 	});
 
-	it("should throw an error, when format(undefined)", () => {
+	it('should throw an error, when format(undefined)', () => {
 		expect(() => {
 			// @ts-expect-error - We expect this to throw.
 			format(undefined);
 		}).toThrow();
 	});
 
-	it("should throw an error, when format(null)", () => {
+	it('should throw an error, when format(null)', () => {
 		expect(() => {
 			// @ts-expect-error - We expect this to throw.
 			format(null);
 		}).toThrow();
 	});
 
-	it("should throw an error, when format([])", () => {
+	it('should throw an error, when format([])', () => {
 		expect(() => {
 			// @ts-expect-error - We expect this to throw.
 			format([]);
 		}).toThrow();
 	});
 
-	it("should throw an error, when format({})", () => {
+	it('should throw an error, when format({})', () => {
 		expect(() => {
 			// @ts-expect-error - We expect this to throw.
 			format({});
 		}).toThrow();
 	});
 
-	it("should throw an error, when format(NaN)", () => {
+	it('should throw an error, when format(NaN)', () => {
 		expect(() => {
 			format(NaN);
 		}).toThrow();
 	});
 
-	it("should throw an error, when format(Infinity)", () => {
+	it('should throw an error, when format(Infinity)', () => {
 		expect(() => {
 			format(Infinity);
 		}).toThrow();
 	});
 
-	it("should throw an error, when format(-Infinity)", () => {
+	it('should throw an error, when format(-Infinity)', () => {
 		expect(() => {
 			format(-Infinity);
 		}).toThrow();
