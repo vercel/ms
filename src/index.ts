@@ -85,6 +85,8 @@ export function ms(
 	}
 }
 
+export default ms;
+
 /**
  * Parse the given string and return milliseconds.
  *
