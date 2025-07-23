@@ -19,9 +19,6 @@
 	},
 	"sideEffects": false,
 	"license": "MIT",
-	"engines": {
-		"node": ">=24.4.1"
-	},
 	"files": [
 		"dist"
 	],
