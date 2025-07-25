@@ -43,6 +43,32 @@ ms(-3 * 60000, { long: true })        // "-3 minutes"
 ms(ms('10 hours'), { long: true })    // "10 hours"
 ```
 
+### Input Formats (Units)
+
+<!-- prettier-ignore -->
+```js
+// For Years
+'years' | 'year' | 'yrs' | 'yr' | 'y'
+
+// For Weeks
+'weeks' | 'week' | 'w'
+
+// For Days
+'days' | 'day' | 'd'
+
+// For Hours
+'hours' | 'hour' | 'hrs' | 'hr' | 'h'
+
+// For Minutes
+'minutes' | 'minute' | 'mins' | 'min' | 'm'
+
+// For Seconds
+'seconds' | 'second' | 'secs' | 'sec' | 's'
+
+// For Milliseconds
+'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms'
+```
+
 ## Features
 
 - Works both in [Node.js](https://nodejs.org) and in the browser
