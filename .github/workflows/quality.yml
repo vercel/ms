@@ -7,74 +7,31 @@ on:
     branches: [main]
 
 jobs:
-  prettier:
-    name: 'Prettier'
+  quality:
+    name: ${{ matrix.task }} on Node ${{ matrix.node }}
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [24]
+        task: [prettier-check, eslint-check, type-check]
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 7
+          run_install: true
 
-      - name: Use Node.js 16
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '16'
-          cache: 'pnpm'
+          node-version: ${{ matrix.node }}
+          cache: pnpm
 
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run Prettier check
-        run: pnpm run prettier-check
-
-  eslint:
-    name: 'ESLint'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 7
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run ESLint check
-        run: pnpm run eslint-check
-
-  types:
-    name: 'TypeScript'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 7
-
-      - name: Use Node.js 16
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run TypeScript type check
-        run: pnpm run type-check
+      - name: Run ${{ matrix.task }}
+        run: pnpm run ${{ matrix.task }}
