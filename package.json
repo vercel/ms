@@ -21,9 +21,9 @@
     "dist"
   ],
   "scripts": {
-    "test": "npm run test-nodejs && npm run test-edge",
-    "test-nodejs": "jest --env node",
-    "test-edge": "jest --env @edge-runtime/jest-environment",
+    "test": "npm run test:nodejs && npm run test:edge",
+    "test:nodejs": "jest --env node",
+    "test:edge": "jest --env @edge-runtime/jest-environment",
     "build": "scripts/build.js",
     "prepublishOnly": "npm run build",
     "eslint-check": "eslint --max-warnings=0 .",
