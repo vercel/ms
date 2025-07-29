@@ -21,11 +21,11 @@
     "dist"
   ],
   "scripts": {
-    "test": "npm run test-nodejs && npm run test-edge",
-    "test-nodejs": "jest --env node",
-    "test-edge": "jest --env @edge-runtime/jest-environment",
+    "test": "pnpm run test:nodejs && pnpm run test:edge",
+    "test:nodejs": "jest --env node",
+    "test:edge": "jest --env @edge-runtime/jest-environment",
     "build": "scripts/build.js",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm run build",
     "eslint-check": "eslint --max-warnings=0 .",
     "prettier-check": "prettier --check .",
     "type-check": "tsc --noEmit",
