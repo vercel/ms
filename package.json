@@ -15,7 +15,8 @@
   "sideEffects": false,
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": ">=10"
   },
   "files": [
     "dist"
