@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Node ${{ matrix.node }}
+    name: Run `${{ matrix.task }}` on Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -26,7 +26,7 @@ jobs:
           version: 7
           run_install: true
 
-      - name: Setup Node.js
+      - name: Setup Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
