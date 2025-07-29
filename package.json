@@ -29,6 +29,8 @@
     "eslint-check": "eslint --max-warnings=0 .",
     "prettier-check": "prettier --check .",
     "type-check": "tsc --noEmit",
+    "preattw": "pnpm build",
+    "attw": "attw --pack .",
     "precommit": "lint-staged",
     "prepare": "husky install"
   },
@@ -46,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.2",
     "@edge-runtime/jest-environment": "1.1.0-beta.6",
     "@types/jest": "27.0.1",
     "@vercel/style-guide": "3.0.0",
