@@ -5,7 +5,7 @@ specifiers:
   '@biomejs/biome': 2.1.2
   '@edge-runtime/jest-environment': 1.1.0-beta.6
   '@types/jest': 27.0.1
-  husky: 7.0.2
+  husky: 9.1.7
   jest: 27.1.1
   lint-staged: 11.1.2
   ts-jest: 27.0.5
@@ -17,7 +17,7 @@ devDependencies:
   '@biomejs/biome': 2.1.2
   '@edge-runtime/jest-environment': 1.1.0-beta.6
   '@types/jest': 27.0.1
-  husky: 7.0.2
+  husky: 9.1.7
   jest: 27.1.1
   lint-staged: 11.1.2
   ts-jest: 27.0.5_v573o7iggorytmkxpvgtd43u5e
@@ -1989,9 +1989,9 @@ packages:
     engines: {node: '>=10.17.0'}
     dev: true
 
-  /husky/7.0.2:
-    resolution: {integrity: sha512-8yKEWNX4z2YsofXAMT7KvA1g8p+GxtB1ffV8XtpAEGuXNAbCV5wdNKH+qTpw8SM9fh4aMPDR+yQuKfgnreyZlg==}
-    engines: {node: '>=12'}
+  /husky/9.1.7:
+    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
+    engines: {node: '>=18'}
     hasBin: true
     dev: true
 
