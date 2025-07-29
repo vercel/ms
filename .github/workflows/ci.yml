@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: Run `${{ matrix.task }}` on Node ${{ matrix.node }}
+    name: ${{ matrix.task }} - Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -32,5 +32,5 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: pnpm
 
-      - name: Run ${{ matrix.task }}
+      - name: Run `${{ matrix.task }}`
         run: pnpm run ${{ matrix.task }}
