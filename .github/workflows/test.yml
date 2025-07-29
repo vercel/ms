@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.task }} - Node ${{ matrix.node }}
+    name: ${{ matrix.task }} / Node ${{ matrix.node }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
