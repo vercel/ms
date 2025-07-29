@@ -34,7 +34,7 @@
     "prepublishOnly": "pnpm run build",
     "lint": "biome lint",
 		"format": "biome format",
-    "type-check": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "preattw": "pnpm build",
     "attw": "attw --pack .",
     "precommit": "lint-staged",
