@@ -15,7 +15,7 @@
   "sideEffects": false,
   "license": "MIT",
   "engines": {
-    "node": ">=12.13"
+    "node": ">=18"
   },
   "files": [
     "dist"
