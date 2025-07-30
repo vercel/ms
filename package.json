@@ -35,8 +35,7 @@
     "lint": "biome lint",
     "format": "biome format",
     "typecheck": "tsc --noEmit",
-    "preattw": "pnpm build",
-    "attw": "attw --pack .",
+    "attw": "pnpm build && attw --pack .",
     "precommit": "lint-staged",
     "prepare": "husky"
   },
