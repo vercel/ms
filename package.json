@@ -4,14 +4,20 @@
   "description": "Tiny millisecond conversion utility",
   "repository": "vercel/ms",
   "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
   "type": "module",
   "exports": {
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.cjs"
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
   },
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "license": "MIT",
   "engines": {
@@ -24,37 +30,34 @@
     "test": "pnpm run test:nodejs && pnpm run test:edge",
     "test:nodejs": "jest --env node",
     "test:edge": "jest --env @edge-runtime/jest-environment",
-    "build": "scripts/build.js",
+    "build": "tsdown",
     "prepublishOnly": "pnpm run build",
-    "eslint-check": "eslint --max-warnings=0 .",
-    "prettier-check": "prettier --check .",
-    "type-check": "tsc --noEmit",
+    "lint": "biome lint",
+    "format": "biome format",
+    "typecheck": "tsc --noEmit",
+    "attw": "pnpm build && attw --pack .",
     "precommit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
   },
-  "prettier": "@vercel/style-guide/prettier",
   "lint-staged": {
     "*": [
-      "prettier --ignore-unknown --write"
-    ],
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0 --fix"
+      "pnpm biome check --write"
     ]
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.2",
+    "@biomejs/biome": "2.1.2",
     "@edge-runtime/jest-environment": "1.1.0-beta.6",
     "@types/jest": "27.0.1",
-    "@vercel/style-guide": "3.0.0",
-    "eslint": "8.12.0",
-    "husky": "7.0.2",
+    "husky": "9.1.7",
     "jest": "27.1.1",
     "lint-staged": "11.1.2",
-    "prettier": "2.6.2",
     "ts-jest": "27.0.5",
-    "typescript": "4.6.3"
+    "tsdown": "^0.13.0",
+    "typescript": "5.8.3"
   }
 }

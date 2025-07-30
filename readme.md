@@ -7,7 +7,6 @@ Use this package to easily convert various time formats to milliseconds.
 
 ## Examples
 
-<!-- prettier-ignore -->
 ```js
 ms('2 days')  // 172800000
 ms('1d')      // 86400000
@@ -25,7 +24,6 @@ ms('-200')    // -200
 
 ### Convert from Milliseconds
 
-<!-- prettier-ignore -->
 ```js
 ms(60000)             // "1m"
 ms(2 * 60000)         // "2m"
@@ -35,7 +33,6 @@ ms(ms('10 hours'))    // "10h"
 
 ### Time Format Written-Out
 
-<!-- prettier-ignore -->
 ```js
 ms(60000, { long: true })             // "1 minute"
 ms(2 * 60000, { long: true })         // "2 minutes"
