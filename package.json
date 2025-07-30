@@ -54,7 +54,6 @@
     "jest": "30.0.5",
     "lint-staged": "11.1.2",
     "ts-jest": "29.4.0",
-    "ts-node": "10.9.2",
     "tsdown": "^0.13.0",
     "typescript": "5.8.3"
   }
