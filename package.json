@@ -23,6 +23,7 @@
   "engines": {
     "node": ">=18"
   },
+  "packageManager": "pnpm@10.14.0-0+sha512.2cd47a0cbf5f1d1de7693a88307a0ede5be94e0d3b34853d800ee775efbea0650cb562b77605ec80bc8d925f5cd27c4dfe8bb04d3a0b76090784c664450d32d6",
   "files": [
     "dist"
   ],
@@ -39,10 +40,6 @@
     "precommit": "lint-staged",
     "prepare": "husky"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node"
-  },
   "lint-staged": {
     "*": [
       "pnpm biome check --write"
@@ -51,12 +48,13 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@biomejs/biome": "2.1.2",
-    "@edge-runtime/jest-environment": "1.1.0-beta.6",
-    "@types/jest": "27.0.1",
+    "@edge-runtime/jest-environment": "4.0.0",
+    "@jest/globals": "30.0.5",
+    "@types/node": "^24.1.0",
     "husky": "9.1.7",
-    "jest": "27.1.1",
+    "jest": "30.0.5",
     "lint-staged": "11.1.2",
-    "ts-jest": "27.0.5",
+    "ts-jest": "29.4.0",
     "tsdown": "^0.13.0",
     "typescript": "5.8.3"
   }
