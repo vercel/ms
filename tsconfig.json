@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "module": "esnext",
-    "target": "ES2019",
+    "target": "es2022",
     "esModuleInterop": true,
     "outDir": "dist",
     "declaration": true,
