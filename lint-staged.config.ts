@@ -4,4 +4,4 @@
  */
 export default {
   '*': 'pnpm biome check --write',
-}
+};
