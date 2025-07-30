@@ -50,6 +50,7 @@
     "@biomejs/biome": "2.1.2",
     "@edge-runtime/jest-environment": "4.0.0",
     "@jest/globals": "30.0.5",
+    "@types/node": "^24.1.0",
     "husky": "9.1.7",
     "jest": "30.0.5",
     "lint-staged": "11.1.2",
