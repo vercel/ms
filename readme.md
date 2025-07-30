@@ -20,11 +20,14 @@ ms('100')     // 100
 ms('-3 days') // -259200000
 ms('-1h')     // -3600000
 ms('-200')    // -200
+ms('23μs')    // 0.023
+ms('386ns')   // 0.000386
 ```
 
 ### Convert from Milliseconds
 
 ```js
+ms(2e-2)              // "20μs"
 ms(60000)             // "1m"
 ms(2 * 60000)         // "2m"
 ms(-3 * 60000)        // "-3m"
@@ -34,6 +37,7 @@ ms(ms('10 hours'))    // "10h"
 ### Time Format Written-Out
 
 ```js
+ms(2e-2, { long: true })              // "20 microseconds"
 ms(60000, { long: true })             // "1 minute"
 ms(2 * 60000, { long: true })         // "2 minutes"
 ms(-3 * 60000, { long: true })        // "-3 minutes"

@@ -36,6 +36,14 @@ describe('ms(string)', () => {
     expect(ms('100ms')).toBe(100);
   });
 
+  it('should convert μs to ms', () => {
+    expect(ms('1μs')).toBe(0.001);
+  });
+
+  it('should convert ns to ms', () => {
+    expect(ms('1ns')).toBe(0.000001);
+  });
+
   it('should convert y to ms', () => {
     expect(ms('1y')).toBe(31557600000);
   });
@@ -135,6 +143,14 @@ describe('ms(long string)', () => {
   it('should work with negative decimals starting with "."', () => {
     expect(ms('-.5 hr')).toBe(-1800000);
   });
+
+  it('should convert nanoseconds to ms', () => {
+    expect(ms('42 nanoseconds')).toBe(4.2e-5);
+  });
+
+  it('should convert microseconds to ms', () => {
+    expect(ms('66 microseconds')).toBe(0.066);
+  });
 });
 
 // numbers
@@ -146,10 +162,20 @@ describe('ms(number, { long: true })', () => {
     }).not.toThrow();
   });
 
-  it('should support milliseconds', () => {
-    expect(ms(500, { long: true })).toBe('500 ms');
+  it('should support nanoseconds', () => {
+    expect(ms(998e-6, { long: true })).toBe('998 nanoseconds');
+  });
 
-    expect(ms(-500, { long: true })).toBe('-500 ms');
+  it('should support microseconds', () => {
+    expect(ms(1e-3, { long: true })).toBe('1 microsecond');
+    expect(ms(12e-4, { long: true })).toBe('1 microsecond');
+    expect(ms(10e-3, { long: true })).toBe('10 microseconds');
+  });
+
+  it('should support milliseconds', () => {
+    expect(ms(500, { long: true })).toBe('500 milliseconds');
+
+    expect(ms(-500, { long: true })).toBe('-500 milliseconds');
   });
 
   it('should support seconds', () => {
@@ -206,6 +232,14 @@ describe('ms(number)', () => {
     expect(() => {
       ms(500);
     }).not.toThrow();
+  });
+
+  it('should support microseconds', () => {
+    expect(ms(13e-3)).toBe('13μs');
+  });
+
+  it('should support nanoseconds', () => {
+    expect(ms(500e-6)).toBe('500ns');
   });
 
   it('should support milliseconds', () => {
