@@ -1,4 +1,4 @@
-name: Quality
+name: Test
 
 on:
   push:
@@ -7,15 +7,14 @@ on:
     branches: [main]
 
 jobs:
-  quality:
+  test:
     name: ${{ matrix.task }} / Node ${{ matrix.node }}
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
       matrix:
-        node: [24]
-        task: [prettier-check, eslint-check, type-check]
+        node: [18, 20, 22, 24]
+        task: [test:nodejs, test:edge]
 
     steps:
       - name: Checkout
