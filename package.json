@@ -44,7 +44,6 @@
     "preset": "ts-jest",
     "testEnvironment": "node"
   },
-  "prettier": "@vercel/style-guide/prettier",
   "lint-staged": {
     "*": [
       "pnpm biome check --write"
