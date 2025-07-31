@@ -60,9 +60,9 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-function msFn(value: StringValue, options?: Options): number;
-function msFn(value: number, options?: Options): string;
-function msFn(value: StringValue | number, options?: Options): number | string {
+export function ms(value: StringValue, options?: Options): number;
+export function ms(value: number, options?: Options): string;
+export function ms(value: StringValue | number, options?: Options): number | string {
   try {
     if (typeof value === 'string') {
       return parse(value);
@@ -161,7 +161,7 @@ export function parseStrict(value: StringValue): number {
   return parse(value);
 }
 
-export default msFn;
+export default ms;
 
 /**
  * Short format for `ms`.
