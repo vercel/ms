@@ -143,6 +143,12 @@ describe('parse(invalid inputs)', () => {
     }).toThrow();
   });
 
+  it('should throw an error, when parseStrict("...>100 length string...")', () => {
+    expect(() => {
+      parse('▲'.repeat(101));
+    }).toThrow();
+  });
+
   it('should throw an error, when parse(undefined)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
