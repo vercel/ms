@@ -164,8 +164,6 @@ export function parseStrict(value: StringValue): number {
   return parse(value);
 }
 
-export default ms;
-
 /**
  * Short format for `ms`.
  */
