@@ -140,14 +140,12 @@ export function parse(str: string): number {
     case 'sec':
     case 's':
       return n * s;
-
     case 'milliseconds':
     case 'millisecond':
     case 'msecs':
     case 'msec':
     case 'ms':
       return n;
-
     default:
       matchUnit satisfies never;
       throw new Error(
