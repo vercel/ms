@@ -60,9 +60,9 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-export function msFn(value: StringValue, options?: Options): number;
-export function msFn(value: number, options?: Options): string;
-export function msFn(
+export function ms(value: StringValue, options?: Options): number;
+export function ms(value: number, options?: Options): string;
+export function ms(
   value: StringValue | number,
   options?: Options,
 ): number | string {
