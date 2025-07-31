@@ -62,7 +62,10 @@ interface Options {
  */
 export function ms(value: StringValue, options?: Options): number;
 export function ms(value: number, options?: Options): string;
-export function ms(value: StringValue | number, options?: Options): number | string {
+export function ms(
+  value: StringValue | number,
+  options?: Options,
+): number | string {
   try {
     if (typeof value === 'string') {
       return parse(value);
