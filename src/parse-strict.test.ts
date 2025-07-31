@@ -49,24 +49,24 @@ describe('parseStrict(string)', () => {
   });
 
   it('should return NaN if invalid', () => {
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(Number.isNaN(parseStrict('☃'))).toBe(true);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(Number.isNaN(parseStrict('10-.5'))).toBe(true);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(Number.isNaN(parseStrict('foo'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 YeArS')).toBe(1672552800000);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 WeEkS')).toBe(32054400000);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 DaYS')).toBe(4579200000);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 HoUrs')).toBe(190800000);
-    // @ts-expect-error - We expect this to fail.
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 MiLliSeCondS')).toBe(53);
   });
 
