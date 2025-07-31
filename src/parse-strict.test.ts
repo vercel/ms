@@ -57,7 +57,7 @@ describe('parseStrict(string)', () => {
     expect(Number.isNaN(parseStrict('foo'))).toBe(true);
   });
 
-  it('should be case sensitive', () => {
+  it('should be case-insensitive', () => {
     // @ts-expect-error - We expect this to fail.
     expect(parseStrict('53 YeArS')).toBe(1672552800000);
     // @ts-expect-error - We expect this to fail.
