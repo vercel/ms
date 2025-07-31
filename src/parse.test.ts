@@ -55,7 +55,11 @@ describe('parse(string)', () => {
   });
 
   it('should be case-insensitive', () => {
-    expect(parse('1.5H')).toBe(5400000);
+    expect(parse('53 YeArS')).toBe(1672552800000);
+    expect(parse('53 WeEkS')).toBe(32054400000);
+    expect(parse('53 DaYS')).toBe(4579200000);
+    expect(parse('53 HoUrs')).toBe(190800000);
+    expect(parse('53 MiLliSeCondS')).toBe(53);
   });
 
   it('should work with numbers starting with .', () => {
@@ -140,6 +144,12 @@ describe('parse(invalid inputs)', () => {
   it('should throw an error, when parse("")', () => {
     expect(() => {
       parse('');
+    }).toThrow();
+  });
+
+  it('should throw an error, when parseStrict("...>100 length string...")', () => {
+    expect(() => {
+      parse('▲'.repeat(101));
     }).toThrow();
   });
 

@@ -33,7 +33,7 @@
   "scripts": {
     "test": "pnpm run test:nodejs && pnpm run test:edge",
     "test:nodejs": "jest --env node",
-    "test:edge": "jest --env @edge-runtime/jest-environment",
+    "test:edge": "jest --env @edge-runtime/jest-environment --no-coverage",
     "build": "tsdown",
     "prepublishOnly": "pnpm run build",
     "lint": "biome lint",
