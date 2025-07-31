@@ -49,9 +49,9 @@ describe('parse(string)', () => {
   });
 
   it('should return NaN if invalid', () => {
-    expect(isNaN(parse('☃'))).toBe(true);
-    expect(isNaN(parse('10-.5'))).toBe(true);
-    expect(isNaN(parse('foo'))).toBe(true);
+    expect(Number.isNaN(parse('☃'))).toBe(true);
+    expect(Number.isNaN(parse('10-.5'))).toBe(true);
+    expect(Number.isNaN(parse('foo'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {

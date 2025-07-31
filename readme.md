@@ -42,7 +42,7 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ## Features
 
-- Works both in [Node.js](https://nodejs.org) and in the browser
+- Works both in [Node.js](https://nodejs.org) and in the browser [^1]
 - If a number is supplied to `ms`, a string with a unit is returned
 - If a string that contains the number is supplied, it returns it as a number (e.g.: it returns `100` for `'100'`)
 - If you pass a string with a number and a valid unit, the number of equivalent milliseconds is returned
@@ -163,3 +163,5 @@ export const config = {
 3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `npm link ms`. Instead of the default one from npm, Node.js will now use your clone of ms!
 
 As always, you can run the tests using: `npm test`
+
+[^1]: Internet Explorer is not supported
