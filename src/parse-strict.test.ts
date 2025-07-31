@@ -57,8 +57,17 @@ describe('parseStrict(string)', () => {
     expect(Number.isNaN(parseStrict('foo'))).toBe(true);
   });
 
-  it('should be case-insensitive', () => {
-    expect(parseStrict('1.5H')).toBe(5400000);
+  it('should be case sensitive', () => {
+    // @ts-expect-error - We expect this to fail.
+    expect(parseStrict('53 YeArS')).toBe(1672552800000);
+    // @ts-expect-error - We expect this to fail.
+    expect(parseStrict('53 WeEkS')).toBe(32054400000);
+    // @ts-expect-error - We expect this to fail.
+    expect(parseStrict('53 DaYS')).toBe(4579200000);
+    // @ts-expect-error - We expect this to fail.
+    expect(parseStrict('53 HoUrs')).toBe(190800000);
+    // @ts-expect-error - We expect this to fail.
+    expect(parseStrict('53 MiLliSeCondS')).toBe(53);
   });
 
   it('should work with numbers starting with .', () => {
