@@ -71,10 +71,13 @@ function msFn(value: StringValue | number, options?: Options): number | string {
     }
     throw new Error('Value provided to ms() must be a string or number.');
   } catch (error) {
-    const message = isError(error)
-      ? `${error.message}. value=${JSON.stringify(value)}`
-      : 'An unknown error has occurred.';
-    throw new Error(message);
+    /* istanbul ignore next - this branch is unreachable, but required by TypeScript until such a time as TypeScript supports throw types  */
+    if (!(error instanceof Error)) {
+      throw new Error('An unknown error has occurred.');
+    }
+
+    error.message = `${error.message}. value=${JSON.stringify(value)}`;
+    throw error;
   }
 }
 
@@ -92,18 +95,25 @@ export function parse(str: string): number {
     );
   }
   const match =
-    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
-  // Named capture groups need to be manually typed today.
-  // https://github.com/microsoft/TypeScript/issues/32098
-  const groups = match?.groups as { value: string; type?: string } | undefined;
-  if (!groups) {
+
+  if (!match?.groups) {
     return NaN;
   }
-  const n = parseFloat(groups.value);
-  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
-  switch (type) {
+
+  // Named capture groups need to be manually typed today.
+  // https://github.com/microsoft/TypeScript/issues/32098
+  const { value, unit = 'ms' } = match.groups as {
+    value: string;
+    unit: string | undefined;
+  };
+
+  const n = parseFloat(value);
+
+  /* istanbul ignore next - a test that targets .toLowerCase() here cannot be reached because it's handled by the `i` flag on the regex */
+  switch (unit.toLowerCase()) {
     case 'years':
     case 'year':
     case 'yrs':
@@ -136,17 +146,9 @@ export function parse(str: string): number {
     case 'sec':
     case 's':
       return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
     default:
-      // This should never occur.
-      throw new Error(
-        `The unit ${type as string} was matched, but no matching case exists.`,
-      );
+      // Default to milliseconds
+      return n;
   }
 }
 
@@ -228,14 +230,4 @@ function plural(
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
   return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
-}
-
-/**
- * A type guard for errors.
- *
- * @param value - The value to test
- * @returns A boolean `true` if the provided value is an Error-like object
- */
-function isError(value: unknown): value is Error {
-  return typeof value === 'object' && value !== null && 'message' in value;
 }
