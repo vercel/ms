@@ -68,7 +68,9 @@ function msFn(value: StringValue | number, options?: Options): number | string {
   } else if (typeof value === 'number') {
     return format(value, options);
   }
-  throw new Error(`Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`);
+  throw new Error(
+    `Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`,
+  );
 }
 
 /**
@@ -148,7 +150,9 @@ export function parse(str: string): number {
 
     default:
       matchUnit satisfies never;
-      throw new Error(`Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`);
+      throw new Error(
+        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
+      );
   }
 }
 
@@ -214,7 +218,9 @@ function fmtLong(ms: number): StringValue {
  */
 export function format(ms: number, options?: Options): string {
   if (typeof ms !== 'number' || !isFinite(ms)) {
-    throw new Error(`Value provided to ms.format() must be of type number. value=${JSON.stringify(ms)}`);
+    throw new Error(
+      `Value provided to ms.format() must be of type number. value=${JSON.stringify(ms)}`,
+    );
   }
   return options?.long ? fmtLong(ms) : fmtShort(ms);
 }
