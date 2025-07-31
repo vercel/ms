@@ -7,14 +7,6 @@
     "indentStyle": "space",
     "indentWidth": 2
   },
-  "linter": {
-    "rules": {
-      "suspicious": {
-        "noGlobalIsNan": "off",
-        "noGlobalIsFinite": "off"
-      }
-    }
-  },
   "javascript": {
     "formatter": {
       "quoteProperties": "asNeeded",
