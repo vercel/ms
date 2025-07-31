@@ -113,7 +113,7 @@ export function parse(str: string): number {
   const n = parseFloat(value);
 
   const matchUnit = unit.toLowerCase() as Lowercase<Unit>;
-  
+
   /* istanbul ignore next - istanbul doesn't understand, but thankfully the TypeScript the exhaustiveness check in the default case keeps us type safe here */
   switch (matchUnit) {
     case 'years':
@@ -158,9 +158,7 @@ export function parse(str: string): number {
 
     default:
       matchUnit satisfies never;
-      throw new Error(
-        `Unknown unit "${matchUnit}" provided to ms.parse().`,
-      );
+      throw new Error(`Unknown unit "${matchUnit}" provided to ms.parse().`);
   }
 }
 
