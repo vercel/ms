@@ -2,7 +2,10 @@
   "name": "ms",
   "version": "3.0.0-canary.1",
   "description": "Tiny millisecond conversion utility",
-  "repository": "vercel/ms",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vercel/ms.git"
+  },
   "main": "./dist/index.cjs",
   "types": "./dist/index.d.cts",
   "type": "module",
