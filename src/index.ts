@@ -217,10 +217,8 @@ function fmtLong(ms: number): StringValue {
  * @returns The formatted string
  */
 export function format(ms: number, options?: Options): string {
-  if (typeof ms !== 'number' || !isFinite(ms)) {
-    throw new Error(
-      `Value provided to ms.format() must be of type number. value=${JSON.stringify(ms)}`,
-    );
+  if (typeof ms !== 'number' || !Number.isFinite(ms)) {
+    throw new Error('Value provided to ms.format() must be of type number.');
   }
   return options?.long ? fmtLong(ms) : fmtShort(ms);
 }

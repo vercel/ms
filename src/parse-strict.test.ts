@@ -50,11 +50,11 @@ describe('parseStrict(string)', () => {
 
   it('should return NaN if invalid', () => {
     // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('☃'))).toBe(true);
+    expect(Number.isNaN(parseStrict('☃'))).toBe(true);
     // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('10-.5'))).toBe(true);
+    expect(Number.isNaN(parseStrict('10-.5'))).toBe(true);
     // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('foo'))).toBe(true);
+    expect(Number.isNaN(parseStrict('foo'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {
