@@ -112,8 +112,10 @@ export function parse(str: string): number {
 
   const n = parseFloat(value);
 
-  /* istanbul ignore next - a test that targets .toLowerCase() here cannot be reached because it's handled by the `i` flag on the regex */
-  switch (unit.toLowerCase()) {
+  const matchUnit = unit.toLowerCase() as Lowercase<Unit>;
+  
+  /* istanbul ignore next - istanbul doesn't understand, but thankfully the TypeScript the exhaustiveness check in the default case keeps us type safe here */
+  switch (matchUnit) {
     case 'years':
     case 'year':
     case 'yrs':
@@ -146,9 +148,19 @@ export function parse(str: string): number {
     case 'sec':
     case 's':
       return n * s;
-    default:
-      // Default to milliseconds
+
+    case 'milliseconds':
+    case 'millisecond':
+    case 'msecs':
+    case 'msec':
+    case 'ms':
       return n;
+
+    default:
+      matchUnit satisfies never;
+      throw new Error(
+        `Unknown unit "${matchUnit}" provided to ms.parse().`,
+      );
   }
 }
 
