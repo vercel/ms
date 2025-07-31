@@ -63,22 +63,12 @@ interface Options {
 function msFn(value: StringValue, options?: Options): number;
 function msFn(value: number, options?: Options): string;
 function msFn(value: StringValue | number, options?: Options): number | string {
-  try {
-    if (typeof value === 'string') {
-      return parse(value);
-    } else if (typeof value === 'number') {
-      return format(value, options);
-    }
-    throw new Error('Value provided to ms() must be a string or number.');
-  } catch (error) {
-    /* istanbul ignore next - this branch is unreachable, but required by TypeScript until such a time as TypeScript supports throw types  */
-    if (!(error instanceof Error)) {
-      throw new Error('An unknown error has occurred.');
-    }
-
-    error.message = `${error.message}. value=${JSON.stringify(value)}`;
-    throw error;
+  if (typeof value === 'string') {
+    return parse(value);
+  } else if (typeof value === 'number') {
+    return format(value, options);
   }
+  throw new Error(`Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`);
 }
 
 /**
@@ -91,7 +81,7 @@ function msFn(value: StringValue | number, options?: Options): number | string {
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      'Value provided to ms.parse() must be a string with length between 1 and 99.',
+      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
     );
   }
   const match =
@@ -158,7 +148,7 @@ export function parse(str: string): number {
 
     default:
       matchUnit satisfies never;
-      throw new Error(`Unknown unit "${matchUnit}" provided to ms.parse().`);
+      throw new Error(`Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`);
   }
 }
 
@@ -224,7 +214,7 @@ function fmtLong(ms: number): StringValue {
  */
 export function format(ms: number, options?: Options): string {
   if (typeof ms !== 'number' || !isFinite(ms)) {
-    throw new Error('Value provided to ms.format() must be of type number.');
+    throw new Error(`Value provided to ms.format() must be of type number. value=${JSON.stringify(ms)}`);
   }
   return options?.long ? fmtLong(ms) : fmtShort(ms);
 }
