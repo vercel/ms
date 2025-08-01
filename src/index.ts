@@ -6,59 +6,21 @@ const d = h * 24;
 const w = d * 7;
 const y = d * 365.25;
 
-type Years =
-  | 'years'
-  | 'year'
-  | 'yrs'
-  | 'yr'
-  | 'y';
+type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y';
 
-type Weeks =
-  | 'weeks'
-  | 'week'
-  | 'w';
+type Weeks = 'weeks' | 'week' | 'w';
 
-type Days =
-  | 'days'
-  | 'day'
-  | 'd';
+type Days = 'days' | 'day' | 'd';
 
-type Hours =
-  | 'hours'
-  | 'hour'
-  | 'hrs'
-  | 'hr'
-  | 'h';
+type Hours = 'hours' | 'hour' | 'hrs' | 'hr' | 'h';
 
-type Minutes =
-  | 'minutes'
-  | 'minute'
-  | 'mins'
-  | 'min'
-  | 'm';
+type Minutes = 'minutes' | 'minute' | 'mins' | 'min' | 'm';
 
-type Seconds =
-  | 'seconds'
-  | 'second'
-  | 'secs'
-  | 'sec'
-  | 's';
+type Seconds = 'seconds' | 'second' | 'secs' | 'sec' | 's';
 
-type Milliseconds =
-  | 'milliseconds'
-  | 'millisecond'
-  | 'msecs'
-  | 'msec'
-  | 'ms';
+type Milliseconds = 'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms';
 
-type Unit =
-  | Years
-  | Weeks
-  | Days
-  | Hours
-  | Minutes
-  | Seconds
-  | Milliseconds;
+type Unit = Years | Weeks | Days | Hours | Minutes | Seconds | Milliseconds;
 
 type UnitAnyCase = Capitalize<Unit> | Uppercase<Unit> | Unit;
 
