@@ -42,29 +42,23 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ### Input Formats (Units)
 
-<!-- prettier-ignore -->
-```js
-// For Years
-'years' | 'year' | 'yrs' | 'yr' | 'y'
-
-// For Weeks
-'weeks' | 'week' | 'w'
-
-// For Days
-'days' | 'day' | 'd'
-
-// For Hours
-'hours' | 'hour' | 'hrs' | 'hr' | 'h'
-
-// For Minutes
-'minutes' | 'minute' | 'mins' | 'min' | 'm'
-
-// For Seconds
-'seconds' | 'second' | 'secs' | 'sec' | 's'
-
-// For Milliseconds
-'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms'
+```ts
+type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y'
+type Weeks = 'weeks' | 'week' | 'w'
+type Days = 'days' | 'day' | 'd'
+type Hours = 'hours' | 'hour' | 'hrs' | 'hr' | 'h'
+type Minutes = 'minutes' | 'minute' | 'mins' | 'min' | 'm'
+type Seconds = 'seconds' | 'second' | 'secs' | 'sec' | 's'
+type Milliseconds = 'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms'
+type Unit = Years | Weeks | Days | Hours | Minutes | Seconds | Milliseconds
 ```
+
+These formats can be lowercase (`minutes`), uppercase (`MINUTES`), or capitalized (`Minutes`). There can be a space (`2 minutes`) or not (`2minutes`).
+
+> [!NOTE]
+> The casing and spacing is enforced at a type level if you use [`parseStrict`](#enhanced-type-safety).
+
+If no unit is passed (`2`), the unit will default to `Milliseconds`.
 
 ## Features
 
@@ -136,6 +130,8 @@ example('5.2 days');
 
 ## Advanced Usage
 
+### Helper Functions
+
 As of `v3.0`, you can import `parse` and `format` separately.
 
 ```ts
@@ -145,6 +141,8 @@ parse('1h'); // 3600000
 
 format(2000); // "2s"
 ```
+
+### Enhanced Type Safety
 
 If you want strict type checking for the input value, you can use `parseStrict`.
 
