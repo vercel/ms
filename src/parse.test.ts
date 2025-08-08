@@ -1,10 +1,11 @@
+import { describe, expect, it } from '@jest/globals';
 import { parse } from './index';
 
 describe('parse(string)', () => {
   it('should not throw an error', () => {
     expect(() => {
       parse('1m');
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 
   it('should preserve ms', () => {
@@ -48,13 +49,17 @@ describe('parse(string)', () => {
   });
 
   it('should return NaN if invalid', () => {
-    expect(isNaN(parse('☃'))).toBe(true);
-    expect(isNaN(parse('10-.5'))).toBe(true);
-    expect(isNaN(parse('foo'))).toBe(true);
+    expect(Number.isNaN(parse('☃'))).toBe(true);
+    expect(Number.isNaN(parse('10-.5'))).toBe(true);
+    expect(Number.isNaN(parse('foo'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {
-    expect(parse('1.5H')).toBe(5400000);
+    expect(parse('53 YeArS')).toBe(1672552800000);
+    expect(parse('53 WeEkS')).toBe(32054400000);
+    expect(parse('53 DaYS')).toBe(4579200000);
+    expect(parse('53 HoUrs')).toBe(190800000);
+    expect(parse('53 MiLliSeCondS')).toBe(53);
   });
 
   it('should work with numbers starting with .', () => {
@@ -81,7 +86,7 @@ describe('parse(long string)', () => {
   it('should not throw an error', () => {
     expect(() => {
       parse('53 milliseconds');
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 
   it('should convert milliseconds to ms', () => {
@@ -139,55 +144,61 @@ describe('parse(invalid inputs)', () => {
   it('should throw an error, when parse("")', () => {
     expect(() => {
       parse('');
-    }).toThrowError();
+    }).toThrow();
+  });
+
+  it('should throw an error, when parseStrict("...>100 length string...")', () => {
+    expect(() => {
+      parse('▲'.repeat(101));
+    }).toThrow();
   });
 
   it('should throw an error, when parse(undefined)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse(undefined);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse(null)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse(null);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse([])', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse([]);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse({})', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse({});
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse(NaN)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse(NaN);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse(Infinity)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse(Infinity);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parse(-Infinity)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parse(-Infinity);
-    }).toThrowError();
+    }).toThrow();
   });
 });

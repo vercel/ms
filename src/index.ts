@@ -60,22 +60,20 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
-function msFn(value: StringValue, options?: Options): number;
-function msFn(value: number, options?: Options): string;
-function msFn(value: StringValue | number, options?: Options): number | string {
-  try {
-    if (typeof value === 'string') {
-      return parse(value);
-    } else if (typeof value === 'number') {
-      return format(value, options);
-    }
-    throw new Error('Value provided to ms() must be a string or number.');
-  } catch (error) {
-    const message = isError(error)
-      ? `${error.message}. value=${JSON.stringify(value)}`
-      : 'An unknown error has occurred.';
-    throw new Error(message);
+export function ms(value: StringValue, options?: Options): number;
+export function ms(value: number, options?: Options): string;
+export function ms(
+  value: StringValue | number,
+  options?: Options,
+): number | string {
+  if (typeof value === 'string') {
+    return parse(value);
+  } else if (typeof value === 'number') {
+    return format(value, options);
   }
+  throw new Error(
+    `Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`,
+  );
 }
 
 /**
@@ -88,22 +86,31 @@ function msFn(value: StringValue | number, options?: Options): number | string {
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      'Value provided to ms.parse() must be a string with length between 1 and 99.',
+      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
     );
   }
   const match =
-    /^(?<value>-?(?:\d+)?\.?\d+) *(?<type>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?(?:\d+)?\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
       str,
     );
-  // Named capture groups need to be manually typed today.
-  // https://github.com/microsoft/TypeScript/issues/32098
-  const groups = match?.groups as { value: string; type?: string } | undefined;
-  if (!groups) {
+
+  if (!match?.groups) {
     return NaN;
   }
-  const n = parseFloat(groups.value);
-  const type = (groups.type || 'ms').toLowerCase() as Lowercase<Unit>;
-  switch (type) {
+
+  // Named capture groups need to be manually typed today.
+  // https://github.com/microsoft/TypeScript/issues/32098
+  const { value, unit = 'ms' } = match.groups as {
+    value: string;
+    unit: string | undefined;
+  };
+
+  const n = parseFloat(value);
+
+  const matchUnit = unit.toLowerCase() as Lowercase<Unit>;
+
+  /* istanbul ignore next - istanbul doesn't understand, but thankfully the TypeScript the exhaustiveness check in the default case keeps us type safe here */
+  switch (matchUnit) {
     case 'years':
     case 'year':
     case 'yrs':
@@ -143,9 +150,9 @@ export function parse(str: string): number {
     case 'ms':
       return n;
     default:
-      // This should never occur.
+      matchUnit satisfies never;
       throw new Error(
-        `The unit ${type as string} was matched, but no matching case exists.`,
+        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
       );
   }
 }
@@ -160,9 +167,6 @@ export function parse(str: string): number {
 export function parseStrict(value: StringValue): number {
   return parse(value);
 }
-
-// eslint-disable-next-line import/no-default-export
-export default msFn;
 
 /**
  * Short format for `ms`.
@@ -212,7 +216,7 @@ function fmtLong(ms: number): StringValue {
  * @returns The formatted string
  */
 export function format(ms: number, options?: Options): string {
-  if (typeof ms !== 'number' || !isFinite(ms)) {
+  if (typeof ms !== 'number' || !Number.isFinite(ms)) {
     throw new Error('Value provided to ms.format() must be of type number.');
   }
   return options?.long ? fmtLong(ms) : fmtShort(ms);
@@ -229,14 +233,4 @@ function plural(
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
   return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
-}
-
-/**
- * A type guard for errors.
- *
- * @param value - The value to test
- * @returns A boolean `true` if the provided value is an Error-like object
- */
-function isError(value: unknown): value is Error {
-  return typeof value === 'object' && value !== null && 'message' in value;
 }

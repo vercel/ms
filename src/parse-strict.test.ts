@@ -1,10 +1,11 @@
+import { describe, expect, it } from '@jest/globals';
 import { parseStrict } from './index';
 
 describe('parseStrict(string)', () => {
   it('should not throw an error', () => {
     expect(() => {
       parseStrict('1m');
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 
   it('should preserve ms', () => {
@@ -48,16 +49,25 @@ describe('parseStrict(string)', () => {
   });
 
   it('should return NaN if invalid', () => {
-    // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('☃'))).toBe(true);
-    // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('10-.5'))).toBe(true);
-    // @ts-expect-error - We expect this to fail.
-    expect(isNaN(parseStrict('foo'))).toBe(true);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(Number.isNaN(parseStrict('☃'))).toBe(true);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(Number.isNaN(parseStrict('10-.5'))).toBe(true);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(Number.isNaN(parseStrict('foo'))).toBe(true);
   });
 
   it('should be case-insensitive', () => {
-    expect(parseStrict('1.5H')).toBe(5400000);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(parseStrict('53 YeArS')).toBe(1672552800000);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(parseStrict('53 WeEkS')).toBe(32054400000);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(parseStrict('53 DaYS')).toBe(4579200000);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(parseStrict('53 HoUrs')).toBe(190800000);
+    // @ts-expect-error - we expect the types to fail but JS users can still use this
+    expect(parseStrict('53 MiLliSeCondS')).toBe(53);
   });
 
   it('should work with numbers starting with .', () => {
@@ -84,7 +94,7 @@ describe('parseStrict(long string)', () => {
   it('should not throw an error', () => {
     expect(() => {
       parseStrict('53 milliseconds');
-    }).not.toThrowError();
+    }).not.toThrow();
   });
 
   it('should convert milliseconds to ms', () => {
@@ -143,55 +153,62 @@ describe('parseStrict(invalid inputs)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict('');
-    }).toThrowError();
+    }).toThrow();
+  });
+
+  it('should throw an error, when parseStrict("...>100 length string...")', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      parseStrict('▲'.repeat(101));
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict(undefined)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict(undefined);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict(null)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict(null);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict([])', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict([]);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict({})', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict({});
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict(NaN)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict(NaN);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict(Infinity)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict(Infinity);
-    }).toThrowError();
+    }).toThrow();
   });
 
   it('should throw an error, when parseStrict(-Infinity)', () => {
     expect(() => {
       // @ts-expect-error - We expect this to throw.
       parseStrict(-Infinity);
-    }).toThrowError();
+    }).toThrow();
   });
 });

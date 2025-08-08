@@ -1,7 +1,18 @@
 {
-  "extends": "@vercel/style-guide/typescript",
   "compilerOptions": {
-    "target": "ES2019"
+    "moduleResolution": "bundler",
+    "module": "esnext",
+    "target": "es2022",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true,
+
+    "isolatedDeclarations": true,
+    "isolatedModules": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/"]
+  "include": ["src/*.ts"]
 }
