@@ -36,8 +36,11 @@ describe('parseStrict(string)', () => {
     expect(parseStrict('100ms')).toBe(100);
   });
 
+  it('should convert mo to ms', () => {
+    expect(parseStrict('1mo')).toBe(2629746000);
+  });
   it('should convert y to ms', () => {
-    expect(parseStrict('1y')).toBe(31557600000);
+    expect(parseStrict('1y')).toBe(31556952000);
   });
 
   it('should work with ms', () => {
@@ -59,7 +62,7 @@ describe('parseStrict(string)', () => {
 
   it('should be case-insensitive', () => {
     // @ts-expect-error - we expect the types to fail but JS users can still use this
-    expect(parseStrict('53 YeArS')).toBe(1672552800000);
+    expect(parseStrict('53 YeArS')).toBe(1672518456000);
     // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(parseStrict('53 WeEkS')).toBe(32054400000);
     // @ts-expect-error - we expect the types to fail but JS users can still use this
@@ -125,8 +128,12 @@ describe('parseStrict(long string)', () => {
     expect(parseStrict('1 week')).toBe(604800000);
   });
 
+  it('should convert months to ms', () => {
+    expect(parseStrict('1 month')).toBe(2629746000);
+  });
+
   it('should convert years to ms', () => {
-    expect(parseStrict('1 year')).toBe(31557600000);
+    expect(parseStrict('1 year')).toBe(31556952000);
   });
 
   it('should work with decimals', () => {
