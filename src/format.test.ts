@@ -47,13 +47,27 @@ describe('format(number, { long: true })', () => {
   });
 
   it('should support days', () => {
-    expect(format(24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
-    expect(format(24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
-    expect(format(24 * 60 * 60 * 10000, { long: true })).toBe('10 days');
+    expect(format(1 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
+    expect(format(1 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
+    expect(format(6 * 24 * 60 * 60 * 1000, { long: true })).toBe('6 days');
 
-    expect(format(-1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
-    expect(format(-1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
-    expect(format(-1 * 24 * 60 * 60 * 10000, { long: true })).toBe('-10 days');
+    expect(format(-1 * 1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
+    expect(format(-1 * 1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
+    expect(format(-1 * 6 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+      '-6 days',
+    );
+  });
+
+  it('should support weeks', () => {
+    expect(format(1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 week');
+    expect(format(6 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('6 weeks');
+
+    expect(format(-1 * 1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+      '-1 week',
+    );
+    expect(format(-1 * 6 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+      '-6 weeks',
+    );
   });
 
   it('should round', () => {
@@ -104,10 +118,18 @@ describe('format(number)', () => {
 
   it('should support days', () => {
     expect(format(24 * 60 * 60 * 1000)).toBe('1d');
-    expect(format(24 * 60 * 60 * 10000)).toBe('10d');
+    expect(format(24 * 60 * 60 * 6000)).toBe('6d');
 
     expect(format(-1 * 24 * 60 * 60 * 1000)).toBe('-1d');
-    expect(format(-1 * 24 * 60 * 60 * 10000)).toBe('-10d');
+    expect(format(-1 * 24 * 60 * 60 * 6000)).toBe('-6d');
+  });
+
+  it('should support weeks', () => {
+    expect(format(1 * 7 * 24 * 60 * 60 * 1000)).toBe('1w');
+    expect(format(6 * 7 * 24 * 60 * 60 * 1000)).toBe('6w');
+
+    expect(format(-1 * 1 * 7 * 24 * 60 * 60 * 1000)).toBe('-1w');
+    expect(format(-1 * 6 * 7 * 24 * 60 * 60 * 1000)).toBe('-6w');
   });
 
   it('should round', () => {
