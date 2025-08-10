@@ -149,7 +149,7 @@ export function parseStrict(value: StringValue): number {
  */
 function fmtShort(ms: number): StringValue {
   const msAbs = Math.abs(ms);
-  if(msAbs >= y){
+  if (msAbs >= y) {
     return `${Math.round(ms / y)}y`;
   }
   if (msAbs >= d) {
@@ -172,7 +172,7 @@ function fmtShort(ms: number): StringValue {
  */
 function fmtLong(ms: number): StringValue {
   const msAbs = Math.abs(ms);
-  if(msAbs >= y){
+  if (msAbs >= y) {
     return plural(ms, msAbs, y, 'year');
   }
   if (msAbs >= d) {
@@ -201,7 +201,12 @@ export function format(ms: number, options?: Options): string {
   if (typeof ms !== 'number' || !Number.isFinite(ms)) {
     throw new Error('Value provided to ms.format() must be of type number.');
   }
-  return options?.long ? fmtLong(ms) : fmtShort(ms);
+
+  if (options?.long) {
+    return fmtLong(ms);
+  }
+
+  return fmtShort(ms);
 }
 
 /**
