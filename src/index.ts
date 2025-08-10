@@ -6,40 +6,16 @@ const d = h * 24;
 const w = d * 7;
 const y = d * 365.25;
 
-type Unit =
-  | 'Years'
-  | 'Year'
-  | 'Yrs'
-  | 'Yr'
-  | 'Y'
-  | 'Weeks'
-  | 'Week'
-  | 'W'
-  | 'Days'
-  | 'Day'
-  | 'D'
-  | 'Hours'
-  | 'Hour'
-  | 'Hrs'
-  | 'Hr'
-  | 'H'
-  | 'Minutes'
-  | 'Minute'
-  | 'Mins'
-  | 'Min'
-  | 'M'
-  | 'Seconds'
-  | 'Second'
-  | 'Secs'
-  | 'Sec'
-  | 's'
-  | 'Milliseconds'
-  | 'Millisecond'
-  | 'Msecs'
-  | 'Msec'
-  | 'Ms';
+type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y';
+type Weeks = 'weeks' | 'week' | 'w';
+type Days = 'days' | 'day' | 'd';
+type Hours = 'hours' | 'hour' | 'hrs' | 'hr' | 'h';
+type Minutes = 'minutes' | 'minute' | 'mins' | 'min' | 'm';
+type Seconds = 'seconds' | 'second' | 'secs' | 'sec' | 's';
+type Milliseconds = 'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms';
+type Unit = Years | Weeks | Days | Hours | Minutes | Seconds | Milliseconds;
 
-type UnitAnyCase = Unit | Uppercase<Unit> | Lowercase<Unit>;
+type UnitAnyCase = Capitalize<Unit> | Uppercase<Unit> | Unit;
 
 export type StringValue =
   | `${number}`
