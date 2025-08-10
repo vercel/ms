@@ -60,9 +60,21 @@ These formats can be lowercase (`minutes`), uppercase (`MINUTES`), or capitalize
 
 If no unit is passed (`2`), the unit will default to `Milliseconds`.
 
+## Installation
+
+You can install this package using a package manager like [npm](https://docs.npmjs.com/cli/v11/commands/npm-install), [yarn](https://yarnpkg.com/cli/add), [pnpm](https://pnpm.io/cli/add), [deno](https://docs.deno.com/runtime/reference/cli/add), or [bun](https://bun.com/docs/cli/add).
+
+```bash
+npm install ms
+yarn add ms
+pnpm add ms
+deno add npm:ms
+bun add ms
+```
+
 ## Features
 
-- Works both in [Node.js](https://nodejs.org) and in the browser [^1]
+- Works in both browsers and server runtimes like [Node.js](https://nodejs.org), [Deno](https://deno.com), or [Bun](https://bun.sh)
 - If a number is supplied to `ms`, a string with a unit is returned
 - If a string that contains the number is supplied, it returns it as a number (e.g.: it returns `100` for `'100'`)
 - If you pass a string with a number and a valid unit, the number of equivalent milliseconds is returned
