@@ -37,7 +37,7 @@ describe('parse(string)', () => {
   });
 
   it('should convert y to ms', () => {
-    expect(parse('1y')).toBe(31557600000);
+    expect(parse('1y')).toBe(31556952000);
   });
 
   it('should work with ms', () => {
@@ -55,7 +55,7 @@ describe('parse(string)', () => {
   });
 
   it('should be case-insensitive', () => {
-    expect(parse('53 YeArS')).toBe(1672552800000);
+    expect(parse('53 YeArS')).toBe(1672518456000);
     expect(parse('53 WeEkS')).toBe(32054400000);
     expect(parse('53 DaYS')).toBe(4579200000);
     expect(parse('53 HoUrs')).toBe(190800000);
@@ -117,8 +117,12 @@ describe('parse(long string)', () => {
     expect(parse('1 week')).toBe(604800000);
   });
 
+  it('should convert months to ms', () => {
+    expect(parse('1 month')).toBe(2629746000);
+  });
+
   it('should convert years to ms', () => {
-    expect(parse('1 year')).toBe(31557600000);
+    expect(parse('1 year')).toBe(31556952000);
   });
 
   it('should work with decimals', () => {
