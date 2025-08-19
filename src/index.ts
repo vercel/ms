@@ -220,7 +220,12 @@ export function format(ms: number, options?: Options): string {
   if (typeof ms !== 'number' || !Number.isFinite(ms)) {
     throw new Error('Value provided to ms.format() must be of type number.');
   }
-  return options?.long ? fmtLong(ms) : fmtShort(ms);
+
+  if (options?.long) {
+    return fmtLong(ms);
+  }
+
+  return fmtShort(ms);
 }
 
 /**
