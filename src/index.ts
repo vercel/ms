@@ -227,11 +227,7 @@ export function format(ms: number, options?: Options): string {
     throw new Error('Value provided to ms.format() must be of type number.');
   }
 
-  if (options?.long) {
-    return fmtLong(ms);
-  }
-
-  return fmtShort(ms);
+  return options?.long ? fmtLong(ms) : fmtShort(ms);
 }
 
 /**
