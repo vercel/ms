@@ -36,6 +36,9 @@ describe('parseStrict(string)', () => {
     expect(parseStrict('100ms')).toBe(100);
   });
 
+  it('should convert mo to ms', () => {
+    expect(parseStrict('1mo')).toBe(2629800000);
+  });
   it('should convert y to ms', () => {
     expect(parseStrict('1y')).toBe(31557600000);
   });
@@ -123,6 +126,10 @@ describe('parseStrict(long string)', () => {
 
   it('should convert weeks to ms', () => {
     expect(parseStrict('1 week')).toBe(604800000);
+  });
+
+  it('should convert months to ms', () => {
+    expect(parseStrict('1 month')).toBe(2629800000);
   });
 
   it('should convert years to ms', () => {

@@ -1,19 +1,28 @@
-// Helpers.
 const s = 1000;
 const m = s * 60;
 const h = m * 60;
 const d = h * 24;
 const w = d * 7;
 const y = d * 365.25;
+const mo = y / 12;
 
 type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y';
+type Months = 'months' | 'month' | 'mo';
 type Weeks = 'weeks' | 'week' | 'w';
 type Days = 'days' | 'day' | 'd';
 type Hours = 'hours' | 'hour' | 'hrs' | 'hr' | 'h';
 type Minutes = 'minutes' | 'minute' | 'mins' | 'min' | 'm';
 type Seconds = 'seconds' | 'second' | 'secs' | 'sec' | 's';
 type Milliseconds = 'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms';
-type Unit = Years | Weeks | Days | Hours | Minutes | Seconds | Milliseconds;
+type Unit =
+  | Years
+  | Months
+  | Weeks
+  | Days
+  | Hours
+  | Minutes
+  | Seconds
+  | Milliseconds;
 
 type UnitAnyCase = Capitalize<Unit> | Uppercase<Unit> | Unit;
 
@@ -66,7 +75,7 @@ export function parse(str: string): number {
     );
   }
   const match =
-    /^(?<value>-?(?:\d+)?\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
+    /^(?<value>-?\d*\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)?$/i.exec(
       str,
     );
 
@@ -93,6 +102,10 @@ export function parse(str: string): number {
     case 'yr':
     case 'y':
       return n * y;
+    case 'months':
+    case 'month':
+    case 'mo':
+      return n * mo;
     case 'weeks':
     case 'week':
     case 'w':
@@ -152,6 +165,9 @@ function fmtShort(ms: number): StringValue {
   if (msAbs >= y) {
     return `${Math.round(ms / y)}y`;
   }
+  if (msAbs >= mo) {
+    return `${Math.round(ms / mo)}mo`;
+  }
   if (msAbs >= d) {
     return `${Math.round(ms / d)}d`;
   }
@@ -174,6 +190,9 @@ function fmtLong(ms: number): StringValue {
   const msAbs = Math.abs(ms);
   if (msAbs >= y) {
     return plural(ms, msAbs, y, 'year');
+  }
+  if (msAbs >= mo) {
+    return plural(ms, msAbs, mo, 'month');
   }
   if (msAbs >= d) {
     return plural(ms, msAbs, d, 'day');

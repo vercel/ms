@@ -117,6 +117,10 @@ describe('parse(long string)', () => {
     expect(parse('1 week')).toBe(604800000);
   });
 
+  it('should convert months to ms', () => {
+    expect(parse('1 month')).toBe(2629800000);
+  });
+
   it('should convert years to ms', () => {
     expect(parse('1 year')).toBe(31557600000);
   });
