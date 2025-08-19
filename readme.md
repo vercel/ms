@@ -59,7 +59,7 @@ These formats can be lowercase (`minutes`), uppercase (`MINUTES`), or capitalize
 > [!NOTE]
 > The casing and spacing is enforced at a type level if you use [`parseStrict`](#enhanced-type-safety).
 
-If no unit is passed (`2`), the unit will default to `Milliseconds`.
+If no unit is passed (`2`), the unit will default to `Milliseconds`.  Fractional input values like `0.5m`, `-0.5m`, `.5m`, and `-.5m` are supported.
 
 ## Installation
 
