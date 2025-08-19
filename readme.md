@@ -44,13 +44,14 @@ ms(ms('10 hours'), { long: true })    // "10 hours"
 
 ```ts
 type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y'
+type Months = 'months' | 'month' | 'mo'
 type Weeks = 'weeks' | 'week' | 'w'
 type Days = 'days' | 'day' | 'd'
 type Hours = 'hours' | 'hour' | 'hrs' | 'hr' | 'h'
 type Minutes = 'minutes' | 'minute' | 'mins' | 'min' | 'm'
 type Seconds = 'seconds' | 'second' | 'secs' | 'sec' | 's'
 type Milliseconds = 'milliseconds' | 'millisecond' | 'msecs' | 'msec' | 'ms'
-type Unit = Years | Weeks | Days | Hours | Minutes | Seconds | Milliseconds
+type Unit = Years | Months | Weeks | Days | Hours | Minutes | Seconds | Milliseconds
 ```
 
 These formats can be lowercase (`minutes`), uppercase (`MINUTES`), or capitalized (`Minutes`). There can be a space (`2 minutes`) or not (`2minutes`).
