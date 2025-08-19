@@ -89,15 +89,15 @@ describe('format(number, { long: true })', () => {
       '10 years',
     );
 
-    expect(
-      format(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1, { long: true }),
-    ).toBe('-1 year');
-    expect(
-      format(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1, { long: true }),
-    ).toBe('-1 year');
-    expect(
-      format(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1, { long: true }),
-    ).toBe('-10 years');
+    expect(format(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1, { long: true })).toBe(
+      '-1 year',
+    );
+    expect(format(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1, { long: true })).toBe(
+      '-1 year',
+    );
+    expect(format(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1, { long: true })).toBe(
+      '-10 years',
+    );
   });
 
   it('should round', () => {

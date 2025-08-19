@@ -211,12 +211,8 @@ describe('ms(number, { long: true })', () => {
   });
 
   it('should support years', () => {
-    expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1, { long: true })).toBe(
-      '1 year',
-    );
-    expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1, { long: true })).toBe(
-      '1 year',
-    );
+    expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1, { long: true })).toBe('1 year');
+    expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1, { long: true })).toBe('1 year');
     expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1, { long: true })).toBe(
       '10 years',
     );
