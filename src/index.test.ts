@@ -37,7 +37,7 @@ describe('ms(string)', () => {
   });
 
   it('should convert y to ms', () => {
-    expect(ms('1y')).toBe(31556952000);
+    expect(ms('1y')).toBe(31557600000);
   });
 
   it('should work with decimals', () => {
@@ -117,7 +117,7 @@ describe('ms(long string)', () => {
   });
 
   it('should convert years to ms', () => {
-    expect(ms('1 year')).toBe(31556952000);
+    expect(ms('1 year')).toBe(31557600000);
   });
 
   it('should work with decimals', () => {
@@ -193,41 +193,41 @@ describe('ms(number, { long: true })', () => {
   });
 
   it('should support months', () => {
-    expect(ms(30.436875 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 month');
-    expect(ms(30.436875 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 month');
-    expect(ms(30.436875 * 24 * 60 * 60 * 10000, { long: true })).toBe(
+    expect(ms(30.4375 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 month');
+    expect(ms(30.4375 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 month');
+    expect(ms(30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe(
       '10 months',
     );
 
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1000, { long: true })).toBe(
       '-1 month',
     );
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 1200, { long: true })).toBe(
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1200, { long: true })).toBe(
       '-1 month',
     );
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 10000, { long: true })).toBe(
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe(
       '-10 months',
     );
   });
 
   it('should support years', () => {
-    expect(ms(365.2425 * 24 * 60 * 60 * 1000 + 1, { long: true })).toBe(
+    expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1, { long: true })).toBe(
       '1 year',
     );
-    expect(ms(365.2425 * 24 * 60 * 60 * 1200 + 1, { long: true })).toBe(
+    expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1, { long: true })).toBe(
       '1 year',
     );
-    expect(ms(365.2425 * 24 * 60 * 60 * 10000 + 1, { long: true })).toBe(
+    expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1, { long: true })).toBe(
       '10 years',
     );
 
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 1000 - 1, { long: true })).toBe(
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1, { long: true })).toBe(
       '-1 year',
     );
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 1200 - 1, { long: true })).toBe(
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1, { long: true })).toBe(
       '-1 year',
     );
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 10000 - 1, { long: true })).toBe(
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1, { long: true })).toBe(
       '-10 years',
     );
   });
@@ -287,23 +287,23 @@ describe('ms(number)', () => {
   });
 
   it('should support months', () => {
-    expect(ms(30.436875 * 24 * 60 * 60 * 1000)).toBe('1mo');
-    expect(ms(30.436875 * 24 * 60 * 60 * 1200)).toBe('1mo');
-    expect(ms(30.436875 * 24 * 60 * 60 * 10000)).toBe('10mo');
+    expect(ms(30.4375 * 24 * 60 * 60 * 1000)).toBe('1mo');
+    expect(ms(30.4375 * 24 * 60 * 60 * 1200)).toBe('1mo');
+    expect(ms(30.4375 * 24 * 60 * 60 * 10000)).toBe('10mo');
 
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 1000)).toBe('-1mo');
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 1200)).toBe('-1mo');
-    expect(ms(-1 * 30.436875 * 24 * 60 * 60 * 10000)).toBe('-10mo');
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1000)).toBe('-1mo');
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1200)).toBe('-1mo');
+    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 10000)).toBe('-10mo');
   });
 
   it('should support years', () => {
-    expect(ms(365.2425 * 24 * 60 * 60 * 1000 + 1)).toBe('1y');
-    expect(ms(365.2425 * 24 * 60 * 60 * 1200 + 1)).toBe('1y');
-    expect(ms(365.2425 * 24 * 60 * 60 * 10000 + 1)).toBe('10y');
+    expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1)).toBe('1y');
+    expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1)).toBe('1y');
+    expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1)).toBe('10y');
 
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 1000 - 1)).toBe('-1y');
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 1200 - 1)).toBe('-1y');
-    expect(ms(-1 * 365.2425 * 24 * 60 * 60 * 10000 - 1)).toBe('-10y');
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1)).toBe('-1y');
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1)).toBe('-1y');
+    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1)).toBe('-10y');
   });
 
   it('should round', () => {
