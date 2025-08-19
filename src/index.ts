@@ -168,6 +168,9 @@ function fmtShort(ms: number): StringValue {
   if (msAbs >= mo) {
     return `${Math.round(ms / mo)}mo`;
   }
+  if (msAbs >= w) {
+    return `${Math.round(ms / w)}w`;
+  }
   if (msAbs >= d) {
     return `${Math.round(ms / d)}d`;
   }
@@ -193,6 +196,9 @@ function fmtLong(ms: number): StringValue {
   }
   if (msAbs >= mo) {
     return plural(ms, msAbs, mo, 'month');
+  }
+  if (msAbs >= w) {
+    return plural(ms, msAbs, w, 'week');
   }
   if (msAbs >= d) {
     return plural(ms, msAbs, d, 'day');

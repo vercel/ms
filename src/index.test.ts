@@ -183,13 +183,25 @@ describe('ms(number, { long: true })', () => {
   });
 
   it('should support days', () => {
-    expect(ms(24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
-    expect(ms(24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
-    expect(ms(24 * 60 * 60 * 10000, { long: true })).toBe('10 days');
+    expect(ms(1 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
+    expect(ms(1 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
+    expect(ms(6 * 24 * 60 * 60 * 1000, { long: true })).toBe('6 days');
 
-    expect(ms(-1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true })).toBe('-10 days');
+    expect(ms(-1 * 1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
+    expect(ms(-1 * 1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
+    expect(ms(-1 * 6 * 24 * 60 * 60 * 1000, { long: true })).toBe('-6 days');
+  });
+
+  it('should support weeks', () => {
+    expect(ms(1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 week');
+    expect(ms(2 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('2 weeks');
+
+    expect(ms(-1 * 1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+      '-1 week',
+    );
+    expect(ms(-1 * 2 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
+      '-2 weeks',
+    );
   });
 
   it('should support months', () => {
@@ -276,10 +288,18 @@ describe('ms(number)', () => {
 
   it('should support days', () => {
     expect(ms(24 * 60 * 60 * 1000)).toBe('1d');
-    expect(ms(24 * 60 * 60 * 10000)).toBe('10d');
+    expect(ms(24 * 60 * 60 * 6000)).toBe('6d');
 
     expect(ms(-1 * 24 * 60 * 60 * 1000)).toBe('-1d');
-    expect(ms(-1 * 24 * 60 * 60 * 10000)).toBe('-10d');
+    expect(ms(-1 * 24 * 60 * 60 * 6000)).toBe('-6d');
+  });
+
+  it('should support weeks', () => {
+    expect(ms(1 * 7 * 24 * 60 * 60 * 1000)).toBe('1w');
+    expect(ms(2 * 7 * 24 * 60 * 60 * 1000)).toBe('2w');
+
+    expect(ms(-1 * 1 * 7 * 24 * 60 * 60 * 1000)).toBe('-1w');
+    expect(ms(-1 * 2 * 7 * 24 * 60 * 60 * 1000)).toBe('-2w');
   });
 
   it('should support months', () => {
