@@ -9,7 +9,7 @@ permissions:
   id-token: write
 
 jobs:
-  test:
+  canary:
     name: Canary Release / Node 24
     runs-on: ubuntu-latest
 
@@ -31,7 +31,8 @@ jobs:
 
       - name: Publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
           NPM_CONFIG_PROVENANCE: 'true'
         run: |
           BASE=$(node -p "require('./package.json').version.split('-')[0]")
