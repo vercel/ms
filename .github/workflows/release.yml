@@ -1,4 +1,4 @@
-name: Publish Canary
+name: Publish
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
           NPM_CONFIG_PROVENANCE: 'true'
         run: |
           BASE=$(node -p "require('./package.json').version.split('-')[0]")
-          DATE=$(date +'%Y%m%d%H%M%S')
+          DATE=$(date +'%Y%m%d%H%M')
           CANARY="${BASE}-canary.${DATE}"
 
           npm version --no-git-tag-version "$CANARY"
