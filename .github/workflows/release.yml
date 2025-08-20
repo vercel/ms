@@ -3,8 +3,10 @@ name: Publish Canary
 on:
   push:
     branches: [main]
-    tags-ignore: ['*']
   pull_request: {}
+
+permissions:
+  id-token: write
 
 jobs:
   test:
@@ -25,9 +27,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
-
-      - name: Build
-        run: pnpm run build
+          registry-url: https://registry.npmjs.org
 
       - name: Publish
         env:
