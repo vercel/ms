@@ -42,5 +42,5 @@ jobs:
           DATE=$(date +'%Y%m%d%H%M')
           CANARY="${BASE}-canary.${DATE}"
 
-          npm version --no-git-tag-version "$CANARY"
-          npm publish --tag canary --access public
+          pnpm version --no-git-tag-version "$CANARY"
+          pnpm publish --tag canary --access public --no-git-checks
