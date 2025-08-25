@@ -3,7 +3,6 @@ name: Publish
 on:
   push:
     branches: [main]
-  pull_request: {}
 
 permissions:
   id-token: write
