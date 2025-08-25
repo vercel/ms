@@ -30,18 +30,17 @@ jobs:
 
       - name: Set npm auth token
         run: |
-          pnpm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTH_TOKEN }}
-          pnpm config set //vercel-private-registry.vercel.sh/:_authToken=${{ secrets.VERCEL_PRIVATE_REGISTRY_TOKEN }}
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
 
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
           NPM_CONFIG_PROVENANCE: 'true'
         run: |
           BASE=$(node -p "require('./package.json').version.split('-')[0]")
           DATE=$(date +'%Y%m%d%H%M')
           CANARY="${BASE}-canary.${DATE}"
 
-          pnpm version --no-git-tag-version "$CANARY"
-          pnpm publish --tag canary --access public --no-git-checks
+          npm version --no-git-tag-version "$CANARY"
+          npm publish --tag canary --access public
