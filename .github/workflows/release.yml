@@ -30,6 +30,7 @@ jobs:
 
       - name: Set npm auth token
         run: |
+          npm config set loglevel verbose
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
 
       - name: who knows
