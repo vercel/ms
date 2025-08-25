@@ -1,0 +1,52 @@
+name: Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+permissions:
+  id-token: write
+
+jobs:
+  canary:
+    name: Canary Release / Node 24
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Set npm auth token
+        run: |
+          npm config set loglevel verbose
+          npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
+
+      - name: who knows
+        run: |
+          pnpm build
+          git status
+
+      - name: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
+          NPM_CONFIG_PROVENANCE: 'true'
+        run: |
+          BASE=$(node -p "require('./package.json').version.split('-')[0]")
+          DATE=$(date +'%Y%m%d%H%M')
+          CANARY="${BASE}-canary.${DATE}"
+
+          pnpm version --no-git-tag-version "$CANARY"
+          pnpm publish --tag canary --access public --no-git-checks
