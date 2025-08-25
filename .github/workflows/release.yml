@@ -27,7 +27,7 @@ jobs:
           node-version: 24
           cache: pnpm
 
-      - name: Set npm auth token
+      - name: Set NPM Auth Token
         run: |
           npm config set loglevel verbose
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
