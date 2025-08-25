@@ -28,6 +28,11 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      - name: Set npm auth token
+        run: |
+          pnpm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
+          pnpm config set //vercel-private-registry.vercel.sh/:_authToken=${{ secrets.VERCEL_PRIVATE_REGISTRY_TOKEN }}
+
       - name: Publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
