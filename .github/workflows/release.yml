@@ -32,10 +32,8 @@ jobs:
           npm config set loglevel verbose
           npm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_ELEVATED }}
 
-      - name: who knows
-        run: |
-          pnpm build
-          git status
+      - name: Build
+        run: pnpm build
 
       - name: Publish
         env:
