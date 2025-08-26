@@ -1,4 +1,10 @@
-# ms
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/ms-banner.png">
+    <img alt="ms" src="./assets/ms-banner.png" width="100%">
+  </picture>
+  <h1 align="center">ms</h1>
+</p>
 
 ![CI](https://github.com/vercel/ms/workflows/CI/badge.svg)
 ![Edge Runtime Compatible](https://img.shields.io/badge/edge--runtime-%E2%9C%94%20compatible-black)
