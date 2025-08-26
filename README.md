@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="ms" src="./assets/ms-banner.svg" width="100%">
+  <img alt="ms" src="https://raw.githubusercontent.com/vercel/ms/refs/heads/main/assets/ms-banner.svg" width="100%">
   <h1 align="center">ms</h1>
 </p>
 
