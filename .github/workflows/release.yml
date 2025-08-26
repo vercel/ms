@@ -43,7 +43,7 @@ jobs:
         run: |
           BASE=$(node -p "require('./package.json').version.split('-')[0]")
           DATE=$(date +'%Y%m%d%H%M')
-          CANARY="${BASE}-canary.${DATE}"
+          NIGHTLY="${BASE}-nightly.${DATE}"
 
-          pnpm version --no-git-tag-version "$CANARY"
-          pnpm publish --tag canary --access public --no-git-checks
+          pnpm version --no-git-tag-version "$NIGHTLY"
+          pnpm publish --tag nightly --access public --no-git-checks
