@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/ms-banner.png">
-    <img alt="ms" src="./assets/ms-banner.png" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/ms-banner.svg">
+    <img alt="ms" src="./assets/ms-banner.svg" width="100%">
   </picture>
   <h1 align="center">ms</h1>
 </p>
