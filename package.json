@@ -6,7 +6,6 @@
     "type": "git",
     "url": "git+https://github.com/vercel/ms.git"
   },
-  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
