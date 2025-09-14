@@ -80,7 +80,7 @@ export function parse(str: string): number {
     );
 
   if (!match?.groups) {
-    return NaN;
+    return multipleUnits(str);
   }
 
   // Named capture groups need to be manually typed today.
@@ -156,6 +156,25 @@ export function parse(str: string): number {
 export function parseStrict(value: StringValue): number {
   return parse(value);
 }
+
+/**
+ * Parse the given string with multiple time units and return milliseconds.
+ * 
+ */
+
+function multipleUnits(value: string): number {
+
+  const splitUnits : string[] = value.split(" ");
+  
+
+  //No comprueba si están en orden o repetidos
+
+  return splitUnits.reduce(
+    (accumulator, unit) => parse(unit) + accumulator, 0,
+  );
+
+}
+
 
 /**
  * Short format for `ms`.
