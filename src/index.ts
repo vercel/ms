@@ -159,22 +159,21 @@ export function parseStrict(value: StringValue): number {
 
 /**
  * Parse the given string with multiple time units and return milliseconds.
- * 
+ *
  */
 
 function multipleUnits(value: string): number {
+  const regEx =
+    /\d*\.?\d+ *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)/gi;
 
-  const splitUnits : string[] = value.split(" ");
-  
+  const match = [...value.matchAll(regEx)].flat();
 
-  //No comprueba si están en orden o repetidos
+  if (match.length === 0) {
+    return NaN;
+  }
 
-  return splitUnits.reduce(
-    (accumulator, unit) => parse(unit) + accumulator, 0,
-  );
-
+  return match.reduce((accumulator, unit) => parse(unit) + accumulator, 0);
 }
-
 
 /**
  * Short format for `ms`.
