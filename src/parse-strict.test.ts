@@ -219,3 +219,24 @@ describe('parseStrict(invalid inputs)', () => {
     }).toThrow();
   });
 });
+
+//multiple units
+describe('ms(multipleunits)', () => {
+  it('should not throw an error, when ms(hasmorethanoneunit)', () => {
+    expect(() => {
+      parseStrict('3y40s');
+    }).not.toThrow();
+    expect(() => {
+      parseStrict('3y 40s');
+    }).not.toThrow();
+    expect(() => {
+      parseStrict('3 y 40 s');
+    }).not.toThrow();
+  });
+
+  it('should convert all values into ms', () => {
+    expect(parseStrict('1 h 45 s')).toBe(3645000);
+    expect(parseStrict('3seconds40s')).toBe(43000);
+  });
+
+});

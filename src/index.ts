@@ -29,7 +29,10 @@ type UnitAnyCase = Capitalize<Unit> | Uppercase<Unit> | Unit;
 export type StringValue =
   | `${number}`
   | `${number}${UnitAnyCase}`
-  | `${number} ${UnitAnyCase}`;
+  | `${number} ${UnitAnyCase}`
+  | `${`${number}${Years}` | ``}${`${number}${Months}` | ``}${`${number}${Weeks}` | ``}${`${number}${Days}` | ``}${`${number}${Hours}` | ``}${`${number}${Minutes}` | ``}${`${number}${Seconds}` | ``}${`${number}${Milliseconds}` | `${number}` | ``}`
+  | `${`${number} ${Years}` | ``} ${`${number} ${Months}` | ``} ${`${number} ${Weeks}` | ``} ${`${number} ${Days}` | ``} ${`${number} ${Hours}` | ``} ${`${number} ${Minutes}` | ``} ${`${number} ${Seconds}` | ``} ${`${number} ${Milliseconds}` | `${number}` | ``}`
+  | `${`${number}${Years}` | ``} ${`${number}${Months}` | ``} ${`${number}${Weeks}` | ``} ${`${number}${Days}` | ``} ${`${number}${Hours}` | ``} ${`${number}${Minutes}` | ``} ${`${number}${Seconds}` | ``} ${`${number}${Milliseconds}` | `${number}` | ``}`;
 
 interface Options {
   /**
@@ -164,7 +167,7 @@ export function parseStrict(value: StringValue): number {
 
 function multipleUnits(value: string): number {
   const regEx =
-    /\d*\.?\d+ *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)/gi;
+    /\d*\.?\d+ *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|months?|mo|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)/gi;
 
   const match = [...value.matchAll(regEx)].flat();
 
