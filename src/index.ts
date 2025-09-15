@@ -85,6 +85,7 @@ export function parse(str: string): number {
   if (!match?.groups) {
     return multipleUnits(str);
   }
+  
 
   // Named capture groups need to be manually typed today.
   // https://github.com/microsoft/TypeScript/issues/32098
@@ -147,6 +148,8 @@ export function parse(str: string): number {
         `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
       );
   }
+
+  
 }
 
 /**
@@ -163,6 +166,10 @@ export function parseStrict(value: StringValue): number {
 /**
  * Parse the given string with multiple time units and return milliseconds.
  *
+ * @param value - A typesafe StringValue comprised of multiple strings to convert
+ * into milliseconds
+ * @returns The sum of all parsed strings value in milliseconds, or `NaN` if the
+ * string can't be parsed
  */
 
 function multipleUnits(value: string): number {
@@ -170,8 +177,10 @@ function multipleUnits(value: string): number {
     /\d*\.?\d+ *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|months?|mo|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)/gi;
 
   const match = [...value.matchAll(regEx)].flat();
+  const unmatchedString = value.replaceAll(regEx , '');
+  const spaceRegEx = /^ *$/;
 
-  if (match.length === 0) {
+  if (match.length === 0 || spaceRegEx.exec(unmatchedString) === null) {
     return NaN;
   }
 

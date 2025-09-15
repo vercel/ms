@@ -238,5 +238,4 @@ describe('ms(multipleunits)', () => {
     expect(parseStrict('1 h 45 s')).toBe(3645000);
     expect(parseStrict('3seconds40s')).toBe(43000);
   });
-
 });

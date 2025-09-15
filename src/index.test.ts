@@ -403,6 +403,10 @@ describe('ms(multipleunits)', () => {
   it('should convert all values into ms', () => {
     expect(ms('1 h 45 s')).toBe(3645000);
     expect(ms('3seconds40s')).toBe(43000);
-    expect(ms('1m1mo1ms')).toBe(2629860001)
+    expect(ms('1m1mo1ms')).toBe(2629860001);
   });
+
+  it('should return NaN if invalid' , () => {
+    expect(Number.isNaN(ms('3h2failure'))).toBe(true);
+  })
 });
