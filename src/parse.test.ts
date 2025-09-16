@@ -226,7 +226,7 @@ describe('ms(multipleunits)', () => {
     expect(parse('3seconds40s')).toBe(43000);
   });
 
-  it('should return NaN if invalid' , () => {
-      expect(Number.isNaN(parse('3h2failure'))).toBe(true);
-    })
+  it('should return NaN if invalid', () => {
+    expect(Number.isNaN(parse('3h2failure'))).toBe(true);
+  });
 });

@@ -406,7 +406,7 @@ describe('ms(multipleunits)', () => {
     expect(ms('1m1mo1ms')).toBe(2629860001);
   });
 
-  it('should return NaN if invalid' , () => {
+  it('should return NaN if invalid', () => {
     expect(Number.isNaN(ms('3h2failure'))).toBe(true);
-  })
+  });
 });
