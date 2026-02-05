@@ -89,6 +89,10 @@ describe('parseStrict(string)', () => {
   it('should work with negative decimals starting with "."', () => {
     expect(parseStrict('-.5h')).toBe(-1800000);
   });
+  
+  it('should not support explicit plus sign', () => {
+    expect(Number.isNaN(parseStrict('+1h'))).toBe(true);
+  });
 });
 
 // long strings

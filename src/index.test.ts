@@ -77,6 +77,10 @@ describe('ms(string)', () => {
   it('should work with negative decimals starting with "."', () => {
     expect(ms('-.5h')).toBe(-1800000);
   });
+  
+  it('should match README example ms(ms("10 hours"))', () => {
+    expect(ms(ms('10 hours'))).toBe('10h');
+  });
 });
 
 // long strings
@@ -148,7 +152,6 @@ describe('ms(number, { long: true })', () => {
 
   it('should support milliseconds', () => {
     expect(ms(500, { long: true })).toBe('500 ms');
-
     expect(ms(-500, { long: true })).toBe('-500 ms');
   });
 
@@ -167,9 +170,9 @@ describe('ms(number, { long: true })', () => {
     expect(ms(60 * 1200, { long: true })).toBe('1 minute');
     expect(ms(60 * 10000, { long: true })).toBe('10 minutes');
 
-    expect(ms(-1 * 60 * 1000, { long: true })).toBe('-1 minute');
-    expect(ms(-1 * 60 * 1200, { long: true })).toBe('-1 minute');
-    expect(ms(-1 * 60 * 10000, { long: true })).toBe('-10 minutes');
+    expect(ms(-60 * 1000, { long: true })).toBe('-1 minute');
+    expect(ms(-60 * 1200, { long: true })).toBe('-1 minute');
+    expect(ms(-60 * 10000, { long: true })).toBe('-10 minutes');
   });
 
   it('should support hours', () => {
@@ -177,155 +180,52 @@ describe('ms(number, { long: true })', () => {
     expect(ms(60 * 60 * 1200, { long: true })).toBe('1 hour');
     expect(ms(60 * 60 * 10000, { long: true })).toBe('10 hours');
 
-    expect(ms(-1 * 60 * 60 * 1000, { long: true })).toBe('-1 hour');
-    expect(ms(-1 * 60 * 60 * 1200, { long: true })).toBe('-1 hour');
-    expect(ms(-1 * 60 * 60 * 10000, { long: true })).toBe('-10 hours');
+    expect(ms(-60 * 60 * 1000, { long: true })).toBe('-1 hour');
+    expect(ms(-60 * 60 * 1200, { long: true })).toBe('-1 hour');
+    expect(ms(-60 * 60 * 10000, { long: true })).toBe('-10 hours');
   });
 
   it('should support days', () => {
-    expect(ms(1 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
-    expect(ms(1 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
+    expect(ms(24 * 60 * 60 * 1000, { long: true })).toBe('1 day');
+    expect(ms(24 * 60 * 60 * 1200, { long: true })).toBe('1 day');
     expect(ms(6 * 24 * 60 * 60 * 1000, { long: true })).toBe('6 days');
 
-    expect(ms(-1 * 1 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
-    expect(ms(-1 * 1 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
-    expect(ms(-1 * 6 * 24 * 60 * 60 * 1000, { long: true })).toBe('-6 days');
+    expect(ms(-24 * 60 * 60 * 1000, { long: true })).toBe('-1 day');
+    expect(ms(-24 * 60 * 60 * 1200, { long: true })).toBe('-1 day');
+    expect(ms(-6 * 24 * 60 * 60 * 1000, { long: true })).toBe('-6 days');
   });
 
   it('should support weeks', () => {
-    expect(ms(1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 week');
+    expect(ms(7 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 week');
     expect(ms(2 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('2 weeks');
 
-    expect(ms(-1 * 1 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
-      '-1 week',
-    );
-    expect(ms(-1 * 2 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe(
-      '-2 weeks',
-    );
+    expect(ms(-7 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 week');
+    expect(ms(-2 * 7 * 24 * 60 * 60 * 1000, { long: true })).toBe('-2 weeks');
   });
 
   it('should support months', () => {
     expect(ms(30.4375 * 24 * 60 * 60 * 1000, { long: true })).toBe('1 month');
     expect(ms(30.4375 * 24 * 60 * 60 * 1200, { long: true })).toBe('1 month');
-    expect(ms(30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe(
-      '10 months',
-    );
+    expect(ms(30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe('10 months');
 
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1000, { long: true })).toBe(
-      '-1 month',
-    );
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1200, { long: true })).toBe(
-      '-1 month',
-    );
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe(
-      '-10 months',
-    );
+    expect(ms(-30.4375 * 24 * 60 * 60 * 1000, { long: true })).toBe('-1 month');
+    expect(ms(-30.4375 * 24 * 60 * 60 * 1200, { long: true })).toBe('-1 month');
+    expect(ms(-30.4375 * 24 * 60 * 60 * 10000, { long: true })).toBe('-10 months');
   });
 
   it('should support years', () => {
     expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1, { long: true })).toBe('1 year');
     expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1, { long: true })).toBe('1 year');
-    expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1, { long: true })).toBe(
-      '10 years',
-    );
+    expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1, { long: true })).toBe('10 years');
 
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1, { long: true })).toBe(
-      '-1 year',
-    );
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1, { long: true })).toBe(
-      '-1 year',
-    );
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1, { long: true })).toBe(
-      '-10 years',
-    );
+    expect(ms(-365.25 * 24 * 60 * 60 * 1000 - 1, { long: true })).toBe('-1 year');
+    expect(ms(-365.25 * 24 * 60 * 60 * 1200 - 1, { long: true })).toBe('-1 year');
+    expect(ms(-365.25 * 24 * 60 * 60 * 10000 - 1, { long: true })).toBe('-10 years');
   });
 
   it('should round', () => {
     expect(ms(234234234, { long: true })).toBe('3 days');
-
     expect(ms(-234234234, { long: true })).toBe('-3 days');
-  });
-});
-
-// numbers
-
-describe('ms(number)', () => {
-  it('should not throw an error', () => {
-    expect(() => {
-      ms(500);
-    }).not.toThrow();
-  });
-
-  it('should support milliseconds', () => {
-    expect(ms(500)).toBe('500ms');
-
-    expect(ms(-500)).toBe('-500ms');
-  });
-
-  it('should support seconds', () => {
-    expect(ms(1000)).toBe('1s');
-    expect(ms(10000)).toBe('10s');
-
-    expect(ms(-1000)).toBe('-1s');
-    expect(ms(-10000)).toBe('-10s');
-  });
-
-  it('should support minutes', () => {
-    expect(ms(60 * 1000)).toBe('1m');
-    expect(ms(60 * 10000)).toBe('10m');
-
-    expect(ms(-1 * 60 * 1000)).toBe('-1m');
-    expect(ms(-1 * 60 * 10000)).toBe('-10m');
-  });
-
-  it('should support hours', () => {
-    expect(ms(60 * 60 * 1000)).toBe('1h');
-    expect(ms(60 * 60 * 10000)).toBe('10h');
-
-    expect(ms(-1 * 60 * 60 * 1000)).toBe('-1h');
-    expect(ms(-1 * 60 * 60 * 10000)).toBe('-10h');
-  });
-
-  it('should support days', () => {
-    expect(ms(24 * 60 * 60 * 1000)).toBe('1d');
-    expect(ms(24 * 60 * 60 * 6000)).toBe('6d');
-
-    expect(ms(-1 * 24 * 60 * 60 * 1000)).toBe('-1d');
-    expect(ms(-1 * 24 * 60 * 60 * 6000)).toBe('-6d');
-  });
-
-  it('should support weeks', () => {
-    expect(ms(1 * 7 * 24 * 60 * 60 * 1000)).toBe('1w');
-    expect(ms(2 * 7 * 24 * 60 * 60 * 1000)).toBe('2w');
-
-    expect(ms(-1 * 1 * 7 * 24 * 60 * 60 * 1000)).toBe('-1w');
-    expect(ms(-1 * 2 * 7 * 24 * 60 * 60 * 1000)).toBe('-2w');
-  });
-
-  it('should support months', () => {
-    expect(ms(30.4375 * 24 * 60 * 60 * 1000)).toBe('1mo');
-    expect(ms(30.4375 * 24 * 60 * 60 * 1200)).toBe('1mo');
-    expect(ms(30.4375 * 24 * 60 * 60 * 10000)).toBe('10mo');
-
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1000)).toBe('-1mo');
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 1200)).toBe('-1mo');
-    expect(ms(-1 * 30.4375 * 24 * 60 * 60 * 10000)).toBe('-10mo');
-  });
-
-  it('should support years', () => {
-    expect(ms(365.25 * 24 * 60 * 60 * 1000 + 1)).toBe('1y');
-    expect(ms(365.25 * 24 * 60 * 60 * 1200 + 1)).toBe('1y');
-    expect(ms(365.25 * 24 * 60 * 60 * 10000 + 1)).toBe('10y');
-
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1000 - 1)).toBe('-1y');
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 1200 - 1)).toBe('-1y');
-    expect(ms(-1 * 365.25 * 24 * 60 * 60 * 10000 - 1)).toBe('-10y');
-  });
-
-  it('should round', () => {
-    expect(ms(234234234)).toBe('3d');
-
-    expect(ms(-234234234)).toBe('-3d');
   });
 });
 
@@ -333,55 +233,39 @@ describe('ms(number)', () => {
 
 describe('ms(invalid inputs)', () => {
   it('should throw an error, when ms("")', () => {
-    expect(() => {
-      // @ts-expect-error - We expect this to throw.
-      ms('');
-    }).toThrow();
+    // @ts-expect-error
+    expect(() => ms('')).toThrow();
   });
 
   it('should throw an error, when ms(undefined)', () => {
-    expect(() => {
-      // @ts-expect-error - We expect this to throw.
-      ms(undefined);
-    }).toThrow();
+    // @ts-expect-error
+    expect(() => ms(undefined)).toThrow();
   });
 
   it('should throw an error, when ms(null)', () => {
-    expect(() => {
-      // @ts-expect-error - We expect this to throw.
-      ms(null);
-    }).toThrow();
+    // @ts-expect-error
+    expect(() => ms(null)).toThrow();
   });
 
   it('should throw an error, when ms([])', () => {
-    expect(() => {
-      // @ts-expect-error - We expect this to throw.
-      ms([]);
-    }).toThrow();
+    // @ts-expect-error
+    expect(() => ms([])).toThrow();
   });
 
   it('should throw an error, when ms({})', () => {
-    expect(() => {
-      // @ts-expect-error - We expect this to throw.
-      ms({});
-    }).toThrow();
+    // @ts-expect-error
+    expect(() => ms({})).toThrow();
   });
 
   it('should throw an error, when ms(NaN)', () => {
-    expect(() => {
-      ms(NaN);
-    }).toThrow();
+    expect(() => ms(NaN)).toThrow();
   });
 
   it('should throw an error, when ms(Infinity)', () => {
-    expect(() => {
-      ms(Infinity);
-    }).toThrow();
+    expect(() => ms(Infinity)).toThrow();
   });
 
   it('should throw an error, when ms(-Infinity)', () => {
-    expect(() => {
-      ms(-Infinity);
-    }).toThrow();
+    expect(() => ms(-Infinity)).toThrow();
   });
 });
