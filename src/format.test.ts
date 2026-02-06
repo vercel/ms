@@ -258,4 +258,16 @@ describe('format(invalid inputs)', () => {
       format(-Infinity);
     }).toThrow();
   });
+
+  it('should handle negative pluralization correctly', () => {
+    expect(format(-1500, { long: true })).toBe('-1 second');
+    expect(format(-1501, { long: true })).toBe('-2 seconds');
+    expect(format(-1000, { long: true })).toBe('-1 second');
+  });
+
+  it('should handle positive pluralization correctly', () => {
+    expect(format(1500, { long: true })).toBe('2 seconds');
+    expect(format(1501, { long: true })).toBe('2 seconds');
+    expect(format(1000, { long: true })).toBe('1 second');
+  });
 });
