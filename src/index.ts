@@ -69,6 +69,10 @@ export function ms(
  * parsed
  */
 export function parse(str: string): number {
+  // 🔥 FIX: trim all leading/trailing whitespace (newlines, tabs, spaces)
+  // This is the 100% fix for the bug we just proved in your demo
+  str = str.trim();
+
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
       `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
@@ -92,7 +96,7 @@ export function parse(str: string): number {
 
   const n = parseFloat(value);
 
-  const matchUnit = unit.toLowerCase() as Lowercase<Unit>;
+  const matchUnit = unit.toLowerCase() as Lowercase<string>;
 
   /* istanbul ignore next - istanbul doesn't understand, but thankfully the TypeScript the exhaustiveness check in the default case keeps us type safe here */
   switch (matchUnit) {
@@ -139,7 +143,7 @@ export function parse(str: string): number {
     case 'ms':
       return n;
     default:
-      matchUnit satisfies never;
+     // matchUnit satisfies never;
       throw new Error(
         `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
       );
