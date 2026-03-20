@@ -75,20 +75,16 @@ export function parse(str: string): number {
     );
   }
   const match =
-    /^(?<value>-?\d*\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)?$/i.exec(
+    /^(-?\d*\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)?$/i.exec(
       str,
     );
 
-  if (!match?.groups) {
+  if (!match) {
     return NaN;
   }
 
-  // Named capture groups need to be manually typed today.
-  // https://github.com/microsoft/TypeScript/issues/32098
-  const { value, unit = 'ms' } = match.groups as {
-    value: string;
-    unit: string | undefined;
-  };
+  const value = match[1];
+  const unit = match[2] ?? 'ms';
 
   const n = parseFloat(value);
 
