@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { parse } from './index';
+import { format, parse } from './index';
 
 describe('parse(string)', () => {
   it('should not throw an error', () => {
@@ -139,6 +139,27 @@ describe('parse(long string)', () => {
 
   it('should work with negative decimals starting with "."', () => {
     expect(parse('-.5 hr')).toBe(-1800000);
+  });
+});
+
+// scientific notation
+
+describe('parse(scientific notation)', () => {
+  it('should handle scientific notation in number part', () => {
+    expect(parse('1e3ms')).toBe(1000);
+    expect(parse('1.5e2ms')).toBe(150);
+    expect(parse('1e+3ms')).toBe(1000);
+    expect(parse('1e-3ms')).toBe(0.001);
+  });
+
+  it('should handle format() output for very large values', () => {
+    const formatted = format(Number.MAX_SAFE_INTEGER);
+    expect(Number.isNaN(parse(formatted))).toBe(false);
+  });
+
+  it('should handle format() output for very small negative values', () => {
+    const formatted = format(-Number.MAX_SAFE_INTEGER);
+    expect(Number.isNaN(parse(formatted))).toBe(false);
   });
 });
 

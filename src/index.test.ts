@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { ms } from './index';
+import { ms, type StringValue } from './index';
 
 describe('ms(string)', () => {
   it('should not throw an error', () => {
@@ -326,6 +326,29 @@ describe('ms(number)', () => {
     expect(ms(234234234)).toBe('3d');
 
     expect(ms(-234234234)).toBe('-3d');
+  });
+});
+
+// roundtrip
+
+describe('ms(roundtrip)', () => {
+  it('should roundtrip for common values', () => {
+    expect(ms(ms('1s'))).toBe('1s');
+    expect(ms(ms('1m'))).toBe('1m');
+    expect(ms(ms('1h'))).toBe('1h');
+    expect(ms(ms('1d'))).toBe('1d');
+    expect(ms(ms('1w'))).toBe('1w');
+    expect(ms(ms('1y'))).toBe('1y');
+  });
+
+  it('should not return NaN for format() output with large numbers', () => {
+    const formatted = ms(Number.MAX_SAFE_INTEGER) as StringValue;
+    expect(Number.isNaN(ms(formatted))).toBe(false);
+  });
+
+  it('should not return NaN for format() output with large negative numbers', () => {
+    const formatted = ms(-Number.MAX_SAFE_INTEGER) as StringValue;
+    expect(Number.isNaN(ms(formatted))).toBe(false);
   });
 });
 
