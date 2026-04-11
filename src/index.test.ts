@@ -327,6 +327,13 @@ describe('ms(number)', () => {
 
     expect(ms(-234234234)).toBe('-3d');
   });
+
+  it('should roundtrip format/parse for large numbers', () => {
+    const formatted = ms(Number.MAX_VALUE);
+    expect(typeof formatted).toBe('string');
+    const parsed = ms(formatted as `${number}`);
+    expect(parsed).not.toBeNaN();
+  });
 });
 
 // invalid inputs
