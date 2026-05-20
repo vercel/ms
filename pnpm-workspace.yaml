@@ -1,2 +1,4 @@
 onlyBuiltDependencies:
   - unrs-resolver
+minimumReleaseAge: 2880
+
