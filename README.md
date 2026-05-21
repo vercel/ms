@@ -172,6 +172,77 @@ function example(s: string) {
 }
 ```
 
+### Localization
+
+`ms` ships with built-in locales for **French** (`fr`), **Arabic** (`ar`), **German** (`de`), **Spanish** (`es`), and **Chinese** (`zh`). Pass a locale to `format` or `ms` via the `locale` option:
+
+```ts
+import { ms, format, fr, de, zh } from 'ms';
+
+// Short format
+format(60000, { locale: fr })            // "1min"
+format(3600000, { locale: de })          // "1Std"
+format(86400000, { locale: zh })         // "1天"
+
+// Long format
+ms(1000, { locale: fr, long: true })     // "1 seconde"
+ms(10000, { locale: fr, long: true })    // "10 secondes"
+ms(3600000, { locale: de, long: true })  // "1 Stunde"
+ms(7200000, { locale: de, long: true })  // "2 Stunden"
+ms(86400000, { locale: zh, long: true }) // "1 天"
+```
+
+> [!NOTE]
+> Parsing (`ms('1s')`, `parse('1h')`) is always English-only regardless of locale. Only formatting is localized.
+
+#### Adding a Custom Locale
+
+Implement the `LocaleDefinition` interface exported from `ms` and pass it as `locale`:
+
+```ts
+import { format, type LocaleDefinition } from 'ms';
+
+const pt: LocaleDefinition = {
+  shortUnits: {
+    ms: 'ms',
+    s: 's',
+    m: 'min',
+    h: 'h',
+    d: 'd',
+    w: 'sem',
+    mo: 'mês',
+    y: 'ano',
+  },
+  longUnits: {
+    millisecond: ['milissegundo', 'milissegundos'],
+    second:      ['segundo',      'segundos'],
+    minute:      ['minuto',       'minutos'],
+    hour:        ['hora',         'horas'],
+    day:         ['dia',          'dias'],
+    week:        ['semana',       'semanas'],
+    month:       ['mês',          'meses'],
+    year:        ['ano',          'anos'],
+  },
+  // Return true when the plural form should be used.
+  // Omit to use the English default: value >= unitMs * 1.5.
+  isPlural: (value) => value !== 1,
+};
+
+format(1000,  { locale: pt, long: true }); // "1 segundo"
+format(10000, { locale: pt, long: true }); // "10 segundos"
+format(60000, { locale: pt });             // "1min"
+```
+
+The `LocaleDefinition` fields:
+
+| Field | Type | Description |
+|---|---|---|
+| `shortUnits` | `object` | Abbreviated unit labels appended directly after the number (e.g. `1min`, `2h`) |
+| `longUnits` | `object` | `[singular, plural]` pair for each unit, used in long format |
+| `isPlural` | `(value: number) => boolean` | Optional. Receives the rounded absolute display value; return `true` to use the plural form. Defaults to `value >= unitMs * 1.5` (English-style threshold). |
+
+For languages without grammatical number (like Chinese), set `isPlural: () => false` and use the same string for both entries in each `longUnits` pair.
+
 ## Edge Runtime Support
 
 `ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app/). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:

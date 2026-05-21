@@ -31,12 +31,73 @@ export type StringValue =
   | `${number}${UnitAnyCase}`
   | `${number} ${UnitAnyCase}`;
 
-interface Options {
+export interface LocaleDefinition {
+  shortUnits: {
+    ms: string;
+    s: string;
+    m: string;
+    h: string;
+    d: string;
+    w: string;
+    mo: string;
+    y: string;
+  };
+  longUnits: {
+    millisecond: [string, string];
+    second: [string, string];
+    minute: [string, string];
+    hour: [string, string];
+    day: [string, string];
+    week: [string, string];
+    month: [string, string];
+    year: [string, string];
+  };
+  /**
+   * Receives rounded abs display value, returns true if plural form should be used.
+   * Defaults to English-style: `msAbs >= unit * 1.5`.
+   */
+  isPlural?: (value: number) => boolean;
+}
+
+export interface Options {
   /**
    * Set to `true` to use verbose formatting. Defaults to `false`.
    */
   long?: boolean;
+  /**
+   * Locale definition for formatting. Defaults to English.
+   */
+  locale?: LocaleDefinition;
 }
+
+export const en: LocaleDefinition = {
+  shortUnits: {
+    ms: 'ms',
+    s: 's',
+    m: 'm',
+    h: 'h',
+    d: 'd',
+    w: 'w',
+    mo: 'mo',
+    y: 'y',
+  },
+  longUnits: {
+    millisecond: ['ms', 'ms'],
+    second: ['second', 'seconds'],
+    minute: ['minute', 'minutes'],
+    hour: ['hour', 'hours'],
+    day: ['day', 'days'],
+    week: ['week', 'weeks'],
+    month: ['month', 'months'],
+    year: ['year', 'years'],
+  },
+};
+
+export { ar } from './locales/ar';
+export { de } from './locales/de';
+export { es } from './locales/es';
+export { fr } from './locales/fr';
+export { zh } from './locales/zh';
 
 /**
  * Parse or format the given value.
@@ -160,59 +221,62 @@ export function parseStrict(value: StringValue): number {
 /**
  * Short format for `ms`.
  */
-function fmtShort(ms: number): StringValue {
+function fmtShort(ms: number, locale: LocaleDefinition): string {
   const msAbs = Math.abs(ms);
+  const u = locale.shortUnits;
   if (msAbs >= y) {
-    return `${Math.round(ms / y)}y`;
+    return `${Math.round(ms / y)}${u.y}`;
   }
   if (msAbs >= mo) {
-    return `${Math.round(ms / mo)}mo`;
+    return `${Math.round(ms / mo)}${u.mo}`;
   }
   if (msAbs >= w) {
-    return `${Math.round(ms / w)}w`;
+    return `${Math.round(ms / w)}${u.w}`;
   }
   if (msAbs >= d) {
-    return `${Math.round(ms / d)}d`;
+    return `${Math.round(ms / d)}${u.d}`;
   }
   if (msAbs >= h) {
-    return `${Math.round(ms / h)}h`;
+    return `${Math.round(ms / h)}${u.h}`;
   }
   if (msAbs >= m) {
-    return `${Math.round(ms / m)}m`;
+    return `${Math.round(ms / m)}${u.m}`;
   }
   if (msAbs >= s) {
-    return `${Math.round(ms / s)}s`;
+    return `${Math.round(ms / s)}${u.s}`;
   }
-  return `${ms}ms`;
+  return `${ms}${u.ms}`;
 }
 
 /**
  * Long format for `ms`.
  */
-function fmtLong(ms: number): StringValue {
+function fmtLong(ms: number, locale: LocaleDefinition): string {
   const msAbs = Math.abs(ms);
+  const { longUnits, isPlural } = locale;
   if (msAbs >= y) {
-    return plural(ms, msAbs, y, 'year');
+    return fmtPlural(ms, msAbs, y, longUnits.year, isPlural);
   }
   if (msAbs >= mo) {
-    return plural(ms, msAbs, mo, 'month');
+    return fmtPlural(ms, msAbs, mo, longUnits.month, isPlural);
   }
   if (msAbs >= w) {
-    return plural(ms, msAbs, w, 'week');
+    return fmtPlural(ms, msAbs, w, longUnits.week, isPlural);
   }
   if (msAbs >= d) {
-    return plural(ms, msAbs, d, 'day');
+    return fmtPlural(ms, msAbs, d, longUnits.day, isPlural);
   }
   if (msAbs >= h) {
-    return plural(ms, msAbs, h, 'hour');
+    return fmtPlural(ms, msAbs, h, longUnits.hour, isPlural);
   }
   if (msAbs >= m) {
-    return plural(ms, msAbs, m, 'minute');
+    return fmtPlural(ms, msAbs, m, longUnits.minute, isPlural);
   }
   if (msAbs >= s) {
-    return plural(ms, msAbs, s, 'second');
+    return fmtPlural(ms, msAbs, s, longUnits.second, isPlural);
   }
-  return `${ms} ms`;
+  const shouldBePlural = isPlural ? isPlural(msAbs) : msAbs >= 1.5;
+  return `${ms} ${shouldBePlural ? longUnits.millisecond[1] : longUnits.millisecond[0]}`;
 }
 
 /**
@@ -227,18 +291,22 @@ export function format(ms: number, options?: Options): string {
     throw new Error('Value provided to ms.format() must be of type number.');
   }
 
-  return options?.long ? fmtLong(ms) : fmtShort(ms);
+  const locale = options?.locale ?? en;
+  return options?.long ? fmtLong(ms, locale) : fmtShort(ms, locale);
 }
 
 /**
  * Pluralization helper.
  */
-function plural(
+function fmtPlural(
   ms: number,
   msAbs: number,
   n: number,
-  name: string,
-): StringValue {
-  const isPlural = msAbs >= n * 1.5;
-  return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+  units: [string, string],
+  isPlural?: (value: number) => boolean,
+): string {
+  const value = Math.round(ms / n);
+  const absValue = Math.abs(value);
+  const shouldBePlural = isPlural ? isPlural(absValue) : msAbs >= n * 1.5;
+  return `${value} ${shouldBePlural ? units[1] : units[0]}`;
 }
