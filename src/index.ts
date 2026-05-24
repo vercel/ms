@@ -29,7 +29,10 @@ type UnitAnyCase = Capitalize<Unit> | Uppercase<Unit> | Unit;
 export type StringValue =
   | `${number}`
   | `${number}${UnitAnyCase}`
-  | `${number} ${UnitAnyCase}`;
+  | `${number} ${UnitAnyCase}`
+  | `${`${number}${Years}` | ``}${`${number}${Months}` | ``}${`${number}${Weeks}` | ``}${`${number}${Days}` | ``}${`${number}${Hours}` | ``}${`${number}${Minutes}` | ``}${`${number}${Seconds}` | ``}${`${number}${Milliseconds}` | `${number}` | ``}`
+  | `${`${number} ${Years}` | ``} ${`${number} ${Months}` | ``} ${`${number} ${Weeks}` | ``} ${`${number} ${Days}` | ``} ${`${number} ${Hours}` | ``} ${`${number} ${Minutes}` | ``} ${`${number} ${Seconds}` | ``} ${`${number} ${Milliseconds}` | `${number}` | ``}`
+  | `${`${number}${Years}` | ``} ${`${number}${Months}` | ``} ${`${number}${Weeks}` | ``} ${`${number}${Days}` | ``} ${`${number}${Hours}` | ``} ${`${number}${Minutes}` | ``} ${`${number}${Seconds}` | ``} ${`${number}${Milliseconds}` | `${number}` | ``}`;
 
 interface Options {
   /**
@@ -80,7 +83,7 @@ export function parse(str: string): number {
     );
 
   if (!match?.groups) {
-    return NaN;
+    return multipleUnits(str);
   }
 
   // Named capture groups need to be manually typed today.
@@ -155,6 +158,30 @@ export function parse(str: string): number {
  */
 export function parseStrict(value: StringValue): number {
   return parse(value);
+}
+
+/**
+ * Parse the given string with multiple time units and return milliseconds.
+ *
+ * @param value - A typesafe StringValue comprised of multiple strings to convert
+ * into milliseconds
+ * @returns The sum of all parsed strings value in milliseconds, or `NaN` if the
+ * string can't be parsed
+ */
+
+function multipleUnits(value: string): number {
+  const regEx =
+    /\d*\.?\d+ *(?:milliseconds?|msecs?|ms|seconds?|secs?|s|months?|mo|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)/gi;
+
+  const match = [...value.matchAll(regEx)].flat();
+  const unmatchedString = value.replaceAll(regEx, '');
+  const spaceRegEx = /^ *$/;
+
+  if (match.length === 0 || spaceRegEx.exec(unmatchedString) === null) {
+    return NaN;
+  }
+
+  return match.reduce((accumulator, unit) => parse(unit) + accumulator, 0);
 }
 
 /**

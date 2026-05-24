@@ -385,3 +385,28 @@ describe('ms(invalid inputs)', () => {
     }).toThrow();
   });
 });
+
+//multiple units
+describe('ms(multipleunits)', () => {
+  it('should not throw an error, when ms(hasmorethanoneunit)', () => {
+    expect(() => {
+      ms('3y40s');
+    }).not.toThrow();
+    expect(() => {
+      ms('3y 40s');
+    }).not.toThrow();
+    expect(() => {
+      ms('3 y 40 s');
+    }).not.toThrow();
+  });
+
+  it('should convert all values into ms', () => {
+    expect(ms('1 h 45 s')).toBe(3645000);
+    expect(ms('3seconds40s')).toBe(43000);
+    expect(ms('1m1mo1ms')).toBe(2629860001);
+  });
+
+  it('should return NaN if invalid', () => {
+    expect(Number.isNaN(ms('3h2failure'))).toBe(true);
+  });
+});
