@@ -78,6 +78,15 @@ describe('parse(string)', () => {
   it('should work with negative decimals starting with "."', () => {
     expect(parse('-.5h')).toBe(-1800000);
   });
+
+  it('should work with scientific notation (roundtrip from format)', () => {
+    expect(parse('5.696545792019405e+297y')).not.toBeNaN();
+    expect(parse('1e3ms')).toBe(1000);
+    expect(parse('1.5e2s')).toBe(150000);
+    expect(parse('-1e3ms')).toBe(-1000);
+    expect(parse('1E3ms')).toBe(1000);
+    expect(parse('1e+3ms')).toBe(1000);
+  });
 });
 
 // long strings
