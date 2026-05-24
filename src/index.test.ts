@@ -40,6 +40,10 @@ describe('ms(string)', () => {
     expect(ms('1y')).toBe(31557600000);
   });
 
+  it('should convert mo to ms', () => {
+    expect(ms('1mo')).toBe(2629800000);
+  });
+
   it('should work with decimals', () => {
     expect(ms('1.5h')).toBe(5400000);
   });
@@ -114,6 +118,10 @@ describe('ms(long string)', () => {
 
   it('should convert weeks to ms', () => {
     expect(ms('1 week')).toBe(604800000);
+  });
+
+  it('should convert months to ms', () => {
+    expect(ms('1 month')).toBe(2629800000);
   });
 
   it('should convert years to ms', () => {
@@ -326,6 +334,28 @@ describe('ms(number)', () => {
     expect(ms(234234234)).toBe('3d');
 
     expect(ms(-234234234)).toBe('-3d');
+  });
+});
+
+// zero
+
+describe('ms(zero)', () => {
+  it('should handle zero as a string', () => {
+    expect(ms('0')).toBe(0);
+  });
+
+  it('should handle zero with unit', () => {
+    expect(ms('0ms')).toBe(0);
+    expect(ms('0s')).toBe(0);
+    expect(ms('0h')).toBe(0);
+  });
+
+  it('should handle zero as a number', () => {
+    expect(ms(0)).toBe('0ms');
+  });
+
+  it('should handle zero with long format', () => {
+    expect(ms(0, { long: true })).toBe('0 ms');
   });
 });
 
