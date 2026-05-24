@@ -116,7 +116,7 @@ function example(value: string) {
     //
     // It's important to note that this can be dangerous (see below).
     ms(value as StringValue);
-  } catch (error: Error) {
+  } catch (error) {
     // Handle any errors from invalid values.
     console.error(error);
   }
@@ -168,7 +168,7 @@ import { parseStrict } from 'ms';
 parseStrict('1h'); // 3600000
 
 function example(s: string) {
-  return parseStrict(str); // tsc error
+  return parseStrict(s); // tsc error
 }
 ```
 
@@ -177,9 +177,6 @@ function example(s: string) {
 `ms` is compatible with the [Edge Runtime](https://edge-runtime.vercel.app/). It can be used inside environments like [Vercel Edge Functions](https://vercel.com/edge) as follows:
 
 ```ts
-// Next.js (pages/api/edge.js) (npm i next@canary)
-// Other frameworks (api/edge.js) (npm i -g vercel@canary)
-
 import { ms } from 'ms';
 const start = Date.now();
 
@@ -188,7 +185,7 @@ export default (req) => {
 };
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
 };
 ```
 
@@ -199,9 +196,5 @@ export const config = {
 ## Caught a Bug?
 
 1. [Fork](https://help.github.com/articles/fork-a-repo/) this repository to your own GitHub account and then [clone](https://help.github.com/articles/cloning-a-repository/) it to your local device
-2. Link the package to the global module directory: `npm link`
-3. Within the module you want to test your local development instance of ms, just link it to the dependencies: `npm link ms`. Instead of the default one from npm, Node.js will now use your clone of ms!
-
-As always, you can run the tests using: `npm test`
-
-[^1]: Internet Explorer is not supported
+2. Install dependencies: `pnpm install`
+3. Run the tests: `pnpm test`
