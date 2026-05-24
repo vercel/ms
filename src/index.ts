@@ -239,6 +239,7 @@ function plural(
   n: number,
   name: string,
 ): StringValue {
-  const isPlural = msAbs >= n * 1.5;
-  return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+  const rounded = Math.round(ms / n);
+  const isPlural = Math.abs(rounded) !== 1;
+  return `${rounded} ${name}${isPlural ? 's' : ''}` as StringValue;
 }
