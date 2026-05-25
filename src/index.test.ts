@@ -327,6 +327,10 @@ describe('ms(number)', () => {
 
     expect(ms(-234234234)).toBe('-3d');
   });
+
+  it('should roundtrip very large values that format in scientific notation', () => {
+    expect(ms(ms(Number.MAX_VALUE))).toBe(Number.MAX_VALUE);
+  });
 });
 
 // invalid inputs
