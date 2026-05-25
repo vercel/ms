@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { parse } from './index';
+import { format, parse } from './index';
 
 describe('parse(string)', () => {
   it('should not throw an error', () => {
@@ -64,6 +64,20 @@ describe('parse(string)', () => {
 
   it('should work with numbers starting with .', () => {
     expect(parse('.5ms')).toBe(0.5);
+  });
+
+  it('should parse scientific notation values', () => {
+    expect(parse('1e3ms')).toBe(1000);
+    expect(parse('1.5e2s')).toBe(150000);
+    expect(parse('-1e3ms')).toBe(-1000);
+    expect(parse('1E3ms')).toBe(1000);
+    expect(parse('1e+3ms')).toBe(1000);
+  });
+
+  it('should roundtrip format output with scientific notation', () => {
+    const formatted = format(Number.MAX_VALUE);
+    expect(formatted).toMatch(/e[+-]\d+y$/i);
+    expect(parse(formatted)).toBe(Number.MAX_VALUE);
   });
 
   it('should work with negative integers', () => {
