@@ -54,6 +54,12 @@ describe('parse(string)', () => {
     expect(Number.isNaN(parse('foo'))).toBe(true);
   });
 
+  it('should parse long invalid numeric strings without catastrophic backtracking', () => {
+    const start = performance.now();
+    expect(Number.isNaN(parse(`${'9'.repeat(99)}z`))).toBe(true);
+    expect(performance.now() - start).toBeLessThan(20);
+  });
+
   it('should be case-insensitive', () => {
     expect(parse('53 YeArS')).toBe(1672552800000);
     expect(parse('53 WeEkS')).toBe(32054400000);
