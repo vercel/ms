@@ -1,10 +1,10 @@
 const s = 1000;
-const m = s * 60;
-const h = m * 60;
-const d = h * 24;
-const w = d * 7;
-const y = d * 365.25;
-const mo = y / 12;
+const m = 60_000;
+const h = 3_600_000;
+const d = 86_400_000;
+const w = 604_800_000;
+const y = 31_557_600_000;
+const mo = 2_629_800_000;
 
 type Years = 'years' | 'year' | 'yrs' | 'yr' | 'y';
 type Months = 'months' | 'month' | 'mo';
