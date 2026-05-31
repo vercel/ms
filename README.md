@@ -168,7 +168,7 @@ import { parseStrict } from 'ms';
 parseStrict('1h'); // 3600000
 
 function example(s: string) {
-  return parseStrict(str); // tsc error
+  return parseStrict(s); // tsc error
 }
 ```
 
