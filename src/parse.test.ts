@@ -54,6 +54,10 @@ describe('parse(string)', () => {
     expect(Number.isNaN(parse('foo'))).toBe(true);
   });
 
+  it('should return NaN for invalid max-length numeric input', () => {
+    expect(Number.isNaN(parse(`${'9'.repeat(99)}z`))).toBe(true);
+  });
+
   it('should be case-insensitive', () => {
     expect(parse('53 YeArS')).toBe(1672552800000);
     expect(parse('53 WeEkS')).toBe(32054400000);
