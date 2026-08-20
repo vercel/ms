@@ -2,6 +2,10 @@ import { describe, expect, it } from '@jest/globals';
 import { parse } from './index';
 
 describe('parse(string)', () => {
+  it('should support scientific notation', () => {
+    expect(parse('5.696545792019405e+297y')).toBe(5.696545792019405e+297 * 31557600000);
+    expect(parse('1.5e3ms')).toBe(1500);
+  });
   it('should not throw an error', () => {
     expect(() => {
       parse('1m');
