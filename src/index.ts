@@ -71,7 +71,7 @@ export function ms(
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
+      `Value provided to ms.parse() must be a string with length between 1 and 100. value=${JSON.stringify(str)}`,
     );
   }
   const match =
@@ -157,33 +157,53 @@ export function parseStrict(value: StringValue): number {
   return parse(value);
 }
 
+
+/**
+ * Format a number without scientific notation so parse() can round-trip it.
+ */
+function numberToDecimalString(n: number): string {
+  if (Object.is(n, -0)) {
+    return '0';
+  }
+  if (Number.isInteger(n)) {
+    return n.toLocaleString('en-US', {
+      useGrouping: false,
+      maximumFractionDigits: 0,
+    });
+  }
+  return n.toLocaleString('en-US', {
+    useGrouping: false,
+    maximumSignificantDigits: 21,
+  });
+}
+
 /**
  * Short format for `ms`.
  */
 function fmtShort(ms: number): StringValue {
   const msAbs = Math.abs(ms);
   if (msAbs >= y) {
-    return `${Math.round(ms / y)}y`;
+    return `${numberToDecimalString(Math.round(ms / y))}y`;
   }
   if (msAbs >= mo) {
-    return `${Math.round(ms / mo)}mo`;
+    return `${numberToDecimalString(Math.round(ms / mo))}mo`;
   }
   if (msAbs >= w) {
-    return `${Math.round(ms / w)}w`;
+    return `${numberToDecimalString(Math.round(ms / w))}w`;
   }
   if (msAbs >= d) {
-    return `${Math.round(ms / d)}d`;
+    return `${numberToDecimalString(Math.round(ms / d))}d`;
   }
   if (msAbs >= h) {
-    return `${Math.round(ms / h)}h`;
+    return `${numberToDecimalString(Math.round(ms / h))}h`;
   }
   if (msAbs >= m) {
-    return `${Math.round(ms / m)}m`;
+    return `${numberToDecimalString(Math.round(ms / m))}m`;
   }
   if (msAbs >= s) {
-    return `${Math.round(ms / s)}s`;
+    return `${numberToDecimalString(Math.round(ms / s))}s`;
   }
-  return `${ms}ms`;
+  return `${numberToDecimalString(ms)}ms`;
 }
 
 /**
@@ -212,7 +232,7 @@ function fmtLong(ms: number): StringValue {
   if (msAbs >= s) {
     return plural(ms, msAbs, s, 'second');
   }
-  return `${ms} ms`;
+  return `${numberToDecimalString(ms)} ms`;
 }
 
 /**
@@ -240,5 +260,5 @@ function plural(
   name: string,
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
-  return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+  return `${numberToDecimalString(Math.round(ms / n))} ${name}${isPlural ? 's' : ''}` as StringValue;
 }

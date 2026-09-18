@@ -259,3 +259,14 @@ describe('format(invalid inputs)', () => {
     }).toThrow();
   });
 });
+
+describe('format avoids scientific notation', () => {
+  it('formats tiny millisecond values without scientific notation', () => {
+    expect(format(1e-7)).toBe('0.0000001ms');
+  });
+
+  it('formats huge values without scientific notation', () => {
+    expect(format(1e21)).toBe('31688087814y');
+    expect(format(1e21).includes('e')).toBe(false);
+  });
+});
