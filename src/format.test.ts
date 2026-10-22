@@ -1,6 +1,17 @@
 import { describe, expect, it } from '@jest/globals';
 import { format } from './index';
 
+describe('format(exact year boundary)', () => {
+  it('should use years in both formatting modes', () => {
+    const year = 365.25 * 24 * 60 * 60 * 1000;
+
+    expect(format(year)).toBe('1y');
+    expect(format(-year)).toBe('-1y');
+    expect(format(year, { long: true })).toBe('1 year');
+    expect(format(-year, { long: true })).toBe('-1 year');
+  });
+});
+
 // numbers
 
 describe('format(number, { long: true })', () => {
