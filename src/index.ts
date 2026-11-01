@@ -160,21 +160,36 @@ export function parseStrict(value: StringValue): number {
 
 /**
  * Format a number without scientific notation so parse() can round-trip it.
+ *
+ * Ordinary values stay on String(), which is what format() used to emit.
+ * Only an exponent (1e-7, 1e21) is expanded by hand. toLocaleString() is
+ * avoided: it is hundreds of times slower and locale-sensitive.
  */
 function numberToDecimalString(n: number): string {
   if (Object.is(n, -0)) {
     return '0';
   }
-  if (Number.isInteger(n)) {
-    return n.toLocaleString('en-US', {
-      useGrouping: false,
-      maximumFractionDigits: 0,
-    });
+  const plain = String(n);
+  if (!/[eE]/.test(plain)) {
+    return plain;
   }
-  return n.toLocaleString('en-US', {
-    useGrouping: false,
-    maximumSignificantDigits: 21,
-  });
+  const match = /^(-?)(\d+(?:\.\d+)?)[eE]([+-]?\d+)$/.exec(plain);
+  if (!match) {
+    return plain;
+  }
+  const sign = match[1];
+  const digits = match[2].replace('.', '');
+  const exponent = Number(match[3]);
+  const dot = match[2].indexOf('.');
+  const fractionDigits = dot === -1 ? 0 : match[2].length - dot - 1;
+  const point = digits.length - fractionDigits + exponent;
+  if (point <= 0) {
+    return `${sign}0.${'0'.repeat(-point)}${digits}`;
+  }
+  if (point >= digits.length) {
+    return `${sign}${digits}${'0'.repeat(point - digits.length)}`;
+  }
+  return `${sign}${digits.slice(0, point)}.${digits.slice(point)}`;
 }
 
 /**
