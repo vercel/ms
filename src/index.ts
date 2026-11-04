@@ -162,25 +162,27 @@ export function parseStrict(value: StringValue): number {
  */
 function fmtShort(ms: number): StringValue {
   const msAbs = Math.abs(ms);
-  if (msAbs >= y) {
+  // Each unit takes over from the next smaller one as soon as the smaller
+  // one would round up to it, e.g. 59.5s is "1m", not "60s".
+  if (msAbs >= y - mo / 2) {
     return `${Math.round(ms / y)}y`;
   }
   if (msAbs >= mo) {
     return `${Math.round(ms / mo)}mo`;
   }
-  if (msAbs >= w) {
+  if (msAbs >= w - d / 2) {
     return `${Math.round(ms / w)}w`;
   }
-  if (msAbs >= d) {
+  if (msAbs >= d - h / 2) {
     return `${Math.round(ms / d)}d`;
   }
-  if (msAbs >= h) {
+  if (msAbs >= h - m / 2) {
     return `${Math.round(ms / h)}h`;
   }
-  if (msAbs >= m) {
+  if (msAbs >= m - s / 2) {
     return `${Math.round(ms / m)}m`;
   }
-  if (msAbs >= s) {
+  if (msAbs >= s - 0.5) {
     return `${Math.round(ms / s)}s`;
   }
   return `${ms}ms`;
@@ -191,25 +193,25 @@ function fmtShort(ms: number): StringValue {
  */
 function fmtLong(ms: number): StringValue {
   const msAbs = Math.abs(ms);
-  if (msAbs >= y) {
+  if (msAbs >= y - mo / 2) {
     return plural(ms, msAbs, y, 'year');
   }
   if (msAbs >= mo) {
     return plural(ms, msAbs, mo, 'month');
   }
-  if (msAbs >= w) {
+  if (msAbs >= w - d / 2) {
     return plural(ms, msAbs, w, 'week');
   }
-  if (msAbs >= d) {
+  if (msAbs >= d - h / 2) {
     return plural(ms, msAbs, d, 'day');
   }
-  if (msAbs >= h) {
+  if (msAbs >= h - m / 2) {
     return plural(ms, msAbs, h, 'hour');
   }
-  if (msAbs >= m) {
+  if (msAbs >= m - s / 2) {
     return plural(ms, msAbs, m, 'minute');
   }
-  if (msAbs >= s) {
+  if (msAbs >= s - 0.5) {
     return plural(ms, msAbs, s, 'second');
   }
   return `${ms} ms`;
