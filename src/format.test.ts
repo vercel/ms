@@ -259,3 +259,27 @@ describe('format(invalid inputs)', () => {
     }).toThrow();
   });
 });
+
+describe('format(number) when rounding reaches the next unit', () => {
+  it('should roll over to the next unit in short format', () => {
+    expect(format(999.5)).toBe('1s');
+    expect(format(59_500)).toBe('1m');
+    expect(format(59_999)).toBe('1m');
+    expect(format(60 * 60 * 1000 - 1)).toBe('1h');
+    expect(format(24 * 60 * 60 * 1000 - 1)).toBe('1d');
+    expect(format(6.5 * 24 * 60 * 60 * 1000)).toBe('1w');
+    expect(format(-59_999)).toBe('-1m');
+  });
+
+  it('should roll over to the next unit in long format', () => {
+    expect(format(59_999, { long: true })).toBe('1 minute');
+    expect(format(60 * 60 * 1000 - 1, { long: true })).toBe('1 hour');
+    expect(format(24 * 60 * 60 * 1000 - 1, { long: true })).toBe('1 day');
+  });
+
+  it('should keep the smaller unit below the rounding point', () => {
+    expect(format(999)).toBe('999ms');
+    expect(format(59_499)).toBe('59s');
+    expect(format(59_499, { long: true })).toBe('59 seconds');
+  });
+});
