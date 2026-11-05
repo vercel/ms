@@ -159,11 +159,13 @@ export function parseStrict(value: StringValue): number {
 
 
 /**
- * Format a number without scientific notation so parse() can round-trip it.
+ * Format a number without scientific notation so common values can round-trip
+ * through parse().
  *
  * Ordinary values stay on String(), which is what format() used to emit.
- * Only an exponent (1e-7, 1e21) is expanded by hand. toLocaleString() is
- * avoided: it is hundreds of times slower and locale-sensitive.
+ * Only an exponent (1e-7, 1e21) is expanded by hand. An expanded value longer
+ * than 100 characters still has no exponent, but parse() rejects it.
+ * toLocaleString() is avoided: it is hundreds of times slower and locale-sensitive.
  */
 function numberToDecimalString(n: number): string {
   if (Object.is(n, -0)) {

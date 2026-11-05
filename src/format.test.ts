@@ -269,4 +269,13 @@ describe('format avoids scientific notation', () => {
     expect(format(1e21)).toBe('31688087814y');
     expect(format(1e21).includes('e')).toBe(false);
   });
+
+  it('expands a positive exponent that String() would keep', () => {
+    // 1e36 years: Math.round(ms / y) stringifies with e+. The formatted
+    // result has no exponent. This does not claim a parse() round-trip.
+    // Expanded Number.MIN_VALUE / MAX_VALUE exceed parse()'s 100-character limit.
+    const formatted = format(1e36);
+    expect(formatted.endsWith('y')).toBe(true);
+    expect(/[eE]/.test(formatted)).toBe(false);
+  });
 });
