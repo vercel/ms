@@ -48,6 +48,14 @@ describe('parse(string)', () => {
     expect(parse('1   s')).toBe(1000);
   });
 
+  it('should tolerate leading/trailing whitespace', () => {
+    expect(parse(' 1s')).toBe(1000);
+    expect(parse('1s ')).toBe(1000);
+    expect(parse('  2 days  ')).toBe(172800000);
+    expect(parse('\t1h\n')).toBe(3600000);
+    expect(Number.isNaN(parse('   '))).toBe(true);
+  });
+
   it('should return NaN if invalid', () => {
     expect(Number.isNaN(parse('☃'))).toBe(true);
     expect(Number.isNaN(parse('10-.5'))).toBe(true);

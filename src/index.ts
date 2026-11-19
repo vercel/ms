@@ -76,7 +76,10 @@ export function parse(str: string): number {
   }
   const match =
     /^(?<value>-?\d*\.?\d+) *(?<unit>milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|months?|mo|years?|yrs?|y)?$/i.exec(
-      str,
+      // Tolerate leading/trailing whitespace (e.g. values copied from
+      // config files). Whitespace between the number and the unit was
+      // already accepted; only the edges were rejected with NaN.
+      str.trim(),
     );
 
   if (!match?.groups) {

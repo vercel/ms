@@ -51,6 +51,12 @@ describe('parseStrict(string)', () => {
     expect(parseStrict('1   s')).toBe(1000);
   });
 
+  it('should tolerate leading/trailing whitespace', () => {
+    expect(parseStrict(' 1s')).toBe(1000);
+    expect(parseStrict('1s ')).toBe(1000);
+    expect(parseStrict('\t1h\n')).toBe(3600000);
+  });
+
   it('should return NaN if invalid', () => {
     // @ts-expect-error - we expect the types to fail but JS users can still use this
     expect(Number.isNaN(parseStrict('☃'))).toBe(true);
