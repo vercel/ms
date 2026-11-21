@@ -60,7 +60,7 @@ type Unit = Years | Months | Weeks | Days | Hours | Minutes | Seconds | Millisec
 These formats can be lowercase (`minutes`), uppercase (`MINUTES`), or capitalized (`Minutes`). There can be a space (`2 minutes`) or not (`2minutes`).
 
 > [!NOTE]
-> The casing and spacing is enforced at a type level if you use [`parseStrict`](#enhanced-type-safety).
+> The casing and spacing are enforced at a type level if you use [`parseStrict`](#enhanced-type-safety).
 
 If no unit is passed (`2`), the unit will default to `Milliseconds`.  Fractional input values like `0.5m`, `-0.5m`, `.5m`, and `-.5m` are supported.
 
