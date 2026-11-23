@@ -45,6 +45,31 @@ interface Options {
  * @param options - Options for the conversion
  * @throws Error if `value` is not a non-empty string or a number
  */
+const MAX_ERROR_VALUE_LENGTH = 100;
+
+function formatErrorValue(value: unknown): string {
+  if (typeof value === 'string') {
+    const truncated =
+      value.length > MAX_ERROR_VALUE_LENGTH
+        ? `${value.slice(0, MAX_ERROR_VALUE_LENGTH)}...`
+        : value;
+    return JSON.stringify(truncated);
+  }
+  if (Array.isArray(value)) {
+    return `[Array(${value.length})]`;
+  }
+  if (typeof value === 'bigint') {
+    return `${value}n`;
+  }
+  if (typeof value === 'object' && value !== null) {
+    return `[object ${Object.prototype.toString.call(value).slice(8, -1)}]`;
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return JSON.stringify(value);
+  }
+  return String(value);
+}
+
 export function ms(value: StringValue, options?: Options): number;
 export function ms(value: number, options?: Options): string;
 export function ms(
@@ -57,7 +82,7 @@ export function ms(
     return format(value, options);
   }
   throw new Error(
-    `Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`,
+    `Value provided to ms() must be a string or number. value=${formatErrorValue(value)}`,
   );
 }
 
@@ -71,7 +96,7 @@ export function ms(
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
+      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${formatErrorValue(str)}`,
     );
   }
   const match =
@@ -141,7 +166,7 @@ export function parse(str: string): number {
     default:
       matchUnit satisfies never;
       throw new Error(
-        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
+        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${formatErrorValue(str)}`,
       );
   }
 }
