@@ -384,4 +384,29 @@ describe('ms(invalid inputs)', () => {
       ms(-Infinity);
     }).toThrow();
   });
+
+  it('should throw quickly with a bounded message for large sparse arrays and bigints', () => {
+    const sparse: unknown[] = [];
+    sparse[20_000_000] = 0;
+
+    const start = performance.now();
+    let sparseError: Error | undefined;
+    try {
+      // @ts-expect-error - We expect this to throw.
+      ms(sparse);
+    } catch (error) {
+      sparseError = error as Error;
+    }
+    const elapsed = performance.now() - start;
+
+    expect(sparseError).toBeInstanceOf(Error);
+    expect(sparseError?.message).toContain('[Array(20000001)]');
+    expect(sparseError?.message.length).toBeLessThan(200);
+    expect(elapsed).toBeLessThan(50);
+
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(10n);
+    }).toThrow('Value provided to ms() must be a string or number. value=10n');
+  });
 });
