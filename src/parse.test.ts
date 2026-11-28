@@ -205,4 +205,26 @@ describe('parse(invalid inputs)', () => {
       parse(-Infinity);
     }).toThrow();
   });
+
+  it('should throw an error with validation message when passed a BigInt', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      parse(10n);
+    }).toThrow(
+      'Value provided to ms.parse() must be a string with length between 1 and 99. value=10n',
+    );
+  });
+
+  it('should throw an error with bounded message on sparse array without blocking', () => {
+    const sparse: unknown[] = [];
+    sparse[20000000] = 0;
+    const start = Date.now();
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      parse(sparse);
+    }).toThrow(
+      'Value provided to ms.parse() must be a string with length between 1 and 99.',
+    );
+    expect(Date.now() - start).toBeLessThan(100);
+  });
 });
