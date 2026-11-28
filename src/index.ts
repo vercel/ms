@@ -57,7 +57,7 @@ export function ms(
     return format(value, options);
   }
   throw new Error(
-    `Value provided to ms() must be a string or number. value=${JSON.stringify(value)}`,
+    `Value provided to ms() must be a string or number. value=${serializeValue(value)}`,
   );
 }
 
@@ -71,7 +71,7 @@ export function ms(
 export function parse(str: string): number {
   if (typeof str !== 'string' || str.length === 0 || str.length > 100) {
     throw new Error(
-      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${JSON.stringify(str)}`,
+      `Value provided to ms.parse() must be a string with length between 1 and 99. value=${serializeValue(str)}`,
     );
   }
   const match =
@@ -141,7 +141,7 @@ export function parse(str: string): number {
     default:
       matchUnit satisfies never;
       throw new Error(
-        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${JSON.stringify(str)}`,
+        `Unknown unit "${matchUnit}" provided to ms.parse(). value=${serializeValue(str)}`,
       );
   }
 }
@@ -241,4 +241,102 @@ function plural(
 ): StringValue {
   const isPlural = msAbs >= n * 1.5;
   return `${Math.round(ms / n)} ${name}${isPlural ? 's' : ''}` as StringValue;
+}
+
+/**
+ * Safely serialize any value to a bounded string for error messages,
+ * preventing thread-blocking serialization on sparse arrays or huge objects,
+ * and avoiding throwing on circular references or BigInt values.
+ */
+function serializeValue(value: unknown): string {
+  const str = safeStringify(value);
+  return str.length > 100 ? `${str.slice(0, 97)}...` : str;
+}
+
+function safeStringify(
+  value: unknown,
+  seen: Set<unknown> = new Set(),
+  depth = 0,
+): string {
+  if (value === null) {
+    return 'null';
+  }
+  if (value === undefined) {
+    return 'undefined';
+  }
+  if (typeof value === 'string') {
+    return JSON.stringify(
+      value.length > 100 ? `${value.slice(0, 97)}...` : value,
+    );
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return String(value);
+  }
+  if (typeof value === 'bigint') {
+    const str = `${value}n`;
+    return str.length > 100 ? `${str.slice(0, 97)}...` : str;
+  }
+  if (typeof value === 'symbol') {
+    return String(value);
+  }
+  if (typeof value === 'function') {
+    return '[Function]';
+  }
+
+  if (seen.has(value)) {
+    return '[Circular]';
+  }
+  if (depth >= 2) {
+    return Array.isArray(value) ? '[...]' : '{...}';
+  }
+
+  seen.add(value);
+  try {
+    if (Array.isArray(value)) {
+      const items: string[] = [];
+      const limit = Math.min(value.length, 10);
+      for (let i = 0; i < limit; i++) {
+        try {
+          items.push(
+            i in value ? safeStringify(value[i], seen, depth + 1) : 'null',
+          );
+        } catch {
+          items.push('[Unserializable]');
+        }
+      }
+      if (value.length > 10) {
+        items.push('...');
+      }
+      return `[${items.join(',')}]`;
+    }
+
+    let keys: string[];
+    try {
+      keys = Object.keys(value);
+    } catch {
+      return '[Unserializable]';
+    }
+
+    const entries: string[] = [];
+    const limit = Math.min(keys.length, 10);
+    for (let i = 0; i < limit; i++) {
+      const key = keys[i];
+      try {
+        const valStr = safeStringify(
+          (value as Record<string, unknown>)[key],
+          seen,
+          depth + 1,
+        );
+        entries.push(`${JSON.stringify(key)}:${valStr}`);
+      } catch {
+        entries.push(`${JSON.stringify(key)}:[Unserializable]`);
+      }
+    }
+    if (keys.length > 10) {
+      entries.push('...');
+    }
+    return `{${entries.join(',')}}`;
+  } finally {
+    seen.delete(value);
+  }
 }

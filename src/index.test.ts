@@ -384,4 +384,135 @@ describe('ms(invalid inputs)', () => {
       ms(-Infinity);
     }).toThrow();
   });
+
+  it('should throw an error with bounded message on sparse array without blocking', () => {
+    const sparse: unknown[] = [];
+    sparse[20000000] = 0;
+    const start = Date.now();
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(sparse);
+    }).toThrow('Value provided to ms() must be a string or number.');
+    expect(Date.now() - start).toBeLessThan(100);
+  });
+
+  it('should throw an error with validation message when passed a BigInt', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(10n);
+    }).toThrow('Value provided to ms() must be a string or number. value=10n');
+  });
+
+  it('should handle circular objects safely', () => {
+    const circular: Record<string, unknown> = {};
+    circular.self = circular;
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(circular);
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value={"self":[Circular]}',
+    );
+  });
+
+  it('should throw an error when ms(true) or ms(false)', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(true);
+    }).toThrow('Value provided to ms() must be a string or number. value=true');
+  });
+
+  it('should throw an error when ms(Symbol)', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(Symbol('test'));
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value=Symbol(test)',
+    );
+  });
+
+  it('should throw an error when ms(function)', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(() => {});
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value=[Function]',
+    );
+  });
+
+  it('should bound depth for deeply nested objects and arrays', () => {
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms({ a: { b: { c: 1 } } });
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value={"a":{"b":{...}}}',
+    );
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms([[[1]]]);
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value=[[[...]]]',
+    );
+  });
+
+  it('should truncate objects with many keys and long BigInt values', () => {
+    const bigObj: Record<string, number> = {};
+    for (let i = 0; i < 15; i++) {
+      bigObj[`key${i}`] = i;
+    }
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(bigObj);
+    }).toThrow(/\.\.\./);
+
+    const longBigInt = BigInt(`1${'0'.repeat(120)}`);
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(longBigInt);
+    }).toThrow(/\.\.\./);
+  });
+
+  it('should handle throwing getters and proxy ownKeys safely', () => {
+    const evilArray: unknown[] = [];
+    Object.defineProperty(evilArray, 0, {
+      get() {
+        throw new Error('getter error');
+      },
+      enumerable: true,
+    });
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(evilArray);
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value=[[Unserializable]]',
+    );
+
+    const evilObject = {};
+    Object.defineProperty(evilObject, 'a', {
+      get() {
+        throw new Error('getter error');
+      },
+      enumerable: true,
+    });
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(evilObject);
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value={"a":[Unserializable]}',
+    );
+
+    const evilProxy = new Proxy(
+      {},
+      {
+        ownKeys() {
+          throw new Error('proxy error');
+        },
+      },
+    );
+    expect(() => {
+      // @ts-expect-error - We expect this to throw.
+      ms(evilProxy);
+    }).toThrow(
+      'Value provided to ms() must be a string or number. value=[Unserializable]',
+    );
+  });
 });
